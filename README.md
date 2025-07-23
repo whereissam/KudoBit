@@ -1,5 +1,7 @@
-# 🚀 Micro-Commerce & Loyalty on Morph
+# KudoBit
 
+> **Digital Value, Instantly Rewarded.**
+> 
 > **Lightning-fast digital commerce and instant loyalty rewards powered by Morph's hybrid rollup technology**
 
 A pioneering decentralized application that revolutionizes digital commerce by enabling seamless, low-cost micro-transactions and transparent loyalty programs on Morph's cutting-edge blockchain infrastructure.
