@@ -1,61 +1,184 @@
-import { createRootRoute, Link, Outlet } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/router-devtools'
-import { ThemeToggle } from '@/components/theme-toggle'
-import { MobileNav } from '@/components/mobile-nav'
-import { WalletConnect } from '@/components/wallet-connect'
+import { createRootRoute, Outlet } from '@tanstack/react-router'
+import { AppleLayout } from '@/components/apple-layout'
+import { AuthModal } from '@/components/auth-modal'
+import { useAccount, useReadContract, useChainId } from 'wagmi'
+import { CONTRACTS, getContracts, CREATOR_STORE_ABI, LOYALTY_TOKEN_ABI } from '@/lib/contracts'
+import { CreatorService } from '@/lib/creator-service'
+import { useMemo, lazy, Suspense, useState, useEffect } from 'react'
+
+// Lazy load devtools only in development
+const TanStackRouterDevtools = import.meta.env.DEV
+  ? lazy(() => import('@tanstack/router-devtools').then(res => ({ default: res.TanStackRouterDevtools })))
+  : () => null
+
+function RootComponent() {
+  const { address, isConnected } = useAccount()
+  const chainId = useChainId()
+  const [authModal, setAuthModal] = useState<{ isOpen: boolean; mode: 'signin' | 'signup' }>({ 
+    isOpen: false, 
+    mode: 'signin' 
+  })
+  const [isCreator, setIsCreator] = useState(false)
+  
+  // Get contracts for current chain
+  const currentContracts = useMemo(() => getContracts(chainId), [chainId])
+  
+  // Only fetch owner data if user is connected to reduce unnecessary calls
+  const { data: creatorStoreOwner } = useReadContract({
+    address: currentContracts.creatorStore,
+    abi: CREATOR_STORE_ABI,
+    functionName: 'owner',
+    query: {
+      enabled: !!isConnected && !!address,
+      staleTime: 5 * 60 * 1000, // 5 minutes cache
+      refetchInterval: false,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+    }
+  })
+  
+  const { data: loyaltyTokenOwner } = useReadContract({
+    address: currentContracts.loyaltyToken,
+    abi: LOYALTY_TOKEN_ABI, 
+    functionName: 'owner',
+    query: {
+      enabled: !!isConnected && !!address,
+      staleTime: 5 * 60 * 1000, // 5 minutes cache
+      refetchInterval: false,
+      refetchOnMount: false,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
+    }
+  })
+  
+  // Check creator status - FIXED to prevent infinite loops
+  const [creatorProfile, setCreatorProfile] = useState<any>(null);
+  
+  // Memoize expensive computations - MOVED BEFORE useEffect
+  const hasAdminAccess = useMemo(() => {
+    if (!address || !isConnected) return false
+    
+    const isCreatorStoreOwner = creatorStoreOwner && address.toLowerCase() === (creatorStoreOwner as string).toLowerCase()
+    const isLoyaltyTokenOwner = loyaltyTokenOwner && address.toLowerCase() === (loyaltyTokenOwner as string).toLowerCase()
+    
+    return isCreatorStoreOwner || isLoyaltyTokenOwner
+  }, [address, isConnected, creatorStoreOwner, loyaltyTokenOwner])
+  
+  useEffect(() => {
+    if (!isConnected || !address) {
+      setCreatorProfile(null);
+      return;
+    }
+    
+    const profile = CreatorService.getCurrentCreatorProfile();
+    // Only update if profile actually changed (deep comparison)
+    setCreatorProfile(prevProfile => {
+      if (!profile && !prevProfile) return prevProfile; // Keep null reference
+      if (!profile && prevProfile) return null;
+      if (profile && !prevProfile) return profile;
+      if (profile && prevProfile && profile.address === prevProfile.address) {
+        return prevProfile; // Keep same reference if address matches
+      }
+      return profile;
+    });
+  }, [isConnected, address]);
+
+  useEffect(() => {
+    if (!address || !isConnected) {
+      setIsCreator(false);
+      return;
+    }
+
+    const checkCreatorStatus = async () => {
+      // Check 1: Contract ownership (wallet-based)
+      const isContractOwner = hasAdminAccess;
+      
+      // Check 2: Backend registration (profile-based) 
+      let hasBackendProfile = false;
+      try {
+        const status = await CreatorService.getCreatorStatus(address);
+        hasBackendProfile = status.canAccessCreatorFeatures;
+        
+        // Auto-register contract owners in backend if not already registered
+        if (isContractOwner && !hasBackendProfile) {
+          console.log('🔄 Auto-registering contract owner in backend...');
+          
+          // Create a basic profile for contract owner
+          const autoProfile = {
+            address: address.toLowerCase(),
+            displayName: `Contract Owner ${address.slice(0, 6)}...${address.slice(-4)}`,
+            bio: 'Contract owner with admin access',
+            socialLinks: {},
+            isVerified: true,
+            isOnChainCreator: true,
+            createdAt: new Date().toISOString()
+          };
+          
+          // Save to localStorage first (immediate fallback)
+          CreatorService.saveCreatorSession(autoProfile);
+          
+          // Try to register in backend (if available)
+          try {
+            // Create a dummy token for auto-registration
+            const dummyToken = btoa(JSON.stringify({ address, isOwner: true, timestamp: Date.now() }));
+            await CreatorService.registerCreator(address, {
+              displayName: autoProfile.displayName,
+              bio: autoProfile.bio,
+              socialLinks: autoProfile.socialLinks
+            }, dummyToken);
+            console.log('✅ Auto-registration successful');
+          } catch (regError) {
+            console.log('⚠️ Backend auto-registration failed, using localStorage');
+          }
+          
+          hasBackendProfile = true;
+        }
+      } catch (error) {
+        console.log('Backend check failed, using local profile');
+        hasBackendProfile = !!(creatorProfile && creatorProfile.address === address.toLowerCase());
+      }
+      
+      // User is creator if they own contracts OR have a backend/local profile
+      setIsCreator(isContractOwner || hasBackendProfile);
+    };
+
+    checkCreatorStatus();
+  }, [address, isConnected, hasAdminAccess]);
+
+  const openAuthModal = (mode: 'signin' | 'signup') => {
+    setAuthModal({ isOpen: true, mode })
+  }
+
+  const closeAuthModal = () => {
+    setAuthModal({ isOpen: false, mode: 'signin' })
+  }
+  
+  return (
+    <>
+      <AppleLayout onAuthModal={openAuthModal}>
+        <Outlet />
+      </AppleLayout>
+      
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={authModal.isOpen}
+        onClose={closeAuthModal}
+        mode={authModal.mode}
+        onSuccess={() => {
+          setIsCreator(true)
+          closeAuthModal()
+        }}
+      />
+      
+      {/* Dev Tools */}
+      <Suspense>
+        <TanStackRouterDevtools />
+      </Suspense>
+    </>
+  )
+}
 
 export const Route = createRootRoute({
-  component: () => (
-    <>
-      <nav className="bg-background border-b border-border sticky top-0 z-50">
-        <div className="container mx-auto px-3 sm:px-4">
-          <div className="flex items-center justify-between h-14 sm:h-16">
-            <div className="flex items-center space-x-2 sm:space-x-4 md:space-x-8">
-              <Link 
-                to="/" 
-                className="text-base sm:text-lg font-semibold text-foreground hover:text-primary transition-colors"
-              >
-                <span className="hidden sm:inline">Morph Commerce</span>
-                <span className="sm:hidden">Morph</span>
-              </Link>
-              <div className="hidden sm:flex space-x-4 lg:space-x-6">
-                <Link 
-                  to="/" 
-                  className="text-sm lg:text-base text-muted-foreground hover:text-foreground [&.active]:text-primary [&.active]:font-medium transition-colors"
-                >
-                  Shop
-                </Link>
-                <Link 
-                  to={"/loyalty" as any} 
-                  className="text-sm lg:text-base text-muted-foreground hover:text-foreground [&.active]:text-primary [&.active]:font-medium transition-colors"
-                >
-                  <span className="hidden lg:inline">My Loyalty</span>
-                  <span className="lg:hidden">Loyalty</span>
-                </Link>
-                <Link 
-                  to={"/admin" as any} 
-                  className="text-sm lg:text-base text-muted-foreground hover:text-foreground [&.active]:text-primary [&.active]:font-medium transition-colors"
-                >
-                  Admin
-                </Link>
-              </div>
-            </div>
-            <div className="flex items-center space-x-1 sm:space-x-2">
-              <div className="hidden xs:block">
-                <WalletConnect />
-              </div>
-              <ThemeToggle />
-              <MobileNav />
-            </div>
-          </div>
-          {/* Mobile wallet connection */}
-          <div className="xs:hidden pb-3 border-t border-border mt-2 pt-3">
-            <WalletConnect />
-          </div>
-        </div>
-      </nav>
-      <Outlet />
-      <TanStackRouterDevtools />
-    </>
-  ),
+  component: RootComponent,
 })

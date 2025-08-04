@@ -3,6 +3,12 @@ require("dotenv").config();
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
+  paths: {
+    sources: "./contracts",
+    tests: "./tests",
+    cache: "./build/cache",
+    artifacts: "./build/artifacts"
+  },
   solidity: {
     version: "0.8.27",
     settings: {
@@ -10,6 +16,7 @@ module.exports = {
         enabled: true,
         runs: 200,
       },
+      viaIR: true,
     },
   },
   networks: {

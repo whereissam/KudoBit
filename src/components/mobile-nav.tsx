@@ -1,20 +1,30 @@
-import { useState } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 import { Link } from '@tanstack/react-router'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Gift } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useTheme } from '@/components/theme-provider'
 
-export function MobileNav() {
+interface MobileNavProps {
+  hasAdminAccess?: boolean
+}
+
+export function MobileNav({ hasAdminAccess = false }: MobileNavProps) {
   const [isOpen, setIsOpen] = useState(false)
   const { theme } = useTheme()
-  const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+  const isDark = useMemo(() => 
+    theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches),
+    [theme]
+  )
+
+  const handleToggle = useCallback(() => setIsOpen(!isOpen), [isOpen])
+  const handleClose = useCallback(() => setIsOpen(false), [])
 
   return (
     <div className="sm:hidden">
       <Button
         variant="ghost"
         size="icon"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={handleToggle}
         className="h-9 w-9"
       >
         {isOpen ? (
@@ -26,30 +36,60 @@ export function MobileNav() {
       </Button>
 
       {isOpen && (
-        <div className={`absolute top-14 left-0 right-0 shadow-xl z-50 ${isDark ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200'} border`}>
+        <div className="fixed top-14 left-0 right-0 shadow-xl z-50 bg-background border-border border max-h-[80vh] overflow-y-auto font-sans tracking-normal">
           <div className="container mx-auto px-4 py-4">
-            <div className="flex flex-col space-y-4">
+            <div className="flex flex-col space-y-3">
               <Link 
                 to="/" 
-                className={`hover:text-primary [&.active]:text-primary [&.active]:font-medium transition-colors py-2 text-base ${isDark ? 'text-gray-100' : 'text-gray-900'}`}
-                onClick={() => setIsOpen(false)}
+                className="hover:text-primary [&.active]:text-primary [&.active]:font-medium transition-colors py-3 px-2 text-base rounded-md text-foreground hover:bg-muted/30"
+                onClick={handleClose}
               >
                 🛍️ Shop
               </Link>
               <Link 
+                to={"/creator/dashboard" as any} 
+                className="hover:text-primary [&.active]:text-primary [&.active]:font-medium transition-colors py-3 px-2 text-base rounded-md text-foreground hover:bg-muted/30"
+                onClick={handleClose}
+              >
+                🎨 Creator Hub
+              </Link>
+              <Link 
+                to={"/purchases" as any} 
+                className="hover:text-primary [&.active]:text-primary [&.active]:font-medium transition-colors py-3 px-2 text-base rounded-md text-foreground hover:bg-muted/30"
+                onClick={handleClose}
+              >
+                📦 My Purchases
+              </Link>
+              <Link 
                 to={"/loyalty" as any} 
-                className={`hover:text-primary [&.active]:text-primary [&.active]:font-medium transition-colors py-2 text-base ${isDark ? 'text-gray-100' : 'text-gray-900'}`}
-                onClick={() => setIsOpen(false)}
+                className="hover:text-primary [&.active]:text-primary [&.active]:font-medium transition-colors py-3 px-2 text-base rounded-md text-foreground hover:bg-muted/30"
+                onClick={handleClose}
               >
                 🏆 My Loyalty
               </Link>
               <Link 
-                to={"/admin" as any} 
-                className={`hover:text-primary [&.active]:text-primary [&.active]:font-medium transition-colors py-2 text-base ${isDark ? 'text-gray-100' : 'text-gray-900'}`}
-                onClick={() => setIsOpen(false)}
+                to={"/marketplace/secondary" as any} 
+                className="hover:text-primary [&.active]:text-primary [&.active]:font-medium transition-colors py-3 px-2 text-base rounded-md text-foreground hover:bg-muted/30"
+                onClick={handleClose}
               >
-                ⚙️ Admin
+                🔄 Secondary Market
               </Link>
+              <Link 
+                to={"/perks/discover" as any} 
+                className="hover:text-primary [&.active]:text-primary [&.active]:font-medium transition-colors py-3 px-2 text-base rounded-md text-foreground hover:bg-muted/30"
+                onClick={handleClose}
+              >
+                🎁 Perks
+              </Link>
+              {hasAdminAccess && (
+                <Link 
+                  to={"/admin" as any} 
+                  className="hover:text-primary [&.active]:text-primary [&.active]:font-medium transition-colors py-3 px-2 text-base rounded-md text-foreground hover:bg-muted/30"
+                  onClick={handleClose}
+                >
+                  ⚙️ Admin
+                </Link>
+              )}
             </div>
           </div>
         </div>
