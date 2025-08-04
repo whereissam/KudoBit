@@ -1,164 +1,217 @@
-# KudoBit
+# KudoBit 🎯
 
-> **Digital Value, Instantly Rewarded.**
-> 
-> **Lightning-fast digital commerce and instant loyalty rewards powered by Morph's hybrid rollup technology**
+**A Web3 Creator Economy Platform with Loyalty System & Secondary Marketplace**
 
-A pioneering decentralized application that revolutionizes digital commerce by enabling seamless, low-cost micro-transactions and transparent loyalty programs on Morph's cutting-edge blockchain infrastructure.
+KudoBit empowers creators to monetize their content through NFT-based products while building loyal communities through an integrated badge system and secondary marketplace revenue sharing.
 
-## 🌟 Why Morph?
+## ✨ Key Features
 
-This dApp showcases the unique advantages of **Morph's Hybrid Rollup** technology:
+- 🏆 **Loyalty Badge System** - Automatic badge rewards based on spending tiers
+- 💱 **Secondary Marketplace** - Revenue sharing between creators, platforms, and resellers  
+- 🎨 **Creator Dashboard** - Simple product creation and management
+- 💰 **USDC Payments** - Stable cryptocurrency payments with faucet for testing
+- 🏅 **Tier Progression** - Bronze → Silver → Gold → Diamond based on user spending
+- 📊 **Revenue Analytics** - Track earnings from primary and secondary sales
 
-- **⚡ Lightning Fast**: Hybrid rollup with optimistic finality for instant transaction confirmation
-- **💰 Ultra Low Cost**: Making micro-transactions economically viable for the first time
-- **🔒 Truly Secure**: Responsive Validity Proofs (RVP) ensure robust security
-- **🏛️ Decentralized**: Decentralized sequencer network guarantees fairness and censorship resistance
-
-## ✨ Features
-
-### For Buyers
-- **Instant Wallet Connection**: Connect MetaMask to start shopping
-- **Digital Marketplace**: Browse curated digital products (wallpapers, content passes, sticker packs)
-- **One-Click Purchases**: Buy items with USDC in a single transaction
-- **Automatic Loyalty Rewards**: Earn badges instantly after each purchase
-- **Real-time Balance**: See your USDC balance and transaction status
-
-### For Merchants (Demo)
-- **Product Management**: Pre-configured digital items with pricing
-- **Loyalty Integration**: Automatic badge distribution based on purchase value
-- **Admin Panel**: Manually award badges and manage test tokens
-
-### Technical Features
-- **ERC-1155 Loyalty Badges**: Collectible NFT badges for different tiers
-- **ERC-20 Mock USDC**: Testnet stablecoin for purchases
-- **Smart Contract Integration**: Seamless Web3 interactions via Wagmi
-- **Responsive Design**: Works on desktop and mobile
-
-## 🛠 Tech Stack
-
-- **Frontend**: React + TypeScript + Vite
-- **Styling**: TailwindCSS + shadcn/ui
-- **Web3**: Wagmi + Viem
-- **Routing**: TanStack Router
-- **Blockchain**: Morph Holesky Testnet
-- **Smart Contracts**: Solidity + Hardhat + OpenZeppelin
-
-## 📦 Quick Start
+## 🚀 Quick Start
 
 ### Prerequisites
 - Node.js 18+
-- MetaMask wallet
-- Morph Holesky testnet ETH
+- npm or bun
+- Hardhat for smart contract development
 
 ### Installation
 
-1. **Clone & Install**
-   ```bash
-   git clone <repository-url>
-   cd morph-microcommerce-loyalty
-   npm install
-   ```
+```bash
+# Clone the repository
+git clone <repository-url>
+cd KudoBit
 
-2. **Set up Environment**
-   ```bash
-   cp .env.example .env
-   # Add your private key for deployment
-   ```
+# Install dependencies
+npm install
 
-3. **Deploy Contracts**
-   ```bash
-   npx hardhat run scripts/deploy.js --network morphHolesky
-   ```
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your private key and RPC URLs
 
-4. **Update Contract Addresses**
-   After deployment, update the contract addresses in `src/lib/contracts.ts`
+# Start local blockchain
+npx hardhat node
 
-5. **Start Development Server**
-   ```bash
-   npm run dev
-   ```
+# Deploy contracts (new terminal)
+npx hardhat run scripts/deploy.cjs --network localhost
 
-### Network Setup
+# Start frontend
+npm run dev
+```
 
-Add Morph Holesky to MetaMask:
-- **Network Name**: Morph Holesky
-- **RPC URL**: `https://rpc-quicknode-holesky.morphl2.io`
-- **Chain ID**: `2810`
-- **Currency Symbol**: `ETH`
-- **Explorer**: `https://explorer-holesky.morphl2.io`
+## 📁 Project Structure
 
-Get test ETH: [Morph Holesky Faucet](https://faucet.morphl2.io)
+```
+KudoBit/
+├── contracts/                 # Smart contracts
+│   ├── core/                 # Core system contracts
+│   │   ├── CreatorStore.sol  # Primary marketplace
+│   │   ├── LoyaltyToken.sol  # Badge NFT system
+│   │   ├── MockUSDC.sol      # Test token
+│   │   └── SecondaryMarketplace.sol # Resale system
+│   ├── extensions/           # Additional features
+│   └── legacy/              # Deprecated contracts
+├── src/                     # Frontend React app
+│   ├── components/          # UI components
+│   ├── lib/                # Utilities and services
+│   └── routes/             # App routing
+├── scripts/                # Deployment and utility scripts
+├── tests/                  # Organized test suite
+│   ├── integration/        # End-to-end tests
+│   ├── unit/              # Contract unit tests
+│   └── debug/             # Debug utilities
+├── backend/               # Express.js API server
+├── build/                 # Build artifacts
+├── config/               # Configuration files
+├── docs/                 # Documentation
+└── tools/                # Development utilities
+```
 
-## 🏗 Smart Contracts
+## 🏆 Loyalty System
 
-### MockUSDC.sol
-- Standard ERC-20 token for payments
-- Built-in faucet for testing (1000 USDC max per claim)
-- 6 decimal precision matching real USDC
+The loyalty system automatically rewards users with badges based on their spending:
 
-### LoyaltyToken.sol
-- ERC-1155 multi-token for loyalty badges
-- Four badge tiers: Bronze, Silver, Gold, Diamond
-- Authorized minter system for security
-- IPFS metadata support
+- **Bronze Badge** (🥉): 0.1+ USDC spent
+- **Silver Badge** (🥈): 1.0+ USDC spent  
+- **Gold Badge** (🥇): 5.0+ USDC spent
+- **Diamond Badge** (💎): 10.0+ USDC spent
 
-### Shopfront.sol
-- Main marketplace contract
-- Item management with pricing in USDC
-- Automatic badge distribution on purchase
-- Purchase history tracking
-- Reentrancy protection
+Badges are ERC-1155 NFTs that can be displayed in wallets and used for future perks.
 
-## 🎯 How Morph Makes This Possible
+## 💱 Secondary Market Revenue Sharing
 
-### Speed & Cost
-- **Sub-second confirmations** vs minutes on Ethereum L1
-- **~$0.01 transaction fees** vs $10-50 on L1
-- Enables **micro-transactions** previously impossible due to high gas
+When users resell purchased items:
 
-### Decentralized Sequencer
-- **Fair ordering** prevents MEV exploitation
-- **No single point of failure** like centralized sequencers
-- **Transparent** transaction processing
+- **Creator Royalty**: 5.0% goes to original creator
+- **Platform Fee**: 2.5% goes to platform
+- **Seller Amount**: 92.5% goes to reseller
 
-### Hybrid Rollup Security
-- **Optimistic + ZK** dual verification system
-- **Responsive Validity Proof** for instant finality when needed
-- **Full Ethereum security** inheritance
+All revenue distribution is handled automatically by smart contracts.
 
-## 🚀 Demo Flow
+## 🧪 Testing
 
-1. **Connect Wallet**: Link MetaMask to Morph Holesky
-2. **Get Test USDC**: Use the faucet in admin panel
-3. **Browse Shop**: View digital products with instant preview
-4. **Make Purchase**: One-click buying with automatic approval
-5. **Earn Badges**: Receive loyalty NFTs immediately
-6. **View Rewards**: Check loyalty dashboard for collected badges
+### Run Tests
 
-## 📱 User Experience
+```bash
+# Run all tests
+npx hardhat test
 
-- **Web2-like UX**: Abstracts blockchain complexity
-- **Instant Feedback**: Real-time transaction updates
-- **Mobile Responsive**: Works seamlessly on all devices
-- **Clear Pricing**: Transparent costs in familiar USDC
+# Run specific test suites
+npx hardhat run tests/integration/test-loyalty-working.cjs --network localhost
+npx hardhat run tests/integration/test-final-comprehensive.cjs --network localhost
 
-## 🔮 Future Enhancements
+# Debug contracts
+npx hardhat run tests/debug/debug-creator-addresses.cjs --network localhost
+```
 
-- **Dynamic Pricing**: Market-driven product costs
-- **Creator Tools**: Easy product listing interface  
-- **Social Features**: Badge sharing and leaderboards
-- **Cross-chain**: Bridge to other networks
-- **Real Products**: Integration with digital marketplaces
+### Test Coverage
 
-## 📄 License
+- ✅ **Loyalty System**: Badge minting, tier progression, spending tracking
+- ✅ **Secondary Market**: Revenue sharing, fee calculations, resale mechanics
+- ✅ **Payment System**: USDC transfers, approvals, balance management
+- ✅ **Contract Integration**: Cross-contract interactions and authorization
 
-MIT License - see [LICENSE](LICENSE) for details
+## 🛠️ Development
+
+### Smart Contracts
+
+Core contracts are located in `contracts/core/`:
+
+- **CreatorStore.sol**: Primary marketplace for creator products
+- **SecondaryMarketplace.sol**: Resale marketplace with revenue sharing
+- **LoyaltyToken.sol**: ERC-1155 badge system
+- **MockUSDC.sol**: Test USDC token with faucet
+
+### Frontend
+
+React app with TanStack Router and Wagmi for Web3 integration:
+
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run preview      # Preview production build
+```
+
+### Backend API
+
+Express.js server with SQLite database:
+
+```bash
+cd backend
+npm run dev          # Start API server
+npm run test         # Run API tests
+```
+
+## 📋 Deployment
+
+### Local Development
+```bash
+# Start local network
+npx hardhat node
+
+# Deploy contracts
+npx hardhat run scripts/deploy.cjs --network localhost
+```
+
+### Morph Holesky Testnet
+```bash
+# Deploy to testnet
+npx hardhat run scripts/deploy.cjs --network morphHolesky
+
+# Verify contracts
+npx hardhat verify --network morphHolesky <contract-address>
+```
+
+Contract addresses are automatically saved to `deployments.json`.
+
+## 🎯 System Status
+
+### ✅ Fully Functional Systems
+
+- **Loyalty System**: Automatic badge minting and tier progression
+- **Secondary Marketplace**: Revenue sharing with proper fee distribution
+- **Payment Integration**: USDC token transfers and approvals
+- **Contract Architecture**: Modular, upgradeable smart contract design
+- **Frontend Integration**: Web3 wallet connection and contract interaction
+
+### 🔧 Technical Achievements
+
+- **ABI Interface Issues**: ✅ Resolved through proper contract deployment
+- **Revenue Distribution**: ✅ Mathematical accuracy with 100% fee accounting
+- **Cross-Contract Authorization**: ✅ Proper minter permissions and ownership
+- **Event Emission**: ✅ Comprehensive transaction logging
+- **Error Handling**: ✅ Robust validation and user feedback
+
+## 📖 Documentation
+
+- [Project Structure](PROJECT-STRUCTURE.md) - Detailed architecture overview
+- [Testing Guide](docs/archive/TESTING-GUIDE.md) - Comprehensive testing documentation
+- [API Documentation](backend/docs/) - Backend API reference
+- [Deployment Guide](docs/DEPLOYMENT-GUIDE.md) - Production deployment instructions
 
 ## 🤝 Contributing
 
-Built for Morph Hackathon. Contributions welcome for future development!
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🎉 Acknowledgments
+
+- Built with Hardhat, React, and Vite
+- Uses OpenZeppelin contracts for security
+- Inspired by creator economy and Web3 innovation
 
 ---
 
-**Experience the future of micro-commerce on Morph - where every transaction is fast, cheap, and secure.**
+**KudoBit**: Empowering creators through Web3 technology 🚀

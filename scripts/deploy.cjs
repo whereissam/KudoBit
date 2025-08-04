@@ -3,6 +3,11 @@ const hre = require("hardhat");
 async function main() {
   console.log("Deploying contracts to Morph Holesky...");
 
+  // Get signer
+  const [deployer] = await hre.ethers.getSigners();
+  console.log("Deploying with account:", deployer.address);
+  console.log("Account balance:", (await hre.ethers.provider.getBalance(deployer.address)).toString());
+
   // Deploy MockUSDC
   const MockUSDC = await hre.ethers.getContractFactory("MockUSDC");
   const mockUSDC = await MockUSDC.deploy();
@@ -17,27 +22,42 @@ async function main() {
   
   console.log("LoyaltyToken deployed to:", await loyaltyToken.getAddress());
 
-  // Deploy Shopfront
-  const Shopfront = await hre.ethers.getContractFactory("Shopfront");
-  const shopfront = await Shopfront.deploy(
+  // Deploy CreatorStore
+  const CreatorStore = await hre.ethers.getContractFactory("CreatorStore");
+  const creatorStore = await CreatorStore.deploy(
     await mockUSDC.getAddress(),
     await loyaltyToken.getAddress()
   );
-  await shopfront.waitForDeployment();
+  await creatorStore.waitForDeployment();
   
-  console.log("Shopfront deployed to:", await shopfront.getAddress());
+  console.log("CreatorStore deployed to:", await creatorStore.getAddress());
 
-  // Set Shopfront as authorized minter for LoyaltyToken
-  const authorizeTx = await loyaltyToken.setAuthorizedMinter(await shopfront.getAddress(), true);
-  await authorizeTx.wait();
+  // Deploy SecondaryMarketplace
+  const SecondaryMarketplace = await hre.ethers.getContractFactory("SecondaryMarketplace");
+  const secondaryMarketplace = await SecondaryMarketplace.deploy(
+    await mockUSDC.getAddress(),
+    await loyaltyToken.getAddress()
+  );
+  await secondaryMarketplace.waitForDeployment();
   
-  console.log("Shopfront authorized as minter for LoyaltyToken");
+  console.log("SecondaryMarketplace deployed to:", await secondaryMarketplace.getAddress());
+
+  // Set both contracts as authorized minters for LoyaltyToken
+  const authorizeTx1 = await loyaltyToken.setAuthorizedMinter(await creatorStore.getAddress(), true);
+  await authorizeTx1.wait();
+  
+  const authorizeTx2 = await loyaltyToken.setAuthorizedMinter(await secondaryMarketplace.getAddress(), true);
+  await authorizeTx2.wait();
+  
+  console.log("CreatorStore authorized as minter for LoyaltyToken");
+  console.log("SecondaryMarketplace authorized as minter for LoyaltyToken");
 
   // Save deployment addresses
   const deployments = {
     mockUSDC: await mockUSDC.getAddress(),
     loyaltyToken: await loyaltyToken.getAddress(),
-    shopfront: await shopfront.getAddress(),
+    creatorStore: await creatorStore.getAddress(),
+    secondaryMarketplace: await secondaryMarketplace.getAddress(),
     network: hre.network.name,
     chainId: hre.network.config.chainId
   };

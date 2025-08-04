@@ -1,6 +1,5 @@
-import { http, createConfig } from 'wagmi'
-import { injected, metaMask, walletConnect } from 'wagmi/connectors'
-import { mainnet } from 'wagmi/chains'
+import { getDefaultConfig } from '@rainbow-me/rainbowkit'
+import { mainnet, localhost } from 'wagmi/chains'
 
 // Define Morph Holesky chain details per plan specifications
 const morphHolesky = {
@@ -16,20 +15,22 @@ const morphHolesky = {
   testnet: true,
 } as const
 
-export const config = createConfig({
-  chains: [morphHolesky, mainnet],
-  connectors: [
-    injected(),
-    metaMask(),
-    walletConnect({ 
-      projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || '8c3b2f9f4d7e8a1b5c9d2e6f3a4b7c8e' 
-    }),
-  ],
-  ssr: true,
-  transports: {
-    [morphHolesky.id]: http(),
-    [mainnet.id]: http(),
+// Local development chain
+const localChain = {
+  ...localhost,
+  id: 31337,
+  name: 'Localhost 8545',
+  nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+  rpcUrls: {
+    default: { http: ['http://127.0.0.1:8545'] },
   },
+} as const
+
+export const config = getDefaultConfig({
+  appName: 'KudoBit',
+  projectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID || 'fecdb34a9446481efe518ac7a0625cb1',
+  chains: [localChain, morphHolesky, mainnet],
+  ssr: true
 })
 
 declare module 'wagmi' {

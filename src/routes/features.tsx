@@ -17,8 +17,8 @@ export const Route = createFileRoute('/features')({
         <div className="grid lg:grid-cols-2 gap-8 mb-16">
           <div className="bg-card rounded-lg shadow-sm p-8">
             <div className="flex items-center mb-6">
-              <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg mr-3">
-                <Zap className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+              <div className="p-2 bg-primary/10 dark:bg-blue-900/30 rounded-lg mr-3">
+                <Zap className="h-6 w-6 text-primary dark:text-blue-400" />
               </div>
               <h2 className="text-2xl font-semibold text-foreground">
                 Development Experience
@@ -42,8 +42,8 @@ export const Route = createFileRoute('/features')({
 
           <div className="bg-card rounded-lg shadow-sm p-8">
             <div className="flex items-center mb-6">
-              <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg mr-3">
-                <Shield className="h-6 w-6 text-green-600 dark:text-green-400" />
+              <div className="p-2 bg-chart-1/10 dark:bg-green-900/30 rounded-lg mr-3">
+                <Shield className="h-6 w-6 text-chart-1 dark:text-green-400" />
               </div>
               <h2 className="text-2xl font-semibold text-foreground">
                 Production Ready
@@ -68,8 +68,8 @@ export const Route = createFileRoute('/features')({
 
         <div className="bg-card rounded-lg shadow-sm p-8 mb-16">
           <div className="flex items-center mb-8 justify-center">
-            <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg mr-3">
-              <Wrench className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+            <div className="p-2 bg-chart-3/10 dark:bg-purple-900/30 rounded-lg mr-3">
+              <Wrench className="h-6 w-6 text-chart-3 dark:text-purple-400" />
             </div>
             <h2 className="text-2xl font-semibold text-foreground">
               Technology Stack
@@ -80,19 +80,19 @@ export const Route = createFileRoute('/features')({
               <h3 className="font-semibold text-foreground mb-4">Frontend</h3>
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                  <div className="w-2 h-2 bg-primary/50 rounded-full"></div>
                   <span className="text-muted-foreground">React 19</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                  <div className="w-2 h-2 bg-primary/50 rounded-full"></div>
                   <span className="text-muted-foreground">TypeScript</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                  <div className="w-2 h-2 bg-primary/50 rounded-full"></div>
                   <span className="text-muted-foreground">TanStack Router</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                  <div className="w-2 h-2 bg-primary/50 rounded-full"></div>
                   <span className="text-muted-foreground">TanStack Query</span>
                 </div>
               </div>
@@ -145,7 +145,7 @@ export const Route = createFileRoute('/features')({
         <div className="grid md:grid-cols-2 gap-8">
           <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-800/20 rounded-lg p-8">
             <div className="flex items-center mb-4">
-              <Palette className="h-8 w-8 text-blue-600 dark:text-blue-400 mr-3" />
+              <Palette className="h-8 w-8 text-primary dark:text-blue-400 mr-3" />
               <h3 className="text-xl font-semibold text-foreground">
                 Design System
               </h3>
@@ -167,7 +167,7 @@ export const Route = createFileRoute('/features')({
 
           <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/20 dark:to-green-800/20 rounded-lg p-8">
             <div className="flex items-center mb-4">
-              <Globe className="h-8 w-8 text-green-600 dark:text-green-400 mr-3" />
+              <Globe className="h-8 w-8 text-chart-1 dark:text-green-400 mr-3" />
               <h3 className="text-xl font-semibold text-foreground">
                 Modern Standards
               </h3>

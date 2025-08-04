@@ -1,0 +1,27 @@
+{
+  "network": "hardhat",
+  "chainId": 1337,
+  "timestamp": "2025-08-03T11:41:11.361Z",
+  "mockUSDC": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+  "loyaltyToken": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+  "secondaryMarketplace": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+  "features": {
+    "primaryMarketplace": true,
+    "secondaryMarketplace": true,
+    "creatorRoyalties": true,
+    "platformFees": true,
+    "loyaltyBadges": true,
+    "ownershipTracking": true,
+    "purchaseHistory": true
+  },
+  "configuration": {
+    "defaultCreatorRoyalty": "5%",
+    "platformFee": "2.5%",
+    "loyaltyTiers": {
+      "bronze": "0.1 USDC",
+      "silver": "1.0 USDC",
+      "gold": "5.0 USDC",
+      "diamond": "10.0 USDC"
+    }
+  }
+}
