@@ -1,0 +1,7 @@
+{
+  "loyaltyToken": "0xf96104e59A6844904A59e24ed58d66396a425943",
+  "shopfront": "0x4733FA9d295973C53Eaa027894998B7CC364F0ca",
+  "network": "morphHolesky",
+  "chainId": 2810,
+  "paymentMethod": "ETH"
+}

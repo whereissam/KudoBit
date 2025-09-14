@@ -3,7 +3,7 @@ import { Users, Target, Lightbulb, Heart } from 'lucide-react'
 
 export const Route = createFileRoute('/about')({
   component: () => (
-    <div className="min-h-screen bg-gradient-to-br from-background to-muted">
+    <div className="min-h-screen bg-gradient-to-br from-background to-muted font-sans tracking-normal">
       <div className="container mx-auto px-4 py-16 max-w-4xl">
         <div className="text-center mb-16">
           <h1 className="text-4xl font-bold text-foreground mb-4">
@@ -15,10 +15,10 @@ export const Route = createFileRoute('/about')({
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 mb-16">
-          <div className="bg-card rounded-lg shadow-sm p-8">
+          <div className="bg-card rounded-lg shadow-md p-8">
             <div className="flex items-center mb-4">
-              <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg mr-3">
-                <Target className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+              <div className="p-2 bg-primary/10 rounded-lg mr-3">
+                <Target className="h-6 w-6 text-primary dark:text-blue-400" />
               </div>
               <h2 className="text-2xl font-semibold text-foreground">
                 Our Mission
@@ -31,10 +31,10 @@ export const Route = createFileRoute('/about')({
             </p>
           </div>
 
-          <div className="bg-card rounded-lg shadow-sm p-8">
+          <div className="bg-card rounded-lg shadow-md p-8">
             <div className="flex items-center mb-4">
-              <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg mr-3">
-                <Lightbulb className="h-6 w-6 text-green-600 dark:text-green-400" />
+              <div className="p-2 bg-chart-1/10 dark:bg-green-900/30 rounded-lg mr-3">
+                <Lightbulb className="h-6 w-6 text-chart-1 dark:text-green-400" />
               </div>
               <h2 className="text-2xl font-semibold text-foreground">
                 Philosophy
@@ -50,8 +50,8 @@ export const Route = createFileRoute('/about')({
 
         <div className="bg-card rounded-lg shadow-sm p-8 mb-16">
           <div className="flex items-center mb-6">
-            <div className="p-2 bg-purple-100 dark:bg-purple-900/30 rounded-lg mr-3">
-              <Users className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+            <div className="p-2 bg-chart-3/10 dark:bg-purple-900/30 rounded-lg mr-3">
+              <Users className="h-6 w-6 text-chart-3 dark:text-purple-400" />
             </div>
             <h2 className="text-2xl font-semibold text-foreground">
               Perfect For

@@ -5,9 +5,15 @@ require("dotenv").config();
 module.exports = {
   paths: {
     sources: "./contracts",
+<<<<<<< HEAD:blockchain/hardhat.config.cjs
     tests: "./test",
     cache: "./cache",
     artifacts: "./artifacts"
+=======
+    tests: "./tests",
+    cache: "./build/cache",
+    artifacts: "./build/artifacts"
+>>>>>>> refs/remotes/origin/main:hardhat.config.cjs
   },
   solidity: {
     version: "0.8.27",
@@ -16,6 +22,7 @@ module.exports = {
         enabled: true,
         runs: 200,
       },
+      viaIR: true,
     },
   },
   networks: {
