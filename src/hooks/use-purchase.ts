@@ -1,7 +1,8 @@
 import { useState, useCallback, useMemo } from 'react'
-import { useAccount, useWriteContract, useWaitForTransactionReceipt, useReadContract } from 'wagmi'
+import { useAccount, useWriteContract, useWaitForTransactionReceipt, useReadContract, useChainId } from 'wagmi'
 import toast from 'react-hot-toast'
 import { CONTRACTS, MOCK_USDC_ABI, GUMROAD_CORE_ABI } from '@/lib/contracts'
+import { getChainById } from '@/lib/wagmi'
 
 export type PurchaseState = 'idle' | 'approving' | 'purchasing' | 'success'
 
@@ -14,6 +15,7 @@ export interface PurchaseFlow {
 export function usePurchase() {
   const { address } = useAccount()
   const [flow, setFlow] = useState<PurchaseFlow>({ state: 'idle' })
+  const chainId = useChainId()
   
   const { writeContract, data: txHash, isPending } = useWriteContract()
   const { isSuccess, isError } = useWaitForTransactionReceipt({ hash: txHash })
@@ -23,6 +25,8 @@ export function usePurchase() {
     abi: MOCK_USDC_ABI,
     functionName: 'balanceOf',
     args: address ? [address] : undefined,
+    chainId,
+    account: address,
   })
 
   const { data: allowance } = useReadContract({
@@ -30,6 +34,8 @@ export function usePurchase() {
     abi: MOCK_USDC_ABI,
     functionName: 'allowance',
     args: address ? [address, CONTRACTS.gumroadCore] : undefined,
+    chainId,
+    account: address,
   })
 
   const purchase = useCallback(async (productId: number, price: bigint) => {
@@ -53,6 +59,8 @@ export function usePurchase() {
           address: CONTRACTS.mockUSDC,
           abi: MOCK_USDC_ABI,
           functionName: 'approve',
+          chain: getChainById(chainId),
+          account: address,
           args: [CONTRACTS.gumroadCore, price],
         })
       } else {
@@ -63,6 +71,8 @@ export function usePurchase() {
           address: CONTRACTS.gumroadCore,
           abi: GUMROAD_CORE_ABI,
           functionName: 'purchaseProduct',
+          chain: getChainById(chainId),
+          account: address,
           args: [BigInt(productId), CONTRACTS.mockUSDC],
         })
       }
@@ -73,7 +83,7 @@ export function usePurchase() {
       setFlow({ state: 'idle', error: message })
       toast.error(message)
     }
-  }, [address, usdcBalance, allowance, writeContract])
+  }, [address, usdcBalance, allowance, writeContract, chainId])
 
   // Handle transaction results
   if (isSuccess) {
@@ -86,6 +96,8 @@ export function usePurchase() {
           address: CONTRACTS.gumroadCore,
           abi: GUMROAD_CORE_ABI,
           functionName: 'purchaseProduct',
+          chain: getChainById(chainId),
+          account: address,
           args: [BigInt(flow.currentProductId), CONTRACTS.mockUSDC],
         })
       }

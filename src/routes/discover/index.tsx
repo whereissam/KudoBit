@@ -319,7 +319,7 @@ function ProductCard({
             </div>
             <div className="flex-1">
               <div className="flex items-start justify-between mb-2">
-                <Link to="/product/$id" params={{ id: productId.toString() }}>
+                <Link to={`/product/${productId}`}>
                   <h3 className="font-semibold hover:text-morph-green-600 transition-colors">{name}</h3>
                 </Link>
                 <span className="text-lg font-bold text-morph-green-600">
@@ -333,7 +333,7 @@ function ProductCard({
                   {formatAddress(creator)}
                 </Badge>
                 <Button size="sm" asChild>
-                  <Link to="/product/$id" params={{ id: productId.toString() }}>
+                  <Link to={`/product/${productId}`}>
                     View Details
                   </Link>
                 </Button>
@@ -352,7 +352,7 @@ function ProductCard({
       transition={{ delay: index * 0.1 }}
     >
       <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
-        <Link to="/product/$id" params={{ id: productId.toString() }}>
+        <Link to={`/product/${productId}`}>
           <div className="aspect-video bg-gradient-to-br from-morph-green-50 to-morph-purple-50 dark:from-morph-green-900/20 dark:to-morph-purple-900/20 flex items-center justify-center relative group">
             <div className="text-6xl group-hover:scale-110 transition-transform">
               {getProductEmoji(productId)}
@@ -382,7 +382,7 @@ function ProductCard({
               {formatAddress(creator)}
             </Badge>
             <Button size="sm" asChild>
-              <Link to="/product/$id" params={{ id: productId.toString() }}>
+              <Link to={`/product/${productId}`}>
                 View
               </Link>
             </Button>

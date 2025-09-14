@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
-import { useAccount, useWriteContract } from 'wagmi'
+import { useAccount, useWriteContract, useChainId } from 'wagmi'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -20,6 +20,7 @@ import {
   Trophy
 } from 'lucide-react'
 import { CONTRACTS } from '@/lib/contracts'
+import { getChainById } from '@/lib/wagmi'
 import toast from 'react-hot-toast'
 
 export const Route = createFileRoute('/creator/create-perk')({
@@ -82,6 +83,7 @@ function CreatePerkPage() {
   const { address, isConnected } = useAccount()
   const navigate = useNavigate()
   const { writeContract, isPending } = useWriteContract()
+  const chainId = useChainId()
   
   const [formData, setFormData] = useState<PerkFormData>({
     name: '',
@@ -154,12 +156,14 @@ function CreatePerkPage() {
         address: perksRegistryAddress,
         abi: PERKS_REGISTRY_ABI,
         functionName: 'createPerk',
+        chain: getChainById(chainId),
+        account: address,
         args: [
           formData.name,
           formData.description,
           formData.perkType,
           BigInt(formData.requiredBadgeId),
-          formData.requiredBadgeContract,
+          formData.requiredBadgeContract as `0x${string}`,
           BigInt(formData.minimumBadgeAmount),
           metadata,
           BigInt(formData.usageLimit),

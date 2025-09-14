@@ -253,7 +253,7 @@ function WishlistPage() {
                             <div className="flex items-start justify-between mb-2">
                               <div>
                                 <h3 className="font-semibold text-lg hover:text-morph-green-600 transition-colors">
-                                  <Link to="/product/$id" params={{ id: item.productId.toString() }}>
+                                  <Link to={`/product/${item.productId}`}>
                                     {item.productName}
                                   </Link>
                                 </h3>
@@ -288,12 +288,12 @@ function WishlistPage() {
                               
                               <div className="flex gap-2">
                                 <Button variant="outline" size="sm" asChild>
-                                  <Link to="/product/$id" params={{ id: item.productId.toString() }}>
+                                  <Link to={`/product/${item.productId}`}>
                                     View
                                   </Link>
                                 </Button>
                                 <Button size="sm" asChild>
-                                  <Link to="/product/$id" params={{ id: item.productId.toString() }}>
+                                  <Link to={`/product/${item.productId}`}>
                                     <ShoppingCart className="h-3 w-3 mr-1" />
                                     Buy Now
                                   </Link>

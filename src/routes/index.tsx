@@ -257,7 +257,7 @@ function ProductCard({ productId, index }: { productId: number; index: number })
       transition={{ delay: index * 0.1 }}
     >
       <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 border-morph-green-200/20 hover:border-morph-green-300/40 hover:scale-[1.02]">
-        <Link to="/product/$id" params={{ id: productId.toString() }}>
+        <Link to={`/product/${productId}`}>
           <div className="aspect-video bg-gradient-to-br from-morph-green-50 to-morph-purple-50 dark:from-morph-green-900/20 dark:to-morph-purple-900/20 flex items-center justify-center relative group overflow-hidden">
             <div className="text-6xl group-hover:scale-110 transition-transform">
               {getProductEmoji(productId)}
@@ -296,7 +296,7 @@ function ProductCard({ productId, index }: { productId: number; index: number })
             disabled={!address}
             asChild
           >
-            <Link to="/product/$id" params={{ id: productId.toString() }}>
+            <Link to={`/product/${productId}`}>
               {!address ? 'Connect Wallet' : 'View Details'}
             </Link>
           </Button>

@@ -1,6 +1,6 @@
 import { readContract } from '@wagmi/core'
 import { config } from './wagmi'
-import { CONTRACTS, CREATOR_STORE_ABI, LOYALTY_TOKEN_ABI } from './contracts'
+import { CONTRACTS_EXTENDED, CREATOR_STORE_ABI, LOYALTY_TOKEN_ABI } from './contracts'
 import { formatUnits } from 'viem'
 
 export interface AnalyticsData {
@@ -160,9 +160,11 @@ export class AnalyticsService {
   private static async getAllProducts(): Promise<Product[]> {
     try {
       const products = await readContract(config, {
-        address: CONTRACTS.creatorStore,
+        address: CONTRACTS_EXTENDED.creatorStore,
         abi: CREATOR_STORE_ABI,
-        functionName: 'getAllProducts'
+        functionName: 'getAllProducts',
+        chainId: config.chains[0].id,
+        authorizationList: []
       }) as any[]
 
       return products.map(p => ({
@@ -180,19 +182,6 @@ export class AnalyticsService {
     }
   }
 
-  private static async getCreatorProducts(creatorAddress: string): Promise<Product[]> {
-    try {
-      // Get all products and filter by creator (this would ideally be done on-chain)
-      const allProducts = await this.getAllProducts()
-      
-      // For now, return all products as we don't have creator filtering on-chain
-      // In a real implementation, you'd have a mapping of creators to their products
-      return allProducts
-    } catch (error) {
-      console.error('Error fetching creator products:', error)
-      return []
-    }
-  }
 
   private static async getBackendAnalytics(creatorAddress: string): Promise<{
     productSales: Record<string, number>
@@ -254,10 +243,12 @@ export class AnalyticsService {
   private static async getBadgeBalance(userAddress: string, badgeId: number): Promise<number> {
     try {
       const balance = await readContract(config, {
-        address: CONTRACTS.loyaltyToken,
+        address: CONTRACTS_EXTENDED.loyaltyToken,
         abi: LOYALTY_TOKEN_ABI,
         functionName: 'balanceOf',
-        args: [userAddress as `0x${string}`, BigInt(badgeId)]
+        args: [userAddress as `0x${string}`, BigInt(badgeId)],
+        chainId: config.chains[0].id,
+        authorizationList: []
       }) as bigint
 
       return Number(balance)
@@ -270,10 +261,12 @@ export class AnalyticsService {
   static async getUserPurchases(userAddress: string): Promise<number[]> {
     try {
       const purchases = await readContract(config, {
-        address: CONTRACTS.creatorStore,
+        address: CONTRACTS_EXTENDED.creatorStore,
         abi: CREATOR_STORE_ABI,
         functionName: 'getUserPurchases',
-        args: [userAddress as `0x${string}`]
+        args: [userAddress as `0x${string}`],
+        chainId: config.chains[0].id,
+        authorizationList: []
       }) as bigint[]
 
       return purchases.map(p => Number(p))

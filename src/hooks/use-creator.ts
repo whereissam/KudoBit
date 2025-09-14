@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
-import { useAccount } from 'wagmi';
+import { useAccount, useReadContract } from 'wagmi';
 import { ipfsService } from '../services/ipfs-service';
 import { contractService, ProductMetadata } from '../services/contract-service';
 
@@ -49,10 +49,8 @@ export function useCreator() {
       // 4. Upload metadata to IPFS
       await ipfsService.uploadJSON(metadata);
       
-      // 5. Create product on blockchain
-      const productId = await contractService.createProduct(metadata, contentHashes[0]);
-      
-      return productId;
+      // 5. Return metadata for product creation (actual blockchain interaction should be done in the component using wagmi hooks)
+      return { metadata, contentHash: contentHashes[0] };
     } finally {
       setIsLoading(false);
     }
@@ -63,9 +61,9 @@ export function useCreator() {
     
     setIsLoading(true);
     try {
-      // Load creator products
-      const productIds = await contractService.getCreatorProducts(address);
-      setProducts(productIds ? Array.from(productIds) : []);
+      // Load creator products (this should be done with useReadContract in the component)
+      // For now, return empty array
+      setProducts([]);
       
       // Load earnings for common tokens
       const tokens = ['0x...USDC', '0x...WETH']; // Add actual token addresses

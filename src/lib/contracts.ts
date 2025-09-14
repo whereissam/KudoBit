@@ -281,3 +281,115 @@ export const CREATOR_REGISTRY_ABI = [
     "type": "function"
   }
 ] as const
+
+// Creator Store ABI (for the remote files that import it)
+export const CREATOR_STORE_ABI = [
+  {
+    "inputs": [],
+    "name": "getAllProducts",
+    "outputs": [
+      {
+        "components": [
+          {"internalType": "uint256", "name": "id", "type": "uint256"},
+          {"internalType": "string", "name": "name", "type": "string"},
+          {"internalType": "string", "name": "description", "type": "string"},
+          {"internalType": "string", "name": "ipfsContentHash", "type": "string"},
+          {"internalType": "uint256", "name": "priceInUSDC", "type": "uint256"},
+          {"internalType": "bool", "name": "isActive", "type": "bool"},
+          {"internalType": "uint256", "name": "loyaltyBadgeId", "type": "uint256"}
+        ],
+        "internalType": "struct CreatorStore.Product[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{"internalType": "uint256", "name": "productId", "type": "uint256"}],
+    "name": "buyItem",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [{"internalType": "address", "name": "", "type": "address"}],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{"internalType": "address", "name": "user", "type": "address"}],
+    "name": "getUserPurchases",
+    "outputs": [{"internalType": "uint256[]", "name": "", "type": "uint256[]"}],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdrawFunds",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+] as const
+
+// Secondary Marketplace ABI (for the remote files that import it)  
+export const SECONDARY_MARKETPLACE_ABI = [
+  {
+    "inputs": [
+      {"internalType": "uint256", "name": "tokenId", "type": "uint256"},
+      {"internalType": "uint256", "name": "price", "type": "uint256"}
+    ],
+    "name": "listItem",
+    "outputs": [],
+    "stateMutability": "nonpayable", 
+    "type": "function"
+  },
+  {
+    "inputs": [{"internalType": "uint256", "name": "listingId", "type": "uint256"}],
+    "name": "buyItem",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {"internalType": "uint256", "name": "tokenId", "type": "uint256"},
+      {"internalType": "uint256", "name": "price", "type": "uint256"}
+    ],
+    "name": "listForResale",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{"internalType": "uint256", "name": "listingId", "type": "uint256"}],
+    "name": "buyResaleItem",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [{"internalType": "uint256", "name": "listingId", "type": "uint256"}],
+    "name": "cancelResaleListing",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+] as const
+
+// Add missing contract addresses
+export const CONTRACTS_EXTENDED = {
+  ...CONTRACTS,
+  creatorStore: CONTRACTS.shopfront, // Use shopfront as fallback
+  secondaryMarketplace: CONTRACTS.shopfront, // Use shopfront as fallback
+}
+
+// Chain-specific contract addresses (for the remote files that import getContracts)
+export const getContracts = (_chainId: number) => {
+  // Default to current CONTRACTS for all chains
+  return CONTRACTS_EXTENDED
+}

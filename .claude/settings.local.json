@@ -57,7 +57,8 @@
       "WebSearch",
       "Bash(timeout 30 bun run dev)",
       "Bash(VITE_CONFIG=vite.config.minimal.ts bun run vite)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ],
     "deny": []
   }

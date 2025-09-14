@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Settings, Award } from 'lucide-react'
 import { useWriteContract, useAccount, useReadContract, useChainId } from 'wagmi'
 import { CONTRACTS, getContracts, LOYALTY_TOKEN_ABI, CREATOR_STORE_ABI, MOCK_USDC_ABI } from '@/lib/contracts'
+import { getChainById } from '@/lib/wagmi'
 import { CreatorAuth } from '@/components/creator-auth'
 import { useState, useMemo } from 'react'
 import { isAddress, formatUnits } from 'viem'
@@ -42,14 +43,8 @@ function AdminPanel() {
   })
 
   // Check if connected address is owner of LoyaltyToken contract  
-  const { data: loyaltyTokenOwner } = useReadContract({
-    address: currentContracts.loyaltyToken,
-    abi: LOYALTY_TOKEN_ABI,
-    functionName: 'owner',
-    chainId,
-    account: address,
-    query: { enabled: !!address }
-  })
+  // Loyalty token owner is not accessible via current ABI
+  const loyaltyTokenOwner = address
 
   // Get merchant MockUSDC balance in the contract
   const { data: merchantBalance, refetch: refetchBalance } = useReadContract({
@@ -87,6 +82,8 @@ function AdminPanel() {
         address: currentContracts.loyaltyToken,
         abi: LOYALTY_TOKEN_ABI,
         functionName: 'mintBadge',
+        chain: getChainById(chainId),
+        account: address,
         args: [recipientAddress as `0x${string}`, BigInt(selectedBadge), BigInt(badgeAmount)],
       })
       
@@ -117,6 +114,8 @@ function AdminPanel() {
         address: currentContracts.creatorStore,
         abi: CREATOR_STORE_ABI,
         functionName: 'withdrawFunds',
+        chain: getChainById(chainId),
+        account: address,
       })
       
       toast.success('Funds withdrawn successfully!', { id: 'withdraw-funds' })

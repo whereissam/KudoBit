@@ -1,7 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
-import { useAccount } from 'wagmi'
-import { useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
+import { useAccount, useWriteContract, useWaitForTransactionReceipt, useChainId } from 'wagmi'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -25,6 +24,7 @@ import { motion } from 'framer-motion'
 import toast from 'react-hot-toast'
 import { CONTRACTS, PRODUCT_NFT_ABI } from '@/lib/contracts'
 import { ipfsService } from '@/services/ipfs-service'
+import { getChainById } from '@/lib/wagmi'
 import { parseUnits } from 'viem'
 
 export const Route = createFileRoute('/creator/products/new')({
@@ -60,6 +60,7 @@ const STEPS = [
 function CreateProduct() {
   const { address, isConnected } = useAccount()
   const navigate = useNavigate()
+  const chainId = useChainId()
   
   const [currentStep, setCurrentStep] = useState(1)
   const [isUploading, setIsUploading] = useState(false)
@@ -163,6 +164,8 @@ function CreateProduct() {
         address: CONTRACTS.productNFT,
         abi: PRODUCT_NFT_ABI,
         functionName: 'mintProduct',
+        chain: getChainById(chainId),
+        account: address,
         args: [
           product.name,
           product.description,

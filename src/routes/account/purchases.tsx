@@ -223,7 +223,7 @@ function PurchaseHistory() {
                         {/* Actions */}
                         <div className="flex flex-wrap gap-2">
                           <Button size="sm" asChild>
-                            <Link to="/product/$id" params={{ id: purchase.productId.toString() }}>
+                            <Link to={`/product/${purchase.productId}`}>
                               <ExternalLink className="h-3 w-3 mr-1" />
                               View Product
                             </Link>

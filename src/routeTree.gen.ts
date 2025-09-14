@@ -9,8 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as QuestsRouteImport } from './routes/quests'
+import { Route as PurchasesRouteImport } from './routes/purchases'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as LoyaltyRouteImport } from './routes/loyalty'
+import { Route as IndexMinimalRouteImport } from './routes/index-minimal'
 import { Route as FeaturesRouteImport } from './routes/features'
+import { Route as CommunityRouteImport } from './routes/community'
+import { Route as AffiliateRouteImport } from './routes/affiliate'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -18,23 +25,74 @@ import { Route as DiscoverIndexRouteImport } from './routes/discover/index'
 import { Route as CreatorIndexRouteImport } from './routes/creator/index'
 import { Route as AccountIndexRouteImport } from './routes/account/index'
 import { Route as ProductIdRouteImport } from './routes/product/$id'
+import { Route as PerksDiscoverRouteImport } from './routes/perks.discover'
+import { Route as MarketplaceSecondaryRouteImport } from './routes/marketplace.secondary'
+import { Route as MarketplaceDiscoverRouteImport } from './routes/marketplace.discover'
+import { Route as DaoTreasuryRouteImport } from './routes/dao.treasury'
+import { Route as DaoDashboardRouteImport } from './routes/dao.dashboard'
+import { Route as DaoCreateProposalRouteImport } from './routes/dao.create-proposal'
 import { Route as CreatorRegisterRouteImport } from './routes/creator/register'
+import { Route as CreatorProfileRouteImport } from './routes/creator.profile'
 import { Route as CreatorProductsRouteImport } from './routes/creator/products'
+import { Route as CreatorOnboardingRouteImport } from './routes/creator.onboarding'
 import { Route as CreatorEarningsRouteImport } from './routes/creator/earnings'
+import { Route as CreatorDashboardRouteImport } from './routes/creator.dashboard'
+import { Route as CreatorCreateProductRouteImport } from './routes/creator.create-product'
+import { Route as CreatorCreatePerkRouteImport } from './routes/creator.create-perk'
 import { Route as CreatorAnalyticsRouteImport } from './routes/creator/analytics'
+import { Route as CollaborativeDashboardRouteImport } from './routes/collaborative.dashboard'
+import { Route as CollaborativeCreateRouteImport } from './routes/collaborative.create'
 import { Route as CheckoutIdRouteImport } from './routes/checkout/$id'
+import { Route as AnalyticsPublicRouteImport } from './routes/analytics.public'
+import { Route as AnalyticsDashboardRouteImport } from './routes/analytics.dashboard'
 import { Route as AccountWishlistRouteImport } from './routes/account/wishlist'
 import { Route as AccountPurchasesRouteImport } from './routes/account/purchases'
 import { Route as CreatorProductsNewRouteImport } from './routes/creator/products/new'
+import { Route as CollaborativeProductIdRouteImport } from './routes/collaborative.product.$id'
 
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuestsRoute = QuestsRouteImport.update({
+  id: '/quests',
+  path: '/quests',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PurchasesRoute = PurchasesRouteImport.update({
+  id: '/purchases',
+  path: '/purchases',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoyaltyRoute = LoyaltyRouteImport.update({
   id: '/loyalty',
   path: '/loyalty',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IndexMinimalRoute = IndexMinimalRouteImport.update({
+  id: '/index-minimal',
+  path: '/index-minimal',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FeaturesRoute = FeaturesRouteImport.update({
   id: '/features',
   path: '/features',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommunityRoute = CommunityRouteImport.update({
+  id: '/community',
+  path: '/community',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AffiliateRoute = AffiliateRouteImport.update({
+  id: '/affiliate',
+  path: '/affiliate',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -72,9 +130,44 @@ const ProductIdRoute = ProductIdRouteImport.update({
   path: '/product/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PerksDiscoverRoute = PerksDiscoverRouteImport.update({
+  id: '/perks/discover',
+  path: '/perks/discover',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarketplaceSecondaryRoute = MarketplaceSecondaryRouteImport.update({
+  id: '/marketplace/secondary',
+  path: '/marketplace/secondary',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MarketplaceDiscoverRoute = MarketplaceDiscoverRouteImport.update({
+  id: '/marketplace/discover',
+  path: '/marketplace/discover',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DaoTreasuryRoute = DaoTreasuryRouteImport.update({
+  id: '/dao/treasury',
+  path: '/dao/treasury',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DaoDashboardRoute = DaoDashboardRouteImport.update({
+  id: '/dao/dashboard',
+  path: '/dao/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DaoCreateProposalRoute = DaoCreateProposalRouteImport.update({
+  id: '/dao/create-proposal',
+  path: '/dao/create-proposal',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CreatorRegisterRoute = CreatorRegisterRouteImport.update({
   id: '/creator/register',
   path: '/creator/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreatorProfileRoute = CreatorProfileRouteImport.update({
+  id: '/creator/profile',
+  path: '/creator/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CreatorProductsRoute = CreatorProductsRouteImport.update({
@@ -82,9 +175,29 @@ const CreatorProductsRoute = CreatorProductsRouteImport.update({
   path: '/creator/products',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CreatorOnboardingRoute = CreatorOnboardingRouteImport.update({
+  id: '/creator/onboarding',
+  path: '/creator/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CreatorEarningsRoute = CreatorEarningsRouteImport.update({
   id: '/creator/earnings',
   path: '/creator/earnings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreatorDashboardRoute = CreatorDashboardRouteImport.update({
+  id: '/creator/dashboard',
+  path: '/creator/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreatorCreateProductRoute = CreatorCreateProductRouteImport.update({
+  id: '/creator/create-product',
+  path: '/creator/create-product',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreatorCreatePerkRoute = CreatorCreatePerkRouteImport.update({
+  id: '/creator/create-perk',
+  path: '/creator/create-perk',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CreatorAnalyticsRoute = CreatorAnalyticsRouteImport.update({
@@ -92,9 +205,29 @@ const CreatorAnalyticsRoute = CreatorAnalyticsRouteImport.update({
   path: '/creator/analytics',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CollaborativeDashboardRoute = CollaborativeDashboardRouteImport.update({
+  id: '/collaborative/dashboard',
+  path: '/collaborative/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CollaborativeCreateRoute = CollaborativeCreateRouteImport.update({
+  id: '/collaborative/create',
+  path: '/collaborative/create',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CheckoutIdRoute = CheckoutIdRouteImport.update({
   id: '/checkout/$id',
   path: '/checkout/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnalyticsPublicRoute = AnalyticsPublicRouteImport.update({
+  id: '/analytics/public',
+  path: '/analytics/public',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnalyticsDashboardRoute = AnalyticsDashboardRouteImport.update({
+  id: '/analytics/dashboard',
+  path: '/analytics/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AccountWishlistRoute = AccountWishlistRouteImport.update({
@@ -112,43 +245,94 @@ const CreatorProductsNewRoute = CreatorProductsNewRouteImport.update({
   path: '/new',
   getParentRoute: () => CreatorProductsRoute,
 } as any)
+const CollaborativeProductIdRoute = CollaborativeProductIdRouteImport.update({
+  id: '/collaborative/product/$id',
+  path: '/collaborative/product/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
+  '/affiliate': typeof AffiliateRoute
+  '/community': typeof CommunityRoute
   '/features': typeof FeaturesRoute
+  '/index-minimal': typeof IndexMinimalRoute
   '/loyalty': typeof LoyaltyRoute
+  '/profile': typeof ProfileRoute
+  '/purchases': typeof PurchasesRoute
+  '/quests': typeof QuestsRoute
+  '/register': typeof RegisterRoute
   '/account/purchases': typeof AccountPurchasesRoute
   '/account/wishlist': typeof AccountWishlistRoute
+  '/analytics/dashboard': typeof AnalyticsDashboardRoute
+  '/analytics/public': typeof AnalyticsPublicRoute
   '/checkout/$id': typeof CheckoutIdRoute
+  '/collaborative/create': typeof CollaborativeCreateRoute
+  '/collaborative/dashboard': typeof CollaborativeDashboardRoute
   '/creator/analytics': typeof CreatorAnalyticsRoute
+  '/creator/create-perk': typeof CreatorCreatePerkRoute
+  '/creator/create-product': typeof CreatorCreateProductRoute
+  '/creator/dashboard': typeof CreatorDashboardRoute
   '/creator/earnings': typeof CreatorEarningsRoute
+  '/creator/onboarding': typeof CreatorOnboardingRoute
   '/creator/products': typeof CreatorProductsRouteWithChildren
+  '/creator/profile': typeof CreatorProfileRoute
   '/creator/register': typeof CreatorRegisterRoute
+  '/dao/create-proposal': typeof DaoCreateProposalRoute
+  '/dao/dashboard': typeof DaoDashboardRoute
+  '/dao/treasury': typeof DaoTreasuryRoute
+  '/marketplace/discover': typeof MarketplaceDiscoverRoute
+  '/marketplace/secondary': typeof MarketplaceSecondaryRoute
+  '/perks/discover': typeof PerksDiscoverRoute
   '/product/$id': typeof ProductIdRoute
   '/account': typeof AccountIndexRoute
   '/creator': typeof CreatorIndexRoute
   '/discover': typeof DiscoverIndexRoute
+  '/collaborative/product/$id': typeof CollaborativeProductIdRoute
   '/creator/products/new': typeof CreatorProductsNewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
+  '/affiliate': typeof AffiliateRoute
+  '/community': typeof CommunityRoute
   '/features': typeof FeaturesRoute
+  '/index-minimal': typeof IndexMinimalRoute
   '/loyalty': typeof LoyaltyRoute
+  '/profile': typeof ProfileRoute
+  '/purchases': typeof PurchasesRoute
+  '/quests': typeof QuestsRoute
+  '/register': typeof RegisterRoute
   '/account/purchases': typeof AccountPurchasesRoute
   '/account/wishlist': typeof AccountWishlistRoute
+  '/analytics/dashboard': typeof AnalyticsDashboardRoute
+  '/analytics/public': typeof AnalyticsPublicRoute
   '/checkout/$id': typeof CheckoutIdRoute
+  '/collaborative/create': typeof CollaborativeCreateRoute
+  '/collaborative/dashboard': typeof CollaborativeDashboardRoute
   '/creator/analytics': typeof CreatorAnalyticsRoute
+  '/creator/create-perk': typeof CreatorCreatePerkRoute
+  '/creator/create-product': typeof CreatorCreateProductRoute
+  '/creator/dashboard': typeof CreatorDashboardRoute
   '/creator/earnings': typeof CreatorEarningsRoute
+  '/creator/onboarding': typeof CreatorOnboardingRoute
   '/creator/products': typeof CreatorProductsRouteWithChildren
+  '/creator/profile': typeof CreatorProfileRoute
   '/creator/register': typeof CreatorRegisterRoute
+  '/dao/create-proposal': typeof DaoCreateProposalRoute
+  '/dao/dashboard': typeof DaoDashboardRoute
+  '/dao/treasury': typeof DaoTreasuryRoute
+  '/marketplace/discover': typeof MarketplaceDiscoverRoute
+  '/marketplace/secondary': typeof MarketplaceSecondaryRoute
+  '/perks/discover': typeof PerksDiscoverRoute
   '/product/$id': typeof ProductIdRoute
   '/account': typeof AccountIndexRoute
   '/creator': typeof CreatorIndexRoute
   '/discover': typeof DiscoverIndexRoute
+  '/collaborative/product/$id': typeof CollaborativeProductIdRoute
   '/creator/products/new': typeof CreatorProductsNewRoute
 }
 export interface FileRoutesById {
@@ -156,19 +340,42 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
+  '/affiliate': typeof AffiliateRoute
+  '/community': typeof CommunityRoute
   '/features': typeof FeaturesRoute
+  '/index-minimal': typeof IndexMinimalRoute
   '/loyalty': typeof LoyaltyRoute
+  '/profile': typeof ProfileRoute
+  '/purchases': typeof PurchasesRoute
+  '/quests': typeof QuestsRoute
+  '/register': typeof RegisterRoute
   '/account/purchases': typeof AccountPurchasesRoute
   '/account/wishlist': typeof AccountWishlistRoute
+  '/analytics/dashboard': typeof AnalyticsDashboardRoute
+  '/analytics/public': typeof AnalyticsPublicRoute
   '/checkout/$id': typeof CheckoutIdRoute
+  '/collaborative/create': typeof CollaborativeCreateRoute
+  '/collaborative/dashboard': typeof CollaborativeDashboardRoute
   '/creator/analytics': typeof CreatorAnalyticsRoute
+  '/creator/create-perk': typeof CreatorCreatePerkRoute
+  '/creator/create-product': typeof CreatorCreateProductRoute
+  '/creator/dashboard': typeof CreatorDashboardRoute
   '/creator/earnings': typeof CreatorEarningsRoute
+  '/creator/onboarding': typeof CreatorOnboardingRoute
   '/creator/products': typeof CreatorProductsRouteWithChildren
+  '/creator/profile': typeof CreatorProfileRoute
   '/creator/register': typeof CreatorRegisterRoute
+  '/dao/create-proposal': typeof DaoCreateProposalRoute
+  '/dao/dashboard': typeof DaoDashboardRoute
+  '/dao/treasury': typeof DaoTreasuryRoute
+  '/marketplace/discover': typeof MarketplaceDiscoverRoute
+  '/marketplace/secondary': typeof MarketplaceSecondaryRoute
+  '/perks/discover': typeof PerksDiscoverRoute
   '/product/$id': typeof ProductIdRoute
   '/account/': typeof AccountIndexRoute
   '/creator/': typeof CreatorIndexRoute
   '/discover/': typeof DiscoverIndexRoute
+  '/collaborative/product/$id': typeof CollaborativeProductIdRoute
   '/creator/products/new': typeof CreatorProductsNewRoute
 }
 export interface FileRouteTypes {
@@ -177,57 +384,126 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/admin'
+    | '/affiliate'
+    | '/community'
     | '/features'
+    | '/index-minimal'
     | '/loyalty'
+    | '/profile'
+    | '/purchases'
+    | '/quests'
+    | '/register'
     | '/account/purchases'
     | '/account/wishlist'
+    | '/analytics/dashboard'
+    | '/analytics/public'
     | '/checkout/$id'
+    | '/collaborative/create'
+    | '/collaborative/dashboard'
     | '/creator/analytics'
+    | '/creator/create-perk'
+    | '/creator/create-product'
+    | '/creator/dashboard'
     | '/creator/earnings'
+    | '/creator/onboarding'
     | '/creator/products'
+    | '/creator/profile'
     | '/creator/register'
+    | '/dao/create-proposal'
+    | '/dao/dashboard'
+    | '/dao/treasury'
+    | '/marketplace/discover'
+    | '/marketplace/secondary'
+    | '/perks/discover'
     | '/product/$id'
     | '/account'
     | '/creator'
     | '/discover'
+    | '/collaborative/product/$id'
     | '/creator/products/new'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
     | '/admin'
+    | '/affiliate'
+    | '/community'
     | '/features'
+    | '/index-minimal'
     | '/loyalty'
+    | '/profile'
+    | '/purchases'
+    | '/quests'
+    | '/register'
     | '/account/purchases'
     | '/account/wishlist'
+    | '/analytics/dashboard'
+    | '/analytics/public'
     | '/checkout/$id'
+    | '/collaborative/create'
+    | '/collaborative/dashboard'
     | '/creator/analytics'
+    | '/creator/create-perk'
+    | '/creator/create-product'
+    | '/creator/dashboard'
     | '/creator/earnings'
+    | '/creator/onboarding'
     | '/creator/products'
+    | '/creator/profile'
     | '/creator/register'
+    | '/dao/create-proposal'
+    | '/dao/dashboard'
+    | '/dao/treasury'
+    | '/marketplace/discover'
+    | '/marketplace/secondary'
+    | '/perks/discover'
     | '/product/$id'
     | '/account'
     | '/creator'
     | '/discover'
+    | '/collaborative/product/$id'
     | '/creator/products/new'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/admin'
+    | '/affiliate'
+    | '/community'
     | '/features'
+    | '/index-minimal'
     | '/loyalty'
+    | '/profile'
+    | '/purchases'
+    | '/quests'
+    | '/register'
     | '/account/purchases'
     | '/account/wishlist'
+    | '/analytics/dashboard'
+    | '/analytics/public'
     | '/checkout/$id'
+    | '/collaborative/create'
+    | '/collaborative/dashboard'
     | '/creator/analytics'
+    | '/creator/create-perk'
+    | '/creator/create-product'
+    | '/creator/dashboard'
     | '/creator/earnings'
+    | '/creator/onboarding'
     | '/creator/products'
+    | '/creator/profile'
     | '/creator/register'
+    | '/dao/create-proposal'
+    | '/dao/dashboard'
+    | '/dao/treasury'
+    | '/marketplace/discover'
+    | '/marketplace/secondary'
+    | '/perks/discover'
     | '/product/$id'
     | '/account/'
     | '/creator/'
     | '/discover/'
+    | '/collaborative/product/$id'
     | '/creator/products/new'
   fileRoutesById: FileRoutesById
 }
@@ -235,23 +511,74 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AdminRoute: typeof AdminRoute
+  AffiliateRoute: typeof AffiliateRoute
+  CommunityRoute: typeof CommunityRoute
   FeaturesRoute: typeof FeaturesRoute
+  IndexMinimalRoute: typeof IndexMinimalRoute
   LoyaltyRoute: typeof LoyaltyRoute
+  ProfileRoute: typeof ProfileRoute
+  PurchasesRoute: typeof PurchasesRoute
+  QuestsRoute: typeof QuestsRoute
+  RegisterRoute: typeof RegisterRoute
   AccountPurchasesRoute: typeof AccountPurchasesRoute
   AccountWishlistRoute: typeof AccountWishlistRoute
+  AnalyticsDashboardRoute: typeof AnalyticsDashboardRoute
+  AnalyticsPublicRoute: typeof AnalyticsPublicRoute
   CheckoutIdRoute: typeof CheckoutIdRoute
+  CollaborativeCreateRoute: typeof CollaborativeCreateRoute
+  CollaborativeDashboardRoute: typeof CollaborativeDashboardRoute
   CreatorAnalyticsRoute: typeof CreatorAnalyticsRoute
+  CreatorCreatePerkRoute: typeof CreatorCreatePerkRoute
+  CreatorCreateProductRoute: typeof CreatorCreateProductRoute
+  CreatorDashboardRoute: typeof CreatorDashboardRoute
   CreatorEarningsRoute: typeof CreatorEarningsRoute
+  CreatorOnboardingRoute: typeof CreatorOnboardingRoute
   CreatorProductsRoute: typeof CreatorProductsRouteWithChildren
+  CreatorProfileRoute: typeof CreatorProfileRoute
   CreatorRegisterRoute: typeof CreatorRegisterRoute
+  DaoCreateProposalRoute: typeof DaoCreateProposalRoute
+  DaoDashboardRoute: typeof DaoDashboardRoute
+  DaoTreasuryRoute: typeof DaoTreasuryRoute
+  MarketplaceDiscoverRoute: typeof MarketplaceDiscoverRoute
+  MarketplaceSecondaryRoute: typeof MarketplaceSecondaryRoute
+  PerksDiscoverRoute: typeof PerksDiscoverRoute
   ProductIdRoute: typeof ProductIdRoute
   AccountIndexRoute: typeof AccountIndexRoute
   CreatorIndexRoute: typeof CreatorIndexRoute
   DiscoverIndexRoute: typeof DiscoverIndexRoute
+  CollaborativeProductIdRoute: typeof CollaborativeProductIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quests': {
+      id: '/quests'
+      path: '/quests'
+      fullPath: '/quests'
+      preLoaderRoute: typeof QuestsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/purchases': {
+      id: '/purchases'
+      path: '/purchases'
+      fullPath: '/purchases'
+      preLoaderRoute: typeof PurchasesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/loyalty': {
       id: '/loyalty'
       path: '/loyalty'
@@ -259,11 +586,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoyaltyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/index-minimal': {
+      id: '/index-minimal'
+      path: '/index-minimal'
+      fullPath: '/index-minimal'
+      preLoaderRoute: typeof IndexMinimalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/features': {
       id: '/features'
       path: '/features'
       fullPath: '/features'
       preLoaderRoute: typeof FeaturesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/community': {
+      id: '/community'
+      path: '/community'
+      fullPath: '/community'
+      preLoaderRoute: typeof CommunityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/affiliate': {
+      id: '/affiliate'
+      path: '/affiliate'
+      fullPath: '/affiliate'
+      preLoaderRoute: typeof AffiliateRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -315,11 +663,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/perks/discover': {
+      id: '/perks/discover'
+      path: '/perks/discover'
+      fullPath: '/perks/discover'
+      preLoaderRoute: typeof PerksDiscoverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/marketplace/secondary': {
+      id: '/marketplace/secondary'
+      path: '/marketplace/secondary'
+      fullPath: '/marketplace/secondary'
+      preLoaderRoute: typeof MarketplaceSecondaryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/marketplace/discover': {
+      id: '/marketplace/discover'
+      path: '/marketplace/discover'
+      fullPath: '/marketplace/discover'
+      preLoaderRoute: typeof MarketplaceDiscoverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dao/treasury': {
+      id: '/dao/treasury'
+      path: '/dao/treasury'
+      fullPath: '/dao/treasury'
+      preLoaderRoute: typeof DaoTreasuryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dao/dashboard': {
+      id: '/dao/dashboard'
+      path: '/dao/dashboard'
+      fullPath: '/dao/dashboard'
+      preLoaderRoute: typeof DaoDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dao/create-proposal': {
+      id: '/dao/create-proposal'
+      path: '/dao/create-proposal'
+      fullPath: '/dao/create-proposal'
+      preLoaderRoute: typeof DaoCreateProposalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/creator/register': {
       id: '/creator/register'
       path: '/creator/register'
       fullPath: '/creator/register'
       preLoaderRoute: typeof CreatorRegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/creator/profile': {
+      id: '/creator/profile'
+      path: '/creator/profile'
+      fullPath: '/creator/profile'
+      preLoaderRoute: typeof CreatorProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/creator/products': {
@@ -329,11 +726,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CreatorProductsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/creator/onboarding': {
+      id: '/creator/onboarding'
+      path: '/creator/onboarding'
+      fullPath: '/creator/onboarding'
+      preLoaderRoute: typeof CreatorOnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/creator/earnings': {
       id: '/creator/earnings'
       path: '/creator/earnings'
       fullPath: '/creator/earnings'
       preLoaderRoute: typeof CreatorEarningsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/creator/dashboard': {
+      id: '/creator/dashboard'
+      path: '/creator/dashboard'
+      fullPath: '/creator/dashboard'
+      preLoaderRoute: typeof CreatorDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/creator/create-product': {
+      id: '/creator/create-product'
+      path: '/creator/create-product'
+      fullPath: '/creator/create-product'
+      preLoaderRoute: typeof CreatorCreateProductRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/creator/create-perk': {
+      id: '/creator/create-perk'
+      path: '/creator/create-perk'
+      fullPath: '/creator/create-perk'
+      preLoaderRoute: typeof CreatorCreatePerkRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/creator/analytics': {
@@ -343,11 +768,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CreatorAnalyticsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/collaborative/dashboard': {
+      id: '/collaborative/dashboard'
+      path: '/collaborative/dashboard'
+      fullPath: '/collaborative/dashboard'
+      preLoaderRoute: typeof CollaborativeDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/collaborative/create': {
+      id: '/collaborative/create'
+      path: '/collaborative/create'
+      fullPath: '/collaborative/create'
+      preLoaderRoute: typeof CollaborativeCreateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/checkout/$id': {
       id: '/checkout/$id'
       path: '/checkout/$id'
       fullPath: '/checkout/$id'
       preLoaderRoute: typeof CheckoutIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/analytics/public': {
+      id: '/analytics/public'
+      path: '/analytics/public'
+      fullPath: '/analytics/public'
+      preLoaderRoute: typeof AnalyticsPublicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/analytics/dashboard': {
+      id: '/analytics/dashboard'
+      path: '/analytics/dashboard'
+      fullPath: '/analytics/dashboard'
+      preLoaderRoute: typeof AnalyticsDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/account/wishlist': {
@@ -371,6 +824,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CreatorProductsNewRouteImport
       parentRoute: typeof CreatorProductsRoute
     }
+    '/collaborative/product/$id': {
+      id: '/collaborative/product/$id'
+      path: '/collaborative/product/$id'
+      fullPath: '/collaborative/product/$id'
+      preLoaderRoute: typeof CollaborativeProductIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -390,19 +850,42 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AdminRoute: AdminRoute,
+  AffiliateRoute: AffiliateRoute,
+  CommunityRoute: CommunityRoute,
   FeaturesRoute: FeaturesRoute,
+  IndexMinimalRoute: IndexMinimalRoute,
   LoyaltyRoute: LoyaltyRoute,
+  ProfileRoute: ProfileRoute,
+  PurchasesRoute: PurchasesRoute,
+  QuestsRoute: QuestsRoute,
+  RegisterRoute: RegisterRoute,
   AccountPurchasesRoute: AccountPurchasesRoute,
   AccountWishlistRoute: AccountWishlistRoute,
+  AnalyticsDashboardRoute: AnalyticsDashboardRoute,
+  AnalyticsPublicRoute: AnalyticsPublicRoute,
   CheckoutIdRoute: CheckoutIdRoute,
+  CollaborativeCreateRoute: CollaborativeCreateRoute,
+  CollaborativeDashboardRoute: CollaborativeDashboardRoute,
   CreatorAnalyticsRoute: CreatorAnalyticsRoute,
+  CreatorCreatePerkRoute: CreatorCreatePerkRoute,
+  CreatorCreateProductRoute: CreatorCreateProductRoute,
+  CreatorDashboardRoute: CreatorDashboardRoute,
   CreatorEarningsRoute: CreatorEarningsRoute,
+  CreatorOnboardingRoute: CreatorOnboardingRoute,
   CreatorProductsRoute: CreatorProductsRouteWithChildren,
+  CreatorProfileRoute: CreatorProfileRoute,
   CreatorRegisterRoute: CreatorRegisterRoute,
+  DaoCreateProposalRoute: DaoCreateProposalRoute,
+  DaoDashboardRoute: DaoDashboardRoute,
+  DaoTreasuryRoute: DaoTreasuryRoute,
+  MarketplaceDiscoverRoute: MarketplaceDiscoverRoute,
+  MarketplaceSecondaryRoute: MarketplaceSecondaryRoute,
+  PerksDiscoverRoute: PerksDiscoverRoute,
   ProductIdRoute: ProductIdRoute,
   AccountIndexRoute: AccountIndexRoute,
   CreatorIndexRoute: CreatorIndexRoute,
   DiscoverIndexRoute: DiscoverIndexRoute,
+  CollaborativeProductIdRoute: CollaborativeProductIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

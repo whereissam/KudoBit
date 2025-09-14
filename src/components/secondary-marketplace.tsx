@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react'
 import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt, useChainId } from 'wagmi'
 import { parseUnits, formatUnits } from 'viem'
 import { Button } from '@/components/ui/button'
+import { getChainById } from '../lib/wagmi'
 import { CONTRACTS, getContracts, SECONDARY_MARKETPLACE_ABI, MOCK_USDC_ABI } from '../lib/contracts'
 
 interface Product {
@@ -39,38 +40,48 @@ export function SecondaryMarketplace() {
   const { writeContract, data: hash, isPending } = useWriteContract()
   const { isLoading: isConfirming } = useWaitForTransactionReceipt({ hash })
 
-  // Read contract data
+  // Read contract data with explicit typing
   const { data: products } = useReadContract({
     address: currentContracts.secondaryMarketplace,
     abi: SECONDARY_MARKETPLACE_ABI,
     functionName: 'getAllProducts',
-  })
+    chainId,
+    account: address,
+  }) as { data: Product[] | undefined }
 
   const { data: resaleListings } = useReadContract({
     address: currentContracts.secondaryMarketplace,
     abi: SECONDARY_MARKETPLACE_ABI,
     functionName: 'getAllActiveResaleListings',
-  })
+    chainId,
+    account: address,
+  }) as { data: ResaleListing[] | undefined }
 
   const { data: ownedProducts } = useReadContract({
     address: currentContracts.secondaryMarketplace,
     abi: SECONDARY_MARKETPLACE_ABI,
     functionName: 'getUserOwnedProducts',
     args: address ? [address] : undefined,
-  })
+    chainId,
+    account: address,
+  }) as { data: bigint[] | undefined }
 
   const { data: userResaleListings } = useReadContract({
     address: currentContracts.secondaryMarketplace,
     abi: SECONDARY_MARKETPLACE_ABI,
     functionName: 'getUserResaleListings',
     args: address ? [address] : undefined,
-  })
+    chainId,
+    account: address,
+  }) as { data: bigint[] | undefined }
 
   const { data: usdcBalance } = useReadContract({
     address: currentContracts.mockUSDC,
     abi: MOCK_USDC_ABI,
     functionName: 'balanceOf',
     args: address ? [address] : undefined,
+    chainId,
+    account: address,
   })
 
   // Primary purchase
@@ -84,6 +95,8 @@ export function SecondaryMarketplace() {
         abi: MOCK_USDC_ABI,
         functionName: 'approve',
         args: [currentContracts.secondaryMarketplace, price],
+        chain: getChainById(chainId),
+        account: address,
       })
 
       // Wait for approval, then purchase
@@ -93,6 +106,8 @@ export function SecondaryMarketplace() {
           abi: SECONDARY_MARKETPLACE_ABI,
           functionName: 'buyItem',
           args: [productId],
+          chain: getChainById(chainId),
+          account: address,
         })
       }, 2000)
     } catch (error) {
@@ -111,6 +126,8 @@ export function SecondaryMarketplace() {
         abi: SECONDARY_MARKETPLACE_ABI,
         functionName: 'listForResale',
         args: [productId, priceInWei],
+        chain: getChainById(chainId),
+        account: address,
       })
     } catch (error) {
       console.error('Listing failed:', error)
@@ -128,6 +145,8 @@ export function SecondaryMarketplace() {
         abi: MOCK_USDC_ABI,
         functionName: 'approve',
         args: [currentContracts.secondaryMarketplace, price],
+        chain: getChainById(chainId),
+        account: address,
       })
 
       // Wait for approval, then purchase
@@ -137,6 +156,8 @@ export function SecondaryMarketplace() {
           abi: SECONDARY_MARKETPLACE_ABI,
           functionName: 'buyResaleItem',
           args: [resaleId],
+          chain: getChainById(chainId),
+          account: address,
         })
       }, 2000)
     } catch (error) {
@@ -152,6 +173,8 @@ export function SecondaryMarketplace() {
         abi: SECONDARY_MARKETPLACE_ABI,
         functionName: 'cancelResaleListing',
         args: [resaleId],
+        chain: getChainById(chainId),
+        account: address,
       })
     } catch (error) {
       console.error('Cancel listing failed:', error)
@@ -168,6 +191,8 @@ export function SecondaryMarketplace() {
         abi: MOCK_USDC_ABI,
         functionName: 'faucet',
         args: [parseUnits('100', 6)], // Get 100 USDC
+        chain: getChainById(chainId),
+        account: address,
       })
     } catch (error) {
       console.error('USDC faucet failed:', error)
@@ -221,7 +246,7 @@ export function SecondaryMarketplace() {
         <div>
           <h2 className="text-xl font-semibold mb-4">Primary Products</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {products?.map((product: Product) => (
+            {products && products.map((product: Product) => (
               <div key={product.id.toString()} className="border rounded-lg p-4 shadow-sm">
                 <h3 className="font-semibold text-lg mb-2">{product.name}</h3>
                 <p className="text-gray-600 mb-3">{product.description}</p>
@@ -256,8 +281,8 @@ export function SecondaryMarketplace() {
         <div>
           <h2 className="text-xl font-semibold mb-4">Resale Listings</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {resaleListings?.map((listing: ResaleListing) => {
-              const product = products?.find((p: Product) => p.id === listing.productId)
+            {resaleListings && resaleListings.map((listing: ResaleListing) => {
+              const product = products && products.find((p: Product) => p.id === listing.productId)
               return (
                 <div key={listing.id.toString()} className="border rounded-lg p-4 shadow-sm bg-yellow-50">
                   <div className="flex items-center gap-2 mb-2">
@@ -310,9 +335,9 @@ export function SecondaryMarketplace() {
         <div>
           <h2 className="text-xl font-semibold mb-4">My Owned Items</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {ownedProducts?.map((productId: bigint) => {
-              const product = products?.find((p: Product) => p.id === productId)
-              const isListed = userResaleListings?.includes(productId)
+            {ownedProducts && ownedProducts.map((productId: bigint) => {
+              const product = products && products.find((p: Product) => p.id === productId)
+              const isListed = userResaleListings && userResaleListings.includes(productId)
               
               return (
                 <div key={productId.toString()} className="border rounded-lg p-4 shadow-sm bg-green-50">
@@ -360,7 +385,7 @@ export function SecondaryMarketplace() {
             })}
           </div>
           
-          {(!ownedProducts || ownedProducts.length === 0) && (
+          {(!ownedProducts || (Array.isArray(ownedProducts) && ownedProducts.length === 0)) && (
             <div className="text-center py-12 text-gray-500">
               <p>You don't own any items yet.</p>
               <p className="mt-2">Purchase some items from the Browse Products tab to see them here.</p>

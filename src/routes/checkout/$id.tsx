@@ -5,8 +5,9 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { ArrowLeft, ShoppingCart, CreditCard, Wallet, CheckCircle, AlertCircle, Loader2, Shield, Zap } from 'lucide-react'
-import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
+import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt, useChainId } from 'wagmi'
 import { CONTRACTS, PRODUCT_NFT_ABI, GUMROAD_CORE_ABI, MOCK_USDC_ABI } from '@/lib/contracts'
+import { getChainById } from '@/lib/wagmi'
 import { formatUnits } from 'viem'
 import { motion } from 'framer-motion'
 
@@ -21,6 +22,7 @@ function CheckoutPage() {
   const { address, isConnected } = useAccount()
   const [step, setStep] = useState<CheckoutStep>('review')
   const [paymentMethod, setPaymentMethod] = useState<'usdc' | 'eth'>('usdc')
+  const chainId = useChainId()
   
   const productId = parseInt(id)
 
@@ -30,6 +32,8 @@ function CheckoutPage() {
     abi: PRODUCT_NFT_ABI,
     functionName: 'products',
     args: [BigInt(productId)],
+    chainId,
+    account: address,
   })
 
   // Get user balances
@@ -38,6 +42,8 @@ function CheckoutPage() {
     abi: MOCK_USDC_ABI,
     functionName: 'balanceOf',
     args: address ? [address] : undefined,
+    chainId,
+    account: address,
   })
 
   // Check if user has already purchased
@@ -47,6 +53,8 @@ function CheckoutPage() {
     functionName: 'hasPurchased',
     args: [BigInt(productId), address || '0x0'],
     query: { enabled: !!address },
+    chainId,
+    account: address,
   })
 
   // Purchase transaction
@@ -203,6 +211,8 @@ function CheckoutPage() {
       address: CONTRACTS.gumroadCore,
       abi: GUMROAD_CORE_ABI,
       functionName: 'purchaseProduct',
+      chain: getChainById(chainId),
+      account: address,
       args: [BigInt(productId), CONTRACTS.mockUSDC],
     })
   }
