@@ -1,0 +1,7 @@
+{
+  "mockUSDC": "0x1dA0552f45cC89be39A2BF53Ef1c75859894D5dd",
+  "loyaltyToken": "0x89de622217c01f4c97453a35CaFfF1E7b7D6f8FC",
+  "creatorStore": "0x203B1f821F726d596b57C1399906EF338b98b9FF",
+  "network": "morphHolesky",
+  "chainId": 2810
+}

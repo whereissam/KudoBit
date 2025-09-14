@@ -1,0 +1,54 @@
+{
+  "timestamp": "2025-07-23T20:48:14.989Z",
+  "network": "morphHolesky",
+  "chainId": 2810,
+  "loyaltyTokenAddress": "0x89de622217c01f4c97453a35CaFfF1E7b7D6f8FC",
+  "badges": [
+    {
+      "tier": "Bronze",
+      "badgeId": 1,
+      "imageHash": "QmBronzeBadgeImageHash123456789",
+      "metadataHash": "QmBronzeBadgeMetadataHash123456789",
+      "imageUrl": "ipfs://QmBronzeBadgeImageHash123456789",
+      "metadataUrl": "ipfs://QmBronzeBadgeMetadataHash123456789",
+      "gatewayImageUrl": "https://gateway.pinata.cloud/ipfs/QmBronzeBadgeImageHash123456789",
+      "gatewayMetadataUrl": "https://gateway.pinata.cloud/ipfs/QmBronzeBadgeMetadataHash123456789"
+    },
+    {
+      "tier": "Silver",
+      "badgeId": 2,
+      "imageHash": "QmSilverBadgeImageHash123456789",
+      "metadataHash": "QmSilverBadgeMetadataHash123456789",
+      "imageUrl": "ipfs://QmSilverBadgeImageHash123456789",
+      "metadataUrl": "ipfs://QmSilverBadgeMetadataHash123456789",
+      "gatewayImageUrl": "https://gateway.pinata.cloud/ipfs/QmSilverBadgeImageHash123456789",
+      "gatewayMetadataUrl": "https://gateway.pinata.cloud/ipfs/QmSilverBadgeMetadataHash123456789"
+    },
+    {
+      "tier": "Gold",
+      "badgeId": 3,
+      "imageHash": "QmGoldBadgeImageHash123456789",
+      "metadataHash": "QmGoldBadgeMetadataHash123456789",
+      "imageUrl": "ipfs://QmGoldBadgeImageHash123456789",
+      "metadataUrl": "ipfs://QmGoldBadgeMetadataHash123456789",
+      "gatewayImageUrl": "https://gateway.pinata.cloud/ipfs/QmGoldBadgeImageHash123456789",
+      "gatewayMetadataUrl": "https://gateway.pinata.cloud/ipfs/QmGoldBadgeMetadataHash123456789"
+    },
+    {
+      "tier": "Diamond",
+      "badgeId": 4,
+      "imageHash": "QmDiamondBadgeImageHash123456789",
+      "metadataHash": "QmDiamondBadgeMetadataHash123456789",
+      "imageUrl": "ipfs://QmDiamondBadgeImageHash123456789",
+      "metadataUrl": "ipfs://QmDiamondBadgeMetadataHash123456789",
+      "gatewayImageUrl": "https://gateway.pinata.cloud/ipfs/QmDiamondBadgeImageHash123456789",
+      "gatewayMetadataUrl": "https://gateway.pinata.cloud/ipfs/QmDiamondBadgeMetadataHash123456789"
+    }
+  ],
+  "baseURI": "ipfs://QmKudoBitBadgeBaseURI/",
+  "notes": "Demo IPFS setup for KudoBit loyalty badges. In production, these would be real IPFS hashes from Pinata.",
+  "instructions": {
+    "realIPFS": "To use real IPFS, add PINATA_JWT to .env and run upload-to-ipfs.cjs",
+    "setURI": "Call LoyaltyToken.setURI() with the base URI to activate IPFS metadata"
+  }
+}
