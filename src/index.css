@@ -65,4 +65,35 @@
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
   }
+  
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    /* Improve touch targets */
+    button, a, input, select, textarea {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    
+    /* Disable text selection on UI elements */
+    .btn, .card, nav {
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    
+    /* Smooth scrolling on mobile */
+    html {
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Prevent zoom on inputs */
+    input, select, textarea {
+      font-size: 16px;
+    }
+    
+    /* Optimize tap highlighting */
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+  }
 }

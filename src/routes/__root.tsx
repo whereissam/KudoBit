@@ -15,8 +15,8 @@ export const Route = createRootRoute({
                 to="/" 
                 className="text-base sm:text-lg font-semibold text-foreground hover:text-primary transition-colors"
               >
-                <span className="hidden sm:inline">Morph Commerce</span>
-                <span className="sm:hidden">Morph</span>
+                <span className="hidden sm:inline">KudoBit</span>
+                <span className="sm:hidden">KudoBit</span>
               </Link>
               <div className="hidden sm:flex space-x-4 lg:space-x-6">
                 <Link 
@@ -26,11 +26,22 @@ export const Route = createRootRoute({
                   Shop
                 </Link>
                 <Link 
-                  to={"/loyalty" as any} 
+                  to="/discover" 
                   className="text-sm lg:text-base text-muted-foreground hover:text-foreground [&.active]:text-primary [&.active]:font-medium transition-colors"
                 >
-                  <span className="hidden lg:inline">My Loyalty</span>
-                  <span className="lg:hidden">Loyalty</span>
+                  Discover
+                </Link>
+                <Link 
+                  to="/creator" 
+                  className="text-sm lg:text-base text-muted-foreground hover:text-foreground [&.active]:text-primary [&.active]:font-medium transition-colors"
+                >
+                  Creator
+                </Link>
+                <Link 
+                  to="/account" 
+                  className="text-sm lg:text-base text-muted-foreground hover:text-foreground [&.active]:text-primary [&.active]:font-medium transition-colors"
+                >
+                  Account
                 </Link>
                 <Link 
                   to={"/admin" as any} 

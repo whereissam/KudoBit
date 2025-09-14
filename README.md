@@ -1,19 +1,17 @@
 # KudoBit
 
 > **Digital Value, Instantly Rewarded.**
-> 
-> **Lightning-fast digital commerce and instant loyalty rewards powered by Morph's hybrid rollup technology**
 
-A pioneering decentralized application that revolutionizes digital commerce by enabling seamless, low-cost micro-transactions and transparent loyalty programs on Morph's cutting-edge blockchain infrastructure.
+A professional decentralized commerce platform that enables seamless micro-transactions and transparent loyalty programs using modern blockchain infrastructure. Originally built on Morph's hybrid rollup technology, this platform demonstrates enterprise-grade digital commerce capabilities.
 
-## 🌟 Why Morph?
+## 🏗️ Architecture
 
-This dApp showcases the unique advantages of **Morph's Hybrid Rollup** technology:
+This application showcases advanced blockchain infrastructure capabilities:
 
-- **⚡ Lightning Fast**: Hybrid rollup with optimistic finality for instant transaction confirmation
-- **💰 Ultra Low Cost**: Making micro-transactions economically viable for the first time
-- **🔒 Truly Secure**: Responsive Validity Proofs (RVP) ensure robust security
-- **🏛️ Decentralized**: Decentralized sequencer network guarantees fairness and censorship resistance
+- **⚡ High Performance**: Sub-second transaction finality with optimistic confirmation
+- **💰 Cost Effective**: Micro-transaction friendly with minimal gas fees
+- **🔒 Secure**: Multi-layered security with validity proofs and robust verification
+- **🏛️ Decentralized**: Distributed sequencer network for fair transaction ordering
 
 ## ✨ Features
 
@@ -35,60 +33,68 @@ This dApp showcases the unique advantages of **Morph's Hybrid Rollup** technolog
 - **Smart Contract Integration**: Seamless Web3 interactions via Wagmi
 - **Responsive Design**: Works on desktop and mobile
 
-## 🛠 Tech Stack
+## 🛠 Technology Stack
 
-- **Frontend**: React + TypeScript + Vite
-- **Styling**: TailwindCSS + shadcn/ui
-- **Web3**: Wagmi + Viem
-- **Routing**: TanStack Router
-- **Blockchain**: Morph Holesky Testnet
-- **Smart Contracts**: Solidity + Hardhat + OpenZeppelin
+### Frontend
+- **Framework**: React 18 with TypeScript
+- **Build Tool**: Vite for fast development and building
+- **Styling**: TailwindCSS with shadcn/ui component library
+- **Routing**: TanStack Router for type-safe navigation
+
+### Blockchain
+- **Web3 Integration**: Wagmi v2 + Viem for Ethereum interactions
+- **Smart Contracts**: Solidity with OpenZeppelin standards
+- **Development**: Hardhat framework for testing and deployment
+- **Network**: Configurable for multiple EVM-compatible chains
 
 ## 📦 Quick Start
 
 ### Prerequisites
-- Node.js 18+
-- MetaMask wallet
-- Morph Holesky testnet ETH
+- **Node.js**: Version 18 or higher
+- **Package Manager**: npm, yarn, or pnpm
+- **Web3 Wallet**: MetaMask or compatible wallet
+- **Testnet Tokens**: For development and testing
 
-### Installation
+### Installation & Setup
 
-1. **Clone & Install**
+1. **Clone Repository**
    ```bash
    git clone <repository-url>
-   cd morph-microcommerce-loyalty
+   cd kudobit
    npm install
    ```
 
-2. **Set up Environment**
+2. **Environment Configuration**
    ```bash
    cp .env.example .env
-   # Add your private key for deployment
+   # Configure environment variables as needed
    ```
 
-3. **Deploy Contracts**
+3. **Smart Contract Deployment**
    ```bash
-   npx hardhat run scripts/deploy.js --network morphHolesky
+   # Compile contracts
+   npm run compile
+   
+   # Deploy to testnet
+   npm run deploy:testnet
    ```
 
-4. **Update Contract Addresses**
-   After deployment, update the contract addresses in `src/lib/contracts.ts`
+4. **Configure Contract Addresses**
+   Update deployed contract addresses in `src/lib/contracts.ts`
 
-5. **Start Development Server**
+5. **Development Server**
    ```bash
    npm run dev
    ```
 
-### Network Setup
+### Network Configuration
 
-Add Morph Holesky to MetaMask:
-- **Network Name**: Morph Holesky
-- **RPC URL**: `https://rpc-quicknode-holesky.morphl2.io`
-- **Chain ID**: `2810`
-- **Currency Symbol**: `ETH`
+The application supports multiple EVM-compatible networks. Default configuration includes:
+
+- **Testnet**: Morph Holesky (Chain ID: 2810)
+- **RPC**: `https://rpc-quicknode-holesky.morphl2.io`
 - **Explorer**: `https://explorer-holesky.morphl2.io`
-
-Get test ETH: [Morph Holesky Faucet](https://faucet.morphl2.io)
+- **Faucet**: Available for testnet tokens
 
 ## 🏗 Smart Contracts
 
@@ -110,31 +116,31 @@ Get test ETH: [Morph Holesky Faucet](https://faucet.morphl2.io)
 - Purchase history tracking
 - Reentrancy protection
 
-## 🎯 How Morph Makes This Possible
+## 🎯 Platform Benefits
 
-### Speed & Cost
-- **Sub-second confirmations** vs minutes on Ethereum L1
-- **~$0.01 transaction fees** vs $10-50 on L1
-- Enables **micro-transactions** previously impossible due to high gas
+### Performance & Economics
+- **Fast Finality**: Sub-second transaction confirmation
+- **Low Costs**: Minimal transaction fees enable micro-transactions
+- **Scalability**: High throughput for commercial applications
 
-### Decentralized Sequencer
-- **Fair ordering** prevents MEV exploitation
-- **No single point of failure** like centralized sequencers
-- **Transparent** transaction processing
+### Security & Reliability
+- **Multi-layer Security**: Advanced cryptographic proofs
+- **Decentralized Architecture**: No single points of failure
+- **Transparent Operations**: Open and verifiable transaction processing
 
-### Hybrid Rollup Security
-- **Optimistic + ZK** dual verification system
-- **Responsive Validity Proof** for instant finality when needed
-- **Full Ethereum security** inheritance
+### Developer Experience
+- **EVM Compatibility**: Standard Ethereum tooling and libraries
+- **Modern Stack**: TypeScript, React, and industry-standard frameworks
+- **Comprehensive Testing**: Hardhat integration with full test coverage
 
-## 🚀 Demo Flow
+## 🚀 Usage Flow
 
-1. **Connect Wallet**: Link MetaMask to Morph Holesky
-2. **Get Test USDC**: Use the faucet in admin panel
-3. **Browse Shop**: View digital products with instant preview
-4. **Make Purchase**: One-click buying with automatic approval
-5. **Earn Badges**: Receive loyalty NFTs immediately
-6. **View Rewards**: Check loyalty dashboard for collected badges
+1. **Wallet Connection**: Connect compatible Web3 wallet to the application
+2. **Token Acquisition**: Obtain test tokens from integrated faucet
+3. **Product Browsing**: Explore available digital products and services
+4. **Seamless Purchasing**: Execute transactions with single-click approval
+5. **Loyalty Rewards**: Automatically receive NFT badges for purchases
+6. **Portfolio Management**: Track rewards and transaction history
 
 ## 📱 User Experience
 
@@ -143,22 +149,41 @@ Get test ETH: [Morph Holesky Faucet](https://faucet.morphl2.io)
 - **Mobile Responsive**: Works seamlessly on all devices
 - **Clear Pricing**: Transparent costs in familiar USDC
 
-## 🔮 Future Enhancements
+## 🔮 Roadmap
 
-- **Dynamic Pricing**: Market-driven product costs
-- **Creator Tools**: Easy product listing interface  
-- **Social Features**: Badge sharing and leaderboards
-- **Cross-chain**: Bridge to other networks
-- **Real Products**: Integration with digital marketplaces
+### Phase 1: Core Platform
+- [x] Smart contract architecture
+- [x] Web3 wallet integration
+- [x] Basic marketplace functionality
+- [x] Loyalty token system
+
+### Phase 2: Advanced Features
+- [ ] Multi-chain deployment
+- [ ] Advanced analytics dashboard
+- [ ] Creator onboarding tools
+- [ ] Mobile application
+
+### Phase 3: Enterprise Ready
+- [ ] API integrations
+- [ ] White-label solutions
+- [ ] Advanced governance features
+- [ ] Institutional partnerships
 
 ## 📄 License
 
-MIT License - see [LICENSE](LICENSE) for details
+MIT License - see [LICENSE](LICENSE) for details.
 
 ## 🤝 Contributing
 
-Built for Morph Hackathon. Contributions welcome for future development!
+We welcome contributions from the community. Please read our [Contributing Guidelines](CONTRIBUTING.md) and [Code of Conduct](CODE_OF_CONDUCT.md).
+
+## 📞 Support
+
+- **Documentation**: [docs.kudobit.com](https://docs.kudobit.com)
+- **Issues**: GitHub Issues tracker
+- **Community**: Discord server
+- **Email**: support@kudobit.com
 
 ---
 
-**Experience the future of micro-commerce on Morph - where every transaction is fast, cheap, and secure.**
+**Professional blockchain commerce platform for the modern digital economy.**

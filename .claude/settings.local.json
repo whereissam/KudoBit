@@ -37,7 +37,26 @@
       "Bash(mv:*)",
       "Bash(timeout 10 npm run dev)",
       "Bash(touch:*)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Bash(npm run preview:*)",
+      "WebFetch(domain:gumroad.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(npm run compile:*)",
+      "Bash(cp:*)",
+      "Bash(bun:*)",
+      "Bash(true)",
+      "Bash(curl:*)",
+      "Bash(timeout 20 bun run dev)",
+      "Bash(gtimeout:*)",
+      "Bash(cat:*)",
+      "Bash(open http://localhost:5173)",
+      "Bash(tsc --noEmit)",
+      "Bash(timeout 30 bun tsc --noEmit)",
+      "Bash(git rm:*)",
+      "Bash(git submodule:*)",
+      "WebSearch",
+      "Bash(timeout 30 bun run dev)",
+      "Bash(VITE_CONFIG=vite.config.minimal.ts bun run vite)"
     ],
     "deny": []
   }

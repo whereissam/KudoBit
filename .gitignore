@@ -1,5 +1,49 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build artifacts - Frontend
+dist/
+dist-ssr/
+build/
+*.tsbuildinfo
+
+# Build artifacts - Blockchain
+out/
+artifacts/
+cache/
+blockchain/lib/
+blockchain/cache/
+blockchain/out/
+blockchain/artifacts/
+blockchain/broadcast/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.local
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS
+.DS_Store
+Thumbs.db
+
 # Logs
-logs
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -7,24 +51,43 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Testing
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
 
+# Lock files (keep package-lock.json, but ignore others)
+*.lock
+!package-lock.json
 
-.env
-dist/
-cache/
+# TypeScript build info
+*.tsbuildinfo
+
+# Foundry/Forge artifacts
 artifacts/
+broadcast/
+cache/
+deployments.json
+gumroad-deployments.json
+
+# Documentation
+docs/specs/
+docs/guides/
+*.md
+!README.md
+!SETUP-COMPLETE.md
+
+# Test outputs
+test-results/
+playwright-report/
+
+# Scripts and tools output
+scripts/
+tools/
