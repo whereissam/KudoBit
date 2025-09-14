@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState } from 'react'
-import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
+import { useAccount, useWriteContract, useWaitForTransactionReceipt, useChainId } from 'wagmi'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -12,6 +12,7 @@ import { motion } from 'framer-motion'
 import toast from 'react-hot-toast'
 import { CONTRACTS, CREATOR_REGISTRY_ABI, PRODUCT_NFT_ABI } from '@/lib/contracts'
 import { ipfsService } from '@/services/ipfs-service'
+import { getChainById } from '@/lib/wagmi'
 
 export const Route = createFileRoute('/creator/register')({
   component: CreatorRegister,
@@ -36,6 +37,7 @@ const CREATOR_CATEGORIES = [
 
 function CreatorRegister() {
   const { address, isConnected } = useAccount()
+  const chainId = useChainId()
   const navigate = useNavigate()
   
   const [profile, setProfile] = useState<CreatorProfile>({
@@ -130,6 +132,8 @@ function CreatorRegister() {
           profile.bio,
           profile.avatar || ''
         ],
+        chain: getChainById(chainId),
+        account: address,
       })
     } catch (error: unknown) {
       const message = error && typeof error === 'object' && 'shortMessage' in error 
@@ -154,6 +158,8 @@ function CreatorRegister() {
           '0x828634d95e775031b9ff576805c2feea7f67b6d4bb35b8c6ba75a74a5435da50', // CREATOR_ROLE hash
           address!
         ],
+        chain: getChainById(chainId),
+        account: address,
       })
     } else if (registrationStep === 'grant_role') {
       toast.success('Creator profile registered successfully!')

@@ -22,7 +22,7 @@ export interface UserProfile {
 }
 
 export class UserRoleService {
-  private static currentUser: UserProfile | null = null
+  private static _currentUser: UserProfile | null = null
 
   // For buyers - no account needed, just wallet connection for purchases
   static getBuyerInfo(address: string): UserProfile {
@@ -55,7 +55,7 @@ export class UserRoleService {
         isVerified: false
       }
       
-      this.currentUser = creatorProfile
+      this._currentUser = creatorProfile
       localStorage.setItem('kudobit_user_role', UserRole.CREATOR)
       localStorage.setItem('kudobit_user_address', address.toLowerCase())
       localStorage.setItem('kudobit_creator_profile', JSON.stringify(creatorProfile))
@@ -75,7 +75,7 @@ export class UserRoleService {
       
       if (savedProfile && savedAddress === address.toLowerCase()) {
         const creatorProfile = JSON.parse(savedProfile)
-        this.currentUser = creatorProfile
+        this._currentUser = creatorProfile
         localStorage.setItem('kudobit_user_role', UserRole.CREATOR)
         return { success: true, user: creatorProfile }
       }
@@ -112,7 +112,7 @@ export class UserRoleService {
   }
 
   static logout(): void {
-    this.currentUser = null
+    this._currentUser = null
     localStorage.removeItem('kudobit_user_role')
     localStorage.removeItem('kudobit_user_address')
     localStorage.removeItem('kudobit_creator_profile')

@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState, useEffect } from 'react'
-import { useAccount, useReadContract, useWriteContract } from 'wagmi'
+import { useAccount, useReadContract, useWriteContract, useChainId } from 'wagmi'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -21,6 +21,7 @@ import {
   Sparkles
 } from 'lucide-react'
 import { CONTRACTS } from '@/lib/contracts'
+import { getChainById } from '@/lib/wagmi'
 import toast from 'react-hot-toast'
 
 export const Route = createFileRoute('/perks/discover')({
@@ -112,6 +113,7 @@ function PerksDiscoverPage() {
   const { address, isConnected } = useAccount()
   const navigate = useNavigate()
   const { writeContract, isPending } = useWriteContract()
+  const chainId = useChainId()
   
   const [perks, setPerks] = useState<Perk[]>([])
   const [userBadges, setUserBadges] = useState<UserBadgeBalance[]>([])
@@ -127,6 +129,8 @@ function PerksDiscoverPage() {
     abi: [{"inputs": [{"internalType": "address", "name": "account", "type": "address"}, {"internalType": "uint256", "name": "id", "type": "uint256"}], "name": "balanceOf", "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}], "stateMutability": "view", "type": "function"}],
     functionName: 'balanceOf',
     args: address ? [address, 1n] : undefined,
+    chainId,
+    account: address,
   })
 
   const { data: silverBalance } = useReadContract({
@@ -134,6 +138,8 @@ function PerksDiscoverPage() {
     abi: [{"inputs": [{"internalType": "address", "name": "account", "type": "address"}, {"internalType": "uint256", "name": "id", "type": "uint256"}], "name": "balanceOf", "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}], "stateMutability": "view", "type": "function"}],
     functionName: 'balanceOf',
     args: address ? [address, 2n] : undefined,
+    chainId,
+    account: address,
   })
 
   const { data: goldBalance } = useReadContract({
@@ -141,6 +147,8 @@ function PerksDiscoverPage() {
     abi: [{"inputs": [{"internalType": "address", "name": "account", "type": "address"}, {"internalType": "uint256", "name": "id", "type": "uint256"}], "name": "balanceOf", "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}], "stateMutability": "view", "type": "function"}],
     functionName: 'balanceOf',
     args: address ? [address, 3n] : undefined,
+    chainId,
+    account: address,
   })
 
   const { data: diamondBalance } = useReadContract({
@@ -148,6 +156,8 @@ function PerksDiscoverPage() {
     abi: [{"inputs": [{"internalType": "address", "name": "account", "type": "address"}, {"internalType": "uint256", "name": "id", "type": "uint256"}], "name": "balanceOf", "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}], "stateMutability": "view", "type": "function"}],
     functionName: 'balanceOf',
     args: address ? [address, 4n] : undefined,
+    chainId,
+    account: address,
   })
 
   useEffect(() => {
@@ -272,6 +282,8 @@ function PerksDiscoverPage() {
         address: perksRegistryAddress,
         abi: PERKS_REGISTRY_ABI,
         functionName: 'redeemPerk',
+        chain: getChainById(chainId),
+        account: address,
         args: [BigInt(perk.id), '']
       })
 

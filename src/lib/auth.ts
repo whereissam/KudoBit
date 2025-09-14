@@ -182,7 +182,7 @@ export class AuthService {
         }
       } catch (error) {
         // Only log warning, don't throw - gracefully fallback to localStorage
-        console.warn('Backend profile fetch failed, using localStorage:', error.message || error)
+        console.warn('Backend profile fetch failed, using localStorage:', (error as Error).message || error)
       }
     }
     
@@ -212,8 +212,6 @@ export class AuthService {
       return { success: false, error: 'No authenticated user' }
     }
 
-    let backendSuccess = false
-
     // Try backend update first
     if (PREFER_BACKEND) {
       try {
@@ -226,9 +224,8 @@ export class AuthService {
           body: JSON.stringify(profileData),
         })
 
-        const data = await response.json()
         if (response.ok) {
-          backendSuccess = true
+          await response.json()
         }
       } catch (error) {
         console.warn('Backend profile update failed:', error)

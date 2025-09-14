@@ -1,8 +1,9 @@
 import { useState, useMemo, useCallback } from 'react'
-import { useWriteContract } from 'wagmi'
+import { useWriteContract, useChainId, useAccount } from 'wagmi'
 import { parseUnits } from 'viem'
 import { CONTRACTS, PRODUCT_NFT_ABI } from '@/lib/contracts'
 import { contentService } from '@/services/content-service'
+import { getChainById } from '@/lib/wagmi'
 import toast from 'react-hot-toast'
 
 interface ProductData {
@@ -33,6 +34,8 @@ export function useProductCreation() {
   })
 
   const { writeContract } = useWriteContract()
+  const chainId = useChainId()
+  const { address } = useAccount()
   
   const createProduct = useCallback(async (productData: ProductData) => {
     try {
@@ -71,6 +74,8 @@ export function useProductCreation() {
         address: CONTRACTS.productNFT,
         abi: PRODUCT_NFT_ABI,
         functionName: 'mintProduct',
+        chain: getChainById(chainId),
+        account: address,
         args: [
           productData.name,
           productData.shortDescription,
@@ -89,7 +94,7 @@ export function useProductCreation() {
       })
       toast.error('Failed to create product')
     }
-  }, [writeContract])
+  }, [writeContract, chainId, address])
 
   const uploadFiles = useCallback(async (files: File[], type: 'images' | 'preview' | 'product') => {
     try {

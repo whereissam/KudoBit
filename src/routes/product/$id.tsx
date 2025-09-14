@@ -192,7 +192,7 @@ function ProductDetail() {
                       asChild={active && address ? true : false}
                     >
                       {active && address ? (
-                        <Link to="/checkout/$id" params={{ id: productId.toString() }}>
+                        <Link to={`/checkout/${productId}`}>
                           <ShoppingCart className="h-5 w-5 mr-2" />
                           Buy for {formatUnits(price, 6)} USDC
                         </Link>

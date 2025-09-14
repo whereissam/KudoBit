@@ -16,6 +16,15 @@ const morphHolesky = {
   testnet: true,
 } as const
 
+export const getChainById = (chainId: number) => {
+  switch (chainId) {
+    case 1: return mainnet
+    case 31337: return hardhat  
+    case 2810: return morphHolesky
+    default: return mainnet
+  }
+}
+
 export const config = getDefaultConfig({
   appName: 'KudoBit',
   projectId: import.meta.env.VITE_WALLETCONNECT_PROJECT_ID || '8c3b2f9f4d7e8a1b5c9d2e6f3a4b7c8e',

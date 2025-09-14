@@ -25,12 +25,20 @@ export function AppleLayout({ children, showHero = false, onAuthModal }: AppleLa
       return;
     }
     
-    const profile = CreatorService.getCurrentCreatorProfile();
-    if (profile && profile.address === address.toLowerCase()) {
-      setIsCreator(true);
-    } else {
-      setIsCreator(false);
-    }
+    const checkCreatorStatus = async () => {
+      try {
+        const profile = await CreatorService.getCurrentCreatorProfile();
+        if (profile && profile.address === address.toLowerCase()) {
+          setIsCreator(true);
+        } else {
+          setIsCreator(false);
+        }
+      } catch (error) {
+        setIsCreator(false);
+      }
+    };
+    
+    checkCreatorStatus();
   }, [isConnected, address]);
 
   return (

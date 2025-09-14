@@ -1,5 +1,3 @@
-import { writeContract, readContract } from '@wagmi/core';
-import { config } from '../lib/wagmi';
 import { 
   CONTRACTS, 
   PRODUCT_NFT_ABI, 
@@ -15,51 +13,32 @@ export interface ProductMetadata {
 }
 
 export class ContractService {
-  async createProduct(metadata: ProductMetadata, contentHash: string) {
-    // 1. Register creator if not already registered
-    await this.registerCreator();
-    
-    // 2. Mint ProductNFT
-    const productId = await writeContract(config, {
+  // Contract interaction data structures for use with wagmi hooks
+  getCreateProductConfig(metadata: ProductMetadata, contentHash: string) {
+    return {
       address: CONTRACTS.productNFT,
       abi: PRODUCT_NFT_ABI,
       functionName: 'mintProduct',
       args: [metadata.name, metadata.description, metadata.image, BigInt(metadata.price), contentHash],
-    });
-    
-    return productId;
+    } as const;
   }
   
-  async registerCreator() {
-    try {
-      await writeContract(config, {
-        address: CONTRACTS.creatorRegistry,
-        abi: CREATOR_REGISTRY_ABI,
-        functionName: 'registerCreator',
-        args: ['Creator Name', 'Creator Bio', 'https://example.com/avatar.jpg'],
-      });
-    } catch (error) {
-      // Creator might already be registered
-      console.log('Creator registration skipped:', error);
-    }
+  getRegisterCreatorConfig(name: string, bio: string, avatar: string) {
+    return {
+      address: CONTRACTS.creatorRegistry,
+      abi: CREATOR_REGISTRY_ABI,
+      functionName: 'registerCreator',
+      args: [name, bio, avatar],
+    } as const;
   }
   
-  async getCreatorProducts(creatorAddress: string) {
-    try {
-      const result = await readContract(config, {
-        address: CONTRACTS.productNFT,
-        abi: PRODUCT_NFT_ABI,
-        functionName: 'getCreatorProducts',
-        args: [creatorAddress as `0x${string}`],
-      });
-      return result || [];
-    } catch (error: any) {
-      // Handle case where creator has no products (returns 0x)
-      if (error.message?.includes('returned no data') || error.message?.includes('0x')) {
-        return [];
-      }
-      throw error;
-    }
+  getCreatorProductsConfig(creatorAddress: string) {
+    return {
+      address: CONTRACTS.productNFT,
+      abi: PRODUCT_NFT_ABI,
+      functionName: 'getCreatorProducts',
+      args: [creatorAddress as `0x${string}`],
+    } as const;
   }
   
   async getCreatorEarnings() {
