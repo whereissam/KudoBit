@@ -2,12 +2,9 @@ import { useState } from 'react'
 import { Link } from '@tanstack/react-router'
 import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { useTheme } from '@/components/theme-provider'
 
 export function MobileNav() {
   const [isOpen, setIsOpen] = useState(false)
-  const { theme } = useTheme()
-  const isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)
 
   return (
     <div className="sm:hidden">
@@ -15,7 +12,7 @@ export function MobileNav() {
         variant="ghost"
         size="icon"
         onClick={() => setIsOpen(!isOpen)}
-        className="h-9 w-9"
+        className="h-11 w-11 touch-manipulation"
       >
         {isOpen ? (
           <X className="h-4 w-4" />
@@ -26,29 +23,50 @@ export function MobileNav() {
       </Button>
 
       {isOpen && (
-        <div className={`absolute top-14 left-0 right-0 shadow-xl z-50 ${isDark ? 'bg-gray-900 border-gray-700' : 'bg-white border-gray-200'} border`}>
+        <div className="absolute top-14 left-0 right-0 bg-background border-b shadow-xl z-50">
           <div className="container mx-auto px-4 py-4">
             <div className="flex flex-col space-y-4">
               <Link 
                 to="/" 
-                className={`hover:text-primary [&.active]:text-primary [&.active]:font-medium transition-colors py-2 text-base ${isDark ? 'text-gray-100' : 'text-gray-900'}`}
+                className="text-foreground hover:text-primary [&.active]:text-primary [&.active]:font-medium transition-colors py-3 text-base border-b border-border/50 flex items-center gap-3"
                 onClick={() => setIsOpen(false)}
               >
-                🛍️ Shop
+                🛍️ <span>Shop</span>
               </Link>
               <Link 
-                to={"/loyalty" as any} 
-                className={`hover:text-primary [&.active]:text-primary [&.active]:font-medium transition-colors py-2 text-base ${isDark ? 'text-gray-100' : 'text-gray-900'}`}
+                to="/discover" 
+                className="text-foreground hover:text-primary [&.active]:text-primary [&.active]:font-medium transition-colors py-3 text-base border-b border-border/50 flex items-center gap-3"
                 onClick={() => setIsOpen(false)}
               >
-                🏆 My Loyalty
+                🔍 <span>Discover</span>
               </Link>
               <Link 
-                to={"/admin" as any} 
-                className={`hover:text-primary [&.active]:text-primary [&.active]:font-medium transition-colors py-2 text-base ${isDark ? 'text-gray-100' : 'text-gray-900'}`}
+                to="/creator" 
+                className="text-foreground hover:text-primary [&.active]:text-primary [&.active]:font-medium transition-colors py-3 text-base border-b border-border/50 flex items-center gap-3"
                 onClick={() => setIsOpen(false)}
               >
-                ⚙️ Admin
+                🎨 <span>Creator</span>
+              </Link>
+              <Link 
+                to="/account" 
+                className="text-foreground hover:text-primary [&.active]:text-primary [&.active]:font-medium transition-colors py-3 text-base border-b border-border/50 flex items-center gap-3"
+                onClick={() => setIsOpen(false)}
+              >
+                👤 <span>Account</span>
+              </Link>
+              <Link 
+                to="/loyalty" 
+                className="text-foreground hover:text-primary [&.active]:text-primary [&.active]:font-medium transition-colors py-3 text-base border-b border-border/50 flex items-center gap-3"
+                onClick={() => setIsOpen(false)}
+              >
+                🏆 <span>Loyalty</span>
+              </Link>
+              <Link 
+                to="/admin" 
+                className="text-foreground hover:text-primary [&.active]:text-primary [&.active]:font-medium transition-colors py-3 text-base flex items-center gap-3"
+                onClick={() => setIsOpen(false)}
+              >
+                ⚙️ <span>Admin</span>
               </Link>
             </div>
           </div>
