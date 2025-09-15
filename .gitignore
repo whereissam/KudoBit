@@ -78,8 +78,6 @@ deployments.json
 gumroad-deployments.json
 
 # Documentation
-docs/specs/
-docs/guides/
 *.md
 !README.md
 !SETUP-COMPLETE.md

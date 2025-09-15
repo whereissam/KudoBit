@@ -1,30 +1,41 @@
-# KudoBit: Onchain Gumroad Implementation Plan
+Based on your provided document, the plan is already very detailed and comprehensive. Instead of a complete rewrite, here is an edited version that refines and expands upon key areas, primarily focusing on **tokenomics**, **governance**, and a more robust **social/reputation system** to make the platform's vision of a decentralized, community-driven economy more concrete. The changes are integrated directly into your existing structure for a seamless revision.
+
+-----
+
+# KudoBit: Onchain Gumroad Implementation Plan (Revised)
 
 ## 🎯 Vision
+
 Transform the traditional Gumroad digital marketplace into a fully decentralized, blockchain-native platform where creators truly own their products as NFTs and buyers get verifiable ownership of digital goods.
+
+-----
 
 ## 📊 Current State Analysis
 
 ### ✅ What We Have
-- **Basic Smart Contracts**: MockUSDC, LoyaltyToken (ERC-1155), Shopfront
-- **React Frontend**: Modern TypeScript with TanStack Router
-- **Web3 Integration**: Wagmi + Viem for blockchain interactions
-- **UI Components**: shadcn/ui component library
-- **Basic Purchase Flow**: USDC payments with loyalty rewards
+
+  - **Basic Smart Contracts**: MockUSDC, LoyaltyToken (renamed to KudoToken), Shopfront
+  - **React Frontend**: Modern TypeScript with TanStack Router
+  - **Web3 Integration**: Wagmi + Viem for blockchain interactions
+  - **UI Components**: shadcn/ui component library
+  - **Basic Purchase Flow**: USDC payments with loyalty rewards
 
 ### ❌ Missing Gumroad Features
-1. **Product Discovery & Categories**: No tag-based browsing, no categories
-2. **Individual Product Pages**: Products shown only as cards, no detailed views
-3. **Creator Dashboard**: Admin panel exists but lacks creator-focused features
-4. **User Profiles**: No buyer profiles or purchase history display
-5. **Search & Filtering**: No search functionality
-6. **Product Reviews/Ratings**: No social proof mechanisms
-7. **Wishlist/Favorites**: No way to save items for later
-8. **Multiple Payment Methods**: Only USDC, no variety
-9. **Download Management**: No post-purchase download experience
+
+1.  **Product Discovery & Categories**: No tag-based browsing, no categories
+2.  **Individual Product Pages**: Products shown only as cards, no detailed views
+3.  **Creator Dashboard**: Admin panel exists but lacks creator-focused features
+4.  **User Profiles**: No buyer profiles or purchase history display
+5.  **Search & Filtering**: No search functionality
+6.  **Product Reviews/Ratings**: No social proof mechanisms
+7.  **Wishlist/Favorites**: No way to save items for later
+8.  **Multiple Payment Methods**: Only USDC, no variety
+9.  **Download Management**: No post-purchase download experience
 10. **Creator Onboarding**: No easy product listing flow
 
-## 🔄 Web2 → Web3 Transformation Map
+-----
+
+## 🔄 Web2 → Web3 Transformation Map (Revised)
 
 | **Web2 Component** | **Onchain Equivalent** | **Implementation** |
 |---|---|---|
@@ -38,8 +49,12 @@ Transform the traditional Gumroad digital marketplace into a fully decentralized
 | **User Sessions** | **Wallet Signatures** | Sign-in-with-Ethereum (SIWE) |
 | **Email Notifications** | **Push Notifications** | Web3 notification protocols |
 | **Analytics** | **On-chain Analytics** | Blockchain event analysis |
+| **Centralized Governance** | **Decentralized Autonomous Organization (DAO)** | Community voting on platform rules and funds |
+| **User Trust** | **On-Chain Reputation** | Verifiable reputation score and achievements |
 
-## 📁 Proposed Architecture
+-----
+
+## 📁 Proposed Architecture (Revised)
 
 ```
 src/
@@ -51,14 +66,17 @@ src/
 │   │   ├── RoyaltyManager.sol     # Revenue distribution & royalties
 │   │   └── ContentAccess.sol      # Gated content access control
 │   ├── tokens/
-│   │   ├── PaymentToken.sol       # Multi-token payment support
-│   │   ├── RevenueShare.sol       # Creator revenue sharing tokens
-│   │   └── CreatorToken.sol       # Creator fan tokens
+│   │   ├── KudoToken.sol          # NEW: Governance and utility token
+│   │   ├── CreatorToken.sol       # Creator fan tokens
+│   │   └── PaymentToken.sol       # Multi-token payment support
 │   ├── marketplace/
 │   │   ├── Categories.sol         # Product categorization
 │   │   ├── Reviews.sol            # On-chain review system
-│   │   ├── Wishlist.sol           # User wishlist management
-│   │   └── Search.sol             # Search indexing helpers
+│   │   └── Wishlist.sol           # User wishlist management
+│   ├── governance/
+│   │   ├── KudoDAO.sol            # NEW: DAO for community decision-making
+│   │   ├── KudoTreasury.sol       # NEW: Community-managed treasury
+│   │   └── Reputation.sol         # NEW: On-chain reputation system
 │   └── utils/
 │       ├── AccessControl.sol      # Permissions and roles
 │       ├── ContentHash.sol        # IPFS content verification
@@ -92,8 +110,12 @@ src/
 │   ├── checkout/
 │   │   ├── $id.tsx                # Multi-step checkout flow
 │   │   └── success.$id.tsx        # Purchase confirmation
-│   └── collection/
-│       └── $address.tsx           # Creator collection pages
+│   ├── collection/
+│   │   └── $address.tsx           # Creator collection pages
+│   └── governance/
+│       ├── index.tsx              # NEW: Governance dashboard
+│       ├── proposals.tsx          # NEW: List of proposals and voting
+│       └── treasury.tsx           # NEW: Treasury funds and allocation
 ├── components/
 │   ├── creator/                   # Creator-focused components
 │   │   ├── product-minter.tsx     # Mint product NFTs to IPFS
@@ -134,17 +156,23 @@ src/
 │   │   ├── trending-section.tsx   # Trending products
 │   │   ├── category-grid.tsx      # Visual category browser
 │   │   └── creator-spotlight.tsx  # Featured creators
-│   └── social/                    # Social features
-│       ├── wishlist-button.tsx    # Add to wishlist
-│       ├── share-product.tsx      # Social sharing
-│       ├── follow-creator.tsx     # Follow creators
-│       └── review-form.tsx        # Review submission
+│   ├── social/                    # Social features
+│   │   ├── wishlist-button.tsx    # Add to wishlist
+│   │   ├── share-product.tsx      # Social sharing
+│   │   ├── follow-creator.tsx     # Follow creators
+│   │   └── review-form.tsx        # Review submission
+│   └── governance/
+│       ├── proposal-form.tsx      # NEW: Form for submitting proposals
+│       ├── voting-card.tsx        # NEW: UI for proposals and voting
+│       └── treasury-widget.tsx    # NEW: Displays DAO treasury data
 ├── hooks/
 │   ├── contracts/                 # Smart contract hooks
 │   │   ├── useCreator.ts          # Creator contract interactions
 │   │   ├── useMarketplace.ts      # Marketplace operations
 │   │   ├── useProductNFT.ts       # NFT operations
-│   │   └── useRoyalties.ts        # Royalty management
+│   │   ├── useRoyalties.ts        # Royalty management
+│   │   ├── useDAO.ts              # NEW: DAO contract interactions
+│   │   └── useReputation.ts       # NEW: Reputation contract interactions
 │   ├── features/                  # Feature-specific hooks
 │   │   ├── usePurchase.ts         # Complete purchase flow
 │   │   ├── useContent.ts          # IPFS content management
@@ -172,6 +200,7 @@ src/
 │   └── types/
 │       ├── product.ts             # Product type definitions
 │       ├── creator.ts             # Creator type definitions
+│       ├── governance.ts          # NEW: Governance types
 │       └── marketplace.ts         # Marketplace types
 └── services/
     ├── content-service.ts         # IPFS content operations
@@ -181,10 +210,14 @@ src/
     └── search-service.ts          # Product search indexing
 ```
 
-## 🔗 Core Smart Contracts
+-----
 
-### 1. GumroadCore.sol
+## 🔗 Core Smart Contracts (Revised)
+
+### 1\. GumroadCore.sol
+
 **Main marketplace functionality**
+
 ```solidity
 contract GumroadCore {
     // Product Management
@@ -208,8 +241,10 @@ contract GumroadCore {
 }
 ```
 
-### 2. ProductNFT.sol
+### 2\. ProductNFT.sol
+
 **ERC-721 for product ownership**
+
 ```solidity
 contract ProductNFT is ERC721, AccessControl {
     // Each product = unique NFT with metadata
@@ -223,8 +258,10 @@ contract ProductNFT is ERC721, AccessControl {
 }
 ```
 
-### 3. CreatorRegistry.sol
+### 3\. CreatorRegistry.sol
+
 **Creator management and verification**
+
 ```solidity
 contract CreatorRegistry {
     // Creator Registration
@@ -242,8 +279,10 @@ contract CreatorRegistry {
 }
 ```
 
-### 4. RoyaltyManager.sol
+### 4\. RoyaltyManager.sol
+
 **Revenue distribution system**
+
 ```solidity
 contract RoyaltyManager {
     // Royalty Configuration
@@ -257,200 +296,255 @@ contract RoyaltyManager {
 }
 ```
 
-## 🚀 Implementation Phases
+-----
+
+## 🚀 Implementation Phases (Revised)
 
 ### Phase 1: Core Infrastructure (Weeks 1-3)
+
 **Objective**: Establish basic onchain marketplace functionality
 
 **Smart Contracts**:
-- [ ] ProductNFT.sol - Basic ERC-721 for products
-- [ ] GumroadCore.sol - Core marketplace logic
-- [ ] CreatorRegistry.sol - Creator management
-- [ ] Deploy to testnet and verify
+
+  - [ ] ProductNFT.sol - Basic ERC-721 for products
+  - [ ] GumroadCore.sol - Core marketplace logic
+  - [ ] CreatorRegistry.sol - Creator management
+  - [ ] Deploy to testnet and verify
 
 **Frontend**:
-- [ ] Refactor current routes to match Gumroad structure
-- [ ] Implement individual product pages (/product/$id)
-- [ ] Create basic creator dashboard (/creator)
-- [ ] Add IPFS integration for content storage
+
+  - [ ] Refactor current routes to match Gumroad structure
+  - [ ] Implement individual product pages (/product/$id)
+  - [ ] Create basic creator dashboard (/creator)
+  - [ ] Add IPFS integration for content storage
 
 **Features**:
-- [ ] Product creation and minting as NFTs
-- [ ] Basic purchase flow with crypto payments
-- [ ] IPFS content upload and retrieval
-- [ ] Wallet-based authentication
+
+  - [ ] Product creation and minting as NFTs
+  - [ ] Basic purchase flow with crypto payments
+  - [ ] IPFS content upload and retrieval
+  - [ ] Wallet-based authentication
 
 ### Phase 2: Enhanced Marketplace (Weeks 4-6)
+
 **Objective**: Build comprehensive product discovery and management
 
 **Smart Contracts**:
-- [ ] Categories.sol - Product categorization
-- [ ] Reviews.sol - On-chain review system
-- [ ] Wishlist.sol - User wishlist functionality
+
+  - [ ] Categories.sol - Product categorization
+  - [ ] Reviews.sol - On-chain review system
+  - [ ] Wishlist.sol - User wishlist functionality
+  - [ ] **Reputation.sol** - On-chain reputation system
 
 **Frontend**:
-- [ ] Advanced product discovery (/discover)
-- [ ] Category browsing and filtering
-- [ ] Search functionality
-- [ ] Product review and rating system
-- [ ] Wishlist management
+
+  - [ ] Advanced product discovery (/discover)
+  - [ ] Category browsing and filtering
+  - [ ] Search functionality
+  - [ ] Product review and rating system
+  - [ ] Wishlist management
+  - [ ] **Display on-chain reputation scores on user profiles**
 
 **Features**:
-- [ ] Tag-based product categorization
-- [ ] Advanced search and filtering
-- [ ] User wishlist and favorites
-- [ ] Product reviews and ratings
-- [ ] Related products recommendation
 
-### Phase 3: Creator Economy (Weeks 7-9)
-**Objective**: Advanced creator tools and monetization
+  - [ ] Tag-based product categorization
+  - [ ] Advanced search and filtering
+  - [ ] User wishlist and favorites
+  - [ ] Product reviews and ratings
+  - [ ] **Verifiable reputation for creators and buyers**
+
+### Phase 3: Creator Economy & Governance (Weeks 7-9)
+
+**Objective**: Advanced creator tools, tokenomics, and decentralized governance
 
 **Smart Contracts**:
-- [ ] RoyaltyManager.sol - Revenue distribution
-- [ ] CreatorToken.sol - Fan tokens for creators
-- [ ] RevenueShare.sol - Revenue sharing mechanisms
+
+  - [ ] RoyaltyManager.sol - Revenue distribution
+  - [ ] **KudoToken.sol** - Governance token
+  - [ ] CreatorToken.sol - Fan tokens for creators
+  - [ ] **KudoDAO.sol** - Community governance logic
+  - [ ] **KudoTreasury.sol** - Platform treasury management
 
 **Frontend**:
-- [ ] Advanced creator analytics dashboard
-- [ ] Revenue management and withdrawal
-- [ ] Creator token issuance and management
-- [ ] Fan engagement tools
+
+  - [ ] Advanced creator analytics dashboard
+  - [ ] Revenue management and withdrawal
+  - [ ] Creator token issuance and management
+  - [ ] **Governance dashboard with voting and proposal submission**
+  - [ ] Fan engagement tools
 
 **Features**:
-- [ ] Real-time creator analytics
-- [ ] Multiple revenue streams (sales, royalties, tokens)
-- [ ] Creator fan tokens
-- [ ] Advanced creator verification
-- [ ] Creator collection pages
+
+  - [ ] Real-time creator analytics
+  - [ ] Multiple revenue streams (sales, royalties, tokens)
+  - [ ] **Launch of the $KUDO governance token**
+  - [ ] **Community-led governance for key platform decisions**
+  - [ ] Advanced creator verification
+  - [ ] Creator collection pages
 
 ### Phase 4: Advanced Features (Weeks 10-12)
+
 **Objective**: Enterprise features and cross-chain expansion
 
 **Smart Contracts**:
-- [ ] PriceOracle.sol - Multi-currency pricing
-- [ ] ContentAccess.sol - Gated content access
-- [ ] Cross-chain bridge contracts
+
+  - [ ] PriceOracle.sol - Multi-currency pricing
+  - [ ] ContentAccess.sol - Gated content access
+  - [ ] Cross-chain bridge contracts
 
 **Frontend**:
-- [ ] Multi-chain deployment support
-- [ ] Advanced analytics and reporting
-- [ ] Mobile-responsive optimization
-- [ ] Performance optimization
+
+  - [ ] Multi-chain deployment support
+  - [ ] Advanced analytics and reporting
+  - [ ] Mobile-responsive optimization
+  - [ ] Performance optimization
 
 **Features**:
-- [ ] Multi-chain support (Polygon, Arbitrum, etc.)
-- [ ] Dynamic pricing based on demand
-- [ ] Subscription-based products
-- [ ] Advanced creator verification
-- [ ] API for third-party integrations
 
-## 💡 Key Onchain Innovations
+  - [ ] Multi-chain support (Polygon, Arbitrum, etc.)
+  - [ ] Dynamic pricing based on demand
+  - [ ] **Token-gated subscriptions**
+  - [ ] Advanced creator verification
+  - [ ] API for third-party integrations
+  - [ ] **On-chain referral system with automated payouts**
 
-### 1. **True Digital Ownership**
-- Products as tradeable NFTs
-- Buyers can resell digital products
-- Verifiable ownership on blockchain
-- No platform lock-in
+-----
 
-### 2. **Decentralized Content Delivery**
-- All files stored on IPFS/Arweave
-- Censorship-resistant content
-- Global content availability
-- Redundant storage systems
+## 💡 Key Onchain Innovations (Revised)
 
-### 3. **Programmable Royalties**
-- Automatic royalty distribution
-- Creator royalties on secondary sales
-- Revenue sharing with collaborators
-- Platform fee transparency
+### 1\. **True Digital Ownership**
 
-### 4. **Creator Economy Tokens**
-- Creators can issue fan tokens
-- Token-gated exclusive content
-- Creator DAO governance
-- Community-driven development
+  - Products as tradeable NFTs
+  - Buyers can resell digital products
+  - Verifiable ownership on blockchain
+  - No platform lock-in
 
-### 5. **Cross-Chain Marketplace**
-- Deploy on multiple L2 chains
-- Cross-chain product discovery
-- Unified user experience
-- Chain-agnostic payments
+### 2\. **Decentralized Content Delivery**
 
-## 🔐 Security Considerations
+  - All files stored on IPFS/Arweave
+  - Censorship-resistant content
+  - Global content availability
+  - Redundant storage systems
+
+### 3\. **Programmable Royalties**
+
+  - Automatic royalty distribution
+  - Creator royalties on secondary sales
+  - Revenue sharing with collaborators
+  - Platform fee transparency
+
+### 4\. **Community-Led Governance**
+
+  - **$KUDO token** for voting on platform decisions (e.g., fee structure, treasury allocation)
+  - Community-driven roadmap and development funding
+  - True ownership of the platform by its users and creators
+
+### 5\. **Creator Economy Tokens**
+
+  - Creators can issue fan tokens
+  - **Token-gated exclusive content and communities**
+  - Community-driven development
+
+### 6\. **On-Chain Reputation System**
+
+  - Verifiable and portable reputation score for creators and buyers
+  - Prevents spam and malicious behavior
+  - Builds a trustless, transparent marketplace
+
+-----
+
+## 🔐 Security Considerations (Revised)
 
 ### Smart Contract Security
-- [ ] Comprehensive audit by security firm
-- [ ] Reentrancy protection on all functions
-- [ ] Access control for admin functions
-- [ ] Upgrade mechanisms with timelock
-- [ ] Emergency pause functionality
+
+  - [ ] Comprehensive audit by security firm
+  - [ ] Reentrancy protection on all functions
+  - [ ] Access control for admin functions
+  - [ ] **DAO-managed upgrade mechanisms with timelock**
+  - [ ] Emergency pause functionality
 
 ### Content Security
-- [ ] Content hash verification
-- [ ] IPFS pinning strategy
-- [ ] Content encryption for premium products
-- [ ] Spam and abuse prevention
+
+  - [ ] Content hash verification
+  - [ ] IPFS pinning strategy
+  - [ ] Content encryption for premium products
+  - [ ] Spam and abuse prevention
 
 ### User Security
-- [ ] Multi-sig wallet support
-- [ ] Transaction simulation before execution
-- [ ] Phishing protection measures
-- [ ] Privacy-preserving analytics
 
-## 📊 Success Metrics
+  - [ ] Multi-sig wallet support
+  - [ ] Transaction simulation before execution
+  - [ ] Phishing protection measures
+  - [ ] Privacy-preserving analytics
+
+-----
+
+## 📊 Success Metrics (Revised)
 
 ### Product Metrics
-- [ ] Number of products listed
-- [ ] Total sales volume (in USD)
-- [ ] Creator retention rate
-- [ ] Buyer satisfaction scores
+
+  - [ ] Number of products listed
+  - [ ] Total sales volume (in USD)
+  - [ ] Creator retention rate
+  - [ ] Buyer satisfaction scores
+  - [ ] **Number of active DAO voters**
 
 ### Technical Metrics
-- [ ] Transaction success rate
-- [ ] Average gas costs per operation
-- [ ] IPFS content availability
-- [ ] Frontend performance scores
+
+  - [ ] Transaction success rate
+  - [ ] Average gas costs per operation
+  - [ ] IPFS content availability
+  - [ ] Frontend performance scores
 
 ### Economic Metrics
-- [ ] Total Value Locked (TVL)
-- [ ] Creator earnings distribution
-- [ ] Platform fee collection
-- [ ] Token economics health
 
-## 🌐 Go-to-Market Strategy
+  - [ ] Total Value Locked (TVL)
+  - [ ] Creator earnings distribution
+  - [ ] Platform fee collection
+  - [ ] Token economics health
+  - [ ] **$KUDO token value and liquidity**
+
+-----
+
+## 🌐 Go-to-Market Strategy (Revised)
 
 ### Target Creators
-1. **Digital Artists**: NFT artists, illustrators, designers
-2. **Content Creators**: YouTubers, bloggers, course creators
-3. **Software Developers**: Indie developers, plugin creators
-4. **Musicians**: Independent musicians, beat makers
+
+1.  **Digital Artists**: NFT artists, illustrators, designers
+2.  **Content Creators**: YouTubers, bloggers, course creators
+3.  **Software Developers**: Indie developers, plugin creators
+4.  **Musicians**: Independent musicians, beat makers
 
 ### Launch Strategy
-1. **Alpha**: Invite-only creator program
-2. **Beta**: Public creator onboarding
-3. **Launch**: Full marketplace with marketing push
-4. **Growth**: Multi-chain expansion
 
-## 🔮 Future Vision
+1.  **Alpha**: Invite-only creator program
+2.  **Beta**: Public creator onboarding
+3.  **Launch**: Full marketplace with marketing push
+4.  **Growth**: Multi-chain expansion
+
+## 🔮 Future Vision (Revised)
 
 ### Year 1: Establish Market Presence
-- 1,000+ active creators
-- 10,000+ products listed
-- $1M+ in total sales volume
-- Multi-chain deployment
+
+  - 1,000+ active creators
+  - 10,000+ products listed
+  - $1M+ in total sales volume
+  - Multi-chain deployment
 
 ### Year 2: Advanced Features
-- Creator DAO governance
-- Advanced analytics and AI recommendations
-- Mobile app launch
-- Enterprise creator tools
+
+  - Creator DAO governance
+  - Advanced analytics and AI recommendations
+  - Mobile app launch
+  - Enterprise creator tools
 
 ### Year 3: Market Leadership
-- Industry-leading creator marketplace
-- Cross-platform integrations
-- Global creator community
-- Sustainable token economics
 
----
+  - Industry-leading creator marketplace
+  - Cross-platform integrations
+  - Global creator community
+  - Sustainable token economics
+
+-----
 
 **This plan transforms the traditional Gumroad model into a truly decentralized, creator-owned economy where digital products become valuable, tradeable assets on the blockchain.**

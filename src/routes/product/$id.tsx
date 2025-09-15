@@ -3,23 +3,38 @@ import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { ArrowLeft, Zap, CheckCircle, User, ShoppingCart } from 'lucide-react'
+import { WishlistButton } from '@/components/wishlist-button'
 import { useReadContract, useAccount } from 'wagmi'
 import { CONTRACTS, PRODUCT_NFT_ABI, GUMROAD_CORE_ABI } from '@/lib/contracts'
 import { formatUnits } from 'viem'
 import { motion } from 'framer-motion'
+import { ErrorBoundary } from '@/components/error-boundary'
+import { ProductErrorFallback } from '@/components/error-fallback'
+import { PageLoading, ProductCardSkeleton } from '@/components/loading-states'
+import { useErrorHandler } from '@/hooks/use-error-handler'
 import { Link } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/product/$id')({
-  component: ProductDetail,
+  component: () => (
+    <ErrorBoundary fallback={ProductErrorFallback}>
+      <ProductDetail />
+    </ErrorBoundary>
+  ),
 })
 
 function ProductDetail() {
   const { id } = Route.useParams()
   const { address } = useAccount()
+  const { handleError } = useErrorHandler()
   const productId = parseInt(id)
 
+  // Validate product ID
+  if (isNaN(productId) || productId <= 0) {
+    throw new Error('Invalid product ID')
+  }
+
   // Get product details from ProductNFT contract
-  const { data: product } = useReadContract({
+  const { data: product, isLoading: productLoading, error: productError } = useReadContract({
     address: CONTRACTS.productNFT,
     abi: PRODUCT_NFT_ABI,
     functionName: 'products',
@@ -27,7 +42,7 @@ function ProductDetail() {
   })
 
   // Get content hash
-  const { data: contentHash } = useReadContract({
+  const { data: contentHash, isLoading: contentLoading } = useReadContract({
     address: CONTRACTS.productNFT,
     abi: PRODUCT_NFT_ABI,
     functionName: 'contentHashes',
@@ -35,7 +50,7 @@ function ProductDetail() {
   })
 
   // Check if user has purchased this product
-  const { data: hasPurchased } = useReadContract({
+  const { data: hasPurchased, isLoading: purchaseLoading } = useReadContract({
     address: CONTRACTS.gumroadCore,
     abi: GUMROAD_CORE_ABI,
     functionName: 'hasPurchased',
@@ -43,15 +58,19 @@ function ProductDetail() {
     query: { enabled: !!address },
   })
 
+  // Handle loading states
+  if (productLoading || contentLoading) {
+    return <PageLoading message="Loading product details..." />
+  }
+
+  // Handle error states
+  if (productError) {
+    handleError(productError, { action: 'Load product', component: 'ProductDetail' })
+    throw new Error('Product not found')
+  }
+
   if (!product) {
-    return (
-      <div className="container mx-auto px-4 py-16 text-center">
-        <h1 className="text-2xl font-bold mb-4">Product not found</h1>
-        <Link to="/">
-          <button className="text-blue-500 hover:text-blue-600">← Back to discover</button>
-        </Link>
-      </div>
-    )
+    throw new Error('Product not found')
   }
 
   const [name, description, price, active, creator] = product
@@ -240,9 +259,13 @@ function ProductDetail() {
 
             {/* Action Buttons */}
             <div className="flex gap-2">
-              <Button variant="outline" className="flex-1">
-                ❤️ Add to Wishlist
-              </Button>
+              <WishlistButton 
+                productId={productId} 
+                variant="outline" 
+                size="default"
+                className="flex-1" 
+                showText 
+              />
               <Button variant="outline" className="flex-1">
                 📤 Share
               </Button>

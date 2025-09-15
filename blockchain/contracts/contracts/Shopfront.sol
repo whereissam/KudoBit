@@ -4,7 +4,7 @@ pragma solidity ^0.8.27;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
-import "../core/LoyaltyToken.sol";
+import "./LoyaltyToken.sol";
 
 contract Shopfront is Ownable, ReentrancyGuard {
     IERC20 public paymentToken;

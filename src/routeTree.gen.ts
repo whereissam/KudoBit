@@ -44,7 +44,7 @@ import { Route as CollaborativeDashboardRouteImport } from './routes/collaborati
 import { Route as CollaborativeCreateRouteImport } from './routes/collaborative.create'
 import { Route as CheckoutIdRouteImport } from './routes/checkout/$id'
 import { Route as AnalyticsPublicRouteImport } from './routes/analytics.public'
-import { Route as AnalyticsDashboardRouteImport } from './routes/analytics.dashboard'
+import { Route as AnalyticsDashboardRouteImport } from './routes/analytics/dashboard'
 import { Route as AccountWishlistRouteImport } from './routes/account/wishlist'
 import { Route as AccountPurchasesRouteImport } from './routes/account/purchases'
 import { Route as CreatorProductsNewRouteImport } from './routes/creator/products/new'

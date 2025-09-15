@@ -2,31 +2,50 @@ const hre = require("hardhat");
 
 async function main() {
   console.log("🚀 Deploying KudoBit Gumroad Architecture...");
+  
+  // Check network and get deployer account
+  const network = hre.network.name;
+  console.log("🌐 Network:", network);
+  
+  const signers = await hre.ethers.getSigners();
+  if (signers.length === 0) {
+    throw new Error("No signers available. Check your private key configuration.");
+  }
+  
+  const deployer = signers[0];
+  console.log("📱 Deploying with account:", deployer.address);
+  
+  const balance = await hre.ethers.provider.getBalance(deployer.address);
+  console.log("💰 Account balance:", hre.ethers.formatEther(balance));
+  
+  if (balance === 0n) {
+    throw new Error("Deployer account has no funds. Please fund the account first.");
+  }
 
   // Deploy MockUSDC first
   console.log("📦 Deploying MockUSDC...");
-  const MockUSDC = await hre.ethers.getContractFactory("MockUSDC");
+  const MockUSDC = await hre.ethers.getContractFactory("contracts/contracts/MockUSDC.sol:MockUSDC");
   const mockUSDC = await MockUSDC.deploy();
   await mockUSDC.waitForDeployment();
   console.log("✅ MockUSDC deployed to:", await mockUSDC.getAddress());
 
   // Deploy LoyaltyToken
   console.log("📦 Deploying LoyaltyToken...");
-  const LoyaltyToken = await hre.ethers.getContractFactory("LoyaltyToken");
+  const LoyaltyToken = await hre.ethers.getContractFactory("contracts/contracts/LoyaltyToken.sol:LoyaltyToken");
   const loyaltyToken = await LoyaltyToken.deploy();
   await loyaltyToken.waitForDeployment();
   console.log("✅ LoyaltyToken deployed to:", await loyaltyToken.getAddress());
 
   // Deploy ProductNFT
   console.log("📦 Deploying ProductNFT...");
-  const ProductNFT = await hre.ethers.getContractFactory("ProductNFT");
+  const ProductNFT = await hre.ethers.getContractFactory("contracts/contracts/ProductNFT.sol:ProductNFT");
   const productNFT = await ProductNFT.deploy();
   await productNFT.waitForDeployment();
   console.log("✅ ProductNFT deployed to:", await productNFT.getAddress());
 
   // Deploy CreatorRegistry
   console.log("📦 Deploying CreatorRegistry...");
-  const CreatorRegistry = await hre.ethers.getContractFactory("CreatorRegistry");
+  const CreatorRegistry = await hre.ethers.getContractFactory("contracts/contracts/CreatorRegistry.sol:CreatorRegistry");
   const creatorRegistry = await CreatorRegistry.deploy();
   await creatorRegistry.waitForDeployment();
   console.log("✅ CreatorRegistry deployed to:", await creatorRegistry.getAddress());
@@ -34,21 +53,28 @@ async function main() {
   // Deploy RoyaltyManager
   console.log("📦 Deploying RoyaltyManager...");
   const [owner] = await hre.ethers.getSigners();
-  const RoyaltyManager = await hre.ethers.getContractFactory("RoyaltyManager");
+  const RoyaltyManager = await hre.ethers.getContractFactory("contracts/contracts/RoyaltyManager.sol:RoyaltyManager");
   const royaltyManager = await RoyaltyManager.deploy(owner.address); // Use deployer as platform treasury
   await royaltyManager.waitForDeployment();
   console.log("✅ RoyaltyManager deployed to:", await royaltyManager.getAddress());
 
   // Deploy ContentAccess
   console.log("📦 Deploying ContentAccess...");
-  const ContentAccess = await hre.ethers.getContractFactory("ContentAccess");
+  const ContentAccess = await hre.ethers.getContractFactory("contracts/contracts/ContentAccess.sol:ContentAccess");
   const contentAccess = await ContentAccess.deploy();
   await contentAccess.waitForDeployment();
   console.log("✅ ContentAccess deployed to:", await contentAccess.getAddress());
 
+  // Deploy Wishlist
+  console.log("📦 Deploying Wishlist...");
+  const Wishlist = await hre.ethers.getContractFactory("contracts/contracts/Wishlist.sol:Wishlist");
+  const wishlist = await Wishlist.deploy();
+  await wishlist.waitForDeployment();
+  console.log("✅ Wishlist deployed to:", await wishlist.getAddress());
+
   // Deploy GumroadCore with all dependencies
   console.log("📦 Deploying GumroadCore...");
-  const GumroadCore = await hre.ethers.getContractFactory("GumroadCore");
+  const GumroadCore = await hre.ethers.getContractFactory("contracts/contracts/GumroadCore.sol:GumroadCore");
   const gumroadCore = await GumroadCore.deploy(
     await productNFT.getAddress(),
     await royaltyManager.getAddress(),
@@ -149,6 +175,7 @@ async function main() {
       creatorRegistry: await creatorRegistry.getAddress(),
       royaltyManager: await royaltyManager.getAddress(),
       contentAccess: await contentAccess.getAddress(),
+      wishlist: await wishlist.getAddress(),
       gumroadCore: await gumroadCore.getAddress()
     },
     testData: {
