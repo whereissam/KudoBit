@@ -1,21 +1,25 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { Heart, HeartOff, ShoppingCart, User, Package, Trash2, Share, Loader2 } from 'lucide-react'
-import { useAccount, useReadContract } from 'wagmi'
-import { motion, AnimatePresence } from 'framer-motion'
+import { Heart, ShoppingCart, User, Package } from 'lucide-react'
+import { useAccount } from 'wagmi'
+import { motion } from 'framer-motion'
 import { Link } from '@tanstack/react-router'
 import { useWishlist } from '@/hooks/use-wishlist'
-import { CONTRACTS, PRODUCT_NFT_ABI } from '@/lib/contracts'
-import { formatUnits } from 'viem'
+import { WalletNotConnected, WishlistLoading, WishlistEmpty } from '@/components/wishlist/wishlist-states'
+import { WishlistContent } from '@/components/wishlist/wishlist-content'
 
 export const Route = createFileRoute('/account/wishlist')({
   component: WishlistPage,
 })
 
-// Helper component to fetch product data
+// Move to separate component file if needed
+import { useReadContract } from 'wagmi'
+import { CONTRACTS, PRODUCT_NFT_ABI } from '@/lib/contracts'
+import { formatUnits } from 'viem'
+import { Trash2, Loader2 } from 'lucide-react'
+
 function ProductFromWishlist({ productId }: { productId: number }) {
   const { data: product } = useReadContract({
     address: CONTRACTS.productNFT,
@@ -40,7 +44,7 @@ function ProductFromWishlist({ productId }: { productId: number }) {
 
   const [name, description, price, active, creator] = product
 
-  if (!active) return null // Don't show inactive products
+  if (!active) return null
 
   return (
     <motion.div
@@ -52,12 +56,10 @@ function ProductFromWishlist({ productId }: { productId: number }) {
       <Card className="hover:shadow-lg transition-all duration-300 group">
         <CardContent className="p-6">
           <div className="flex items-start gap-4">
-            {/* Product Image/Emoji */}
             <div className="w-16 h-16 bg-gradient-to-br from-morph-green-50 to-morph-purple-50 dark:from-morph-green-900/20 dark:to-morph-purple-900/20 rounded-lg flex items-center justify-center text-2xl group-hover:scale-105 transition-transform">
               {getProductEmoji(productId)}
             </div>
 
-            {/* Product Details */}
             <div className="flex-1">
               <div className="flex items-start justify-between mb-2">
                 <div>
@@ -119,30 +121,27 @@ function WishlistPage() {
   const { isConnected } = useAccount()
   const { wishlistItems, wishlistCount, isLoading: wishlistLoading } = useWishlist()
 
-  // Calculate stats from real data
   const wishlistProductIds = wishlistItems.map(id => Number(id))
 
   if (!isConnected) {
+    return <WalletNotConnected />
+  }
+
+  const renderWishlistContent = () => {
+    if (wishlistLoading) {
+      return <WishlistLoading />
+    }
+    
+    if (wishlistCount === 0) {
+      return <WishlistEmpty />
+    }
+    
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-morph-green-50/5 to-morph-purple-50/5">
-        <div className="container mx-auto px-3 sm:px-4 py-8">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center p-12"
-          >
-            <div className="max-w-md mx-auto">
-              <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-pink-100 to-pink-200 dark:from-pink-900/30 dark:to-pink-800/30 rounded-full flex items-center justify-center">
-                <Heart className="h-8 w-8 text-pink-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-4">Connect Your Wallet</h3>
-              <p className="text-muted-foreground">
-                Connect your wallet to view and manage your wishlist
-              </p>
-            </div>
-          </motion.div>
-        </div>
-      </div>
+      <WishlistContent wishlistCount={wishlistCount}>
+        {wishlistProductIds.map((productId) => (
+          <ProductFromWishlist key={productId} productId={productId} />
+        ))}
+      </WishlistContent>
     )
   }
 
@@ -225,101 +224,7 @@ function WishlistPage() {
           </Card>
         </motion.div>
 
-        {/* Wishlist Items */}
-        {wishlistLoading ? (
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center p-12"
-          >
-            <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-morph-green-500" />
-            <p className="text-muted-foreground">Loading your wishlist...</p>
-          </motion.div>
-        ) : wishlistCount === 0 ? (
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-center p-12"
-          >
-            <HeartOff className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
-            <h3 className="text-xl font-semibold mb-2">Your wishlist is empty</h3>
-            <p className="text-muted-foreground mb-6">
-              Browse products and save items you're interested in for later!
-            </p>
-            <Button asChild>
-              <Link to="/discover">Browse Products</Link>
-            </Button>
-          </motion.div>
-        ) : (
-          <>
-            {/* Bulk Actions */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="mb-6"
-            >
-              <div className="flex justify-between items-center">
-                <h2 className="text-lg font-semibold">Saved Items</h2>
-                <div className="flex gap-2">
-                  <Button variant="outline" size="sm">
-                    <Share className="h-3 w-3 mr-1" />
-                    Share Wishlist
-                  </Button>
-                  <Button 
-                    variant="outline" 
-                    size="sm" 
-                    disabled
-                    className="text-red-600 hover:text-red-700"
-                  >
-                    <Trash2 className="h-3 w-3 mr-1" />
-                    Clear All
-                  </Button>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Items Grid */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-6"
-            >
-              <AnimatePresence>
-                {wishlistProductIds.map((productId, index) => (
-                  <ProductFromWishlist key={productId} productId={productId} />
-                ))}
-              </AnimatePresence>
-            </motion.div>
-          </>
-        )}
-
-        {/* CTA Section */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="text-center mt-12 p-6 bg-gradient-to-r from-morph-green-50/50 to-morph-purple-50/50 dark:from-morph-green-900/10 dark:to-morph-purple-900/10 rounded-lg border border-morph-green-200/30"
-        >
-          <h3 className="text-lg font-semibold mb-2 bg-gradient-to-r from-morph-green-600 to-morph-purple-600 bg-clip-text text-transparent">
-            Ready to make a purchase?
-          </h3>
-          <p className="text-sm text-muted-foreground mb-4">
-            Browse more products or purchase items from your wishlist
-          </p>
-          <div className="flex flex-wrap gap-2 justify-center">
-            <Button asChild>
-              <Link to="/discover">Discover More</Link>
-            </Button>
-            {wishlistCount > 0 && (
-              <Button variant="outline" disabled>
-                Buy All (Coming Soon)
-              </Button>
-            )}
-          </div>
-        </motion.div>
+        {renderWishlistContent()}
       </div>
     </div>
   )
