@@ -78,7 +78,6 @@ deployments.json
 gumroad-deployments.json
 
 # Documentation
-*.md
 !README.md
 !SETUP-COMPLETE.md
 
@@ -89,3 +88,4 @@ playwright-report/
 # Scripts and tools output
 scripts/
 tools/
+.claude/settings.local.json
