@@ -27,7 +27,7 @@ export function DashboardHeader({ creatorName, loading, error, onRefresh }: Dash
           <div className="flex flex-col sm:flex-row gap-3">
             <Button
               variant="outline"
-              className="border-border hover:border-gray-400 text-foreground"
+              className="border-border hover:border-border/80 text-foreground"
               onClick={() => navigate({ to: '/creator/profile' })}
             >
               <Settings className="mr-2 h-4 w-4" />
@@ -35,7 +35,7 @@ export function DashboardHeader({ creatorName, loading, error, onRefresh }: Dash
             </Button>
             <Button
               variant="outline"
-              className="border-border hover:border-gray-400 text-foreground"
+              className="border-border hover:border-border/80 text-foreground"
               onClick={onRefresh}
               disabled={loading}
             >
@@ -44,7 +44,7 @@ export function DashboardHeader({ creatorName, loading, error, onRefresh }: Dash
             </Button>
             <Button 
               variant="outline"
-              className="border-border hover:border-gray-400 text-foreground"
+              className="border-border hover:border-border/80 text-foreground"
               onClick={() => navigate({ to: '/creator/create-perk' })}
             >
               <Plus className="mr-2 h-4 w-4" />

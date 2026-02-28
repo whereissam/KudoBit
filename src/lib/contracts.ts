@@ -420,8 +420,25 @@ export const CONTRACTS_EXTENDED = {
   ...CONTRACTS,
   creatorStore: CONTRACTS.shopfront, // Use shopfront as fallback
   secondaryMarketplace: CONTRACTS.shopfront, // Use shopfront as fallback
-  wishlist: '0xa85233C63b9Ee964Add6F2cffe00Fd84eb32338f' as Address, // Updated with deployed address
+  wishlist: '0xa85233C63b9Ee964Add6F2cffe00Fd84eb32338f' as Address,
 }
+
+// Re-export extension contracts and ABIs
+export { EXTENSION_CONTRACTS } from './extension-contracts'
+export {
+  DAO_ABI,
+  AFFILIATE_ABI,
+  GAMIFICATION_ABI,
+  PERKS_ABI,
+  SUBSCRIPTION_ABI,
+  TIPPING_ABI,
+  NFT_GATED_ABI,
+  COLLABORATIVE_ABI,
+  BADGE_CHECKER_ABI,
+  GOVERNANCE_TOKEN_ABI,
+  REVIEWS_ABI,
+  CATEGORIES_ABI,
+} from './extension-contracts'
 
 // Chain-specific contract addresses (for the remote files that import getContracts)
 export const getContracts = (_chainId: number) => {

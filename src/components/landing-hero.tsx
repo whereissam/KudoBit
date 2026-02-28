@@ -68,7 +68,7 @@ export function LandingHero({ onSignUp, onSignIn, isConnected }: LandingHeroProp
           {/* Social Proof */}
           <div className="flex items-center justify-center gap-6 text-sm text-muted-foreground mb-16">
             <div className="flex items-center gap-1">
-              <div className="flex text-yellow-500">
+              <div className="flex text-chart-3">
                 {[...Array(5)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-current" />
                 ))}

@@ -44,8 +44,8 @@ export function WishlistButton({
       disabled={!isConnected || isLoading}
       className={cn(
         "transition-colors",
-        inWishlist && variant === 'outline' && "border-red-200 bg-red-50 hover:bg-red-100 text-red-600",
-        inWishlist && variant === 'default' && "bg-red-500 hover:bg-red-600 text-white",
+        inWishlist && variant === 'outline' && "border-destructive/20 bg-destructive/5 hover:bg-destructive/10 text-destructive",
+        inWishlist && variant === 'default' && "bg-destructive hover:bg-destructive/90 text-destructive-foreground",
         className
       )}
     >

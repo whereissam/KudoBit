@@ -61,7 +61,7 @@ export function AppleProducts({ products, isLoading, onBuyProduct, isTransacting
               className="group bg-background rounded-2xl shadow-sm border border-border hover:shadow-lg transition-all duration-300 overflow-hidden"
             >
               {/* Product Image */}
-              <div className="aspect-[4/3] bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center relative overflow-hidden">
+              <div className="aspect-[4/3] bg-gradient-to-br from-muted/30 to-accent/30 flex items-center justify-center relative overflow-hidden">
                 {/* Category Icon */}
                 <div className="text-4xl group-hover:scale-110 transition-transform duration-300">
                   {product.category === 'Art & Design' && '🎨'}
@@ -78,7 +78,7 @@ export function AppleProducts({ products, isLoading, onBuyProduct, isTransacting
                 {/* Badge */}
                 {product.rating && (
                   <div className="absolute top-4 left-4 bg-background/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-1">
-                    <Star className="w-3 h-3 text-yellow-500 fill-current" />
+                    <Star className="w-3 h-3 text-chart-3 fill-current" />
                     <span className="text-sm font-medium text-foreground">{product.rating}</span>
                   </div>
                 )}
@@ -145,7 +145,7 @@ export function AppleProducts({ products, isLoading, onBuyProduct, isTransacting
             <Button
               variant="outline"
               size="lg"
-              className="border-2 border-border hover:border-gray-400 text-foreground px-8 py-3 rounded-full font-medium transition-all duration-200"
+              className="border-2 border-border hover:border-border/80 text-foreground px-8 py-3 rounded-full font-medium transition-all duration-200"
               onClick={() => {
                 // Scroll to top to see all products
                 window.scrollTo({ top: 0, behavior: 'smooth' })

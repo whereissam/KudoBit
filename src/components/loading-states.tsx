@@ -21,9 +21,9 @@ export function LoadingSpinner({ size = 'default', className = '' }: {
 // Full page loading
 export function PageLoading({ message = "Loading..." }: { message?: string }) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-morph-green-50/5 to-morph-purple-50/5 flex items-center justify-center">
+    <div className="min-h-screen bg-gradient-to-br from-background via-accent/5 to-primary/5 flex items-center justify-center">
       <div className="text-center">
-        <LoadingSpinner size="lg" className="mx-auto mb-4 text-morph-green-500" />
+        <LoadingSpinner size="lg" className="mx-auto mb-4 text-primary" />
         <p className="text-muted-foreground">{message}</p>
       </div>
     </div>
@@ -115,7 +115,7 @@ export function TransactionLoading({
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
       <Card className="max-w-sm mx-4">
         <CardContent className="pt-6 text-center">
-          <LoadingSpinner size="lg" className="mx-auto mb-4 text-morph-green-500" />
+          <LoadingSpinner size="lg" className="mx-auto mb-4 text-primary" />
           <h3 className="font-semibold mb-2">{title}</h3>
           <p className="text-sm text-muted-foreground">{message}</p>
         </CardContent>

@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { useAccount, useSignMessage } from 'wagmi'
+import { useAccount, useSignMessage, useReadContract } from 'wagmi'
 import { useNavigate } from '@tanstack/react-router'
-import { CreatorService } from '@/lib/creator-service'
 import { signInWithEthereum } from '@/lib/auth'
+import { CONTRACTS, CREATOR_REGISTRY_ABI } from '@/lib/contracts'
 
 type AuthStep = 'connect' | 'auth' | 'complete' | 'not-found' | 'already-exists'
 
@@ -14,6 +14,15 @@ export function useAuthFlow(mode: 'signin' | 'signup', onSuccess: () => void, on
   const [error, setError] = useState('')
   const [step, setStep] = useState<AuthStep>('connect')
 
+  // Check on-chain creator registration
+  const { data: isRegistered } = useReadContract({
+    address: CONTRACTS.creatorRegistry,
+    abi: CREATOR_REGISTRY_ABI,
+    functionName: 'isRegistered',
+    args: address ? [address] : undefined,
+    query: { enabled: !!address },
+  })
+
   const handleWalletAuth = async () => {
     if (!address || !isConnected) return
 
@@ -22,23 +31,27 @@ export function useAuthFlow(mode: 'signin' | 'signup', onSuccess: () => void, on
 
     try {
       if (mode === 'signin') {
-        const result = await CreatorService.signInCreator(address)
-        
-        if (result.success && result.profile) {
-          CreatorService.saveCreatorSession(result.profile)
-          setStep('complete')
-          setTimeout(() => {
-            onSuccess()
-            onClose()
-          }, 1500)
-        } else if (result.needsRegistration) {
-          setStep('not-found')
+        if (isRegistered) {
+          // SIWE auth for registered creators
+          const authResult = await signInWithEthereum(address, async (message: string) => {
+            return await signMessageAsync({ message, account: address })
+          })
+
+          if (authResult.success) {
+            setStep('complete')
+            setTimeout(() => {
+              onSuccess()
+              onClose()
+            }, 1500)
+          } else {
+            setError(authResult.error || 'Sign in failed')
+          }
         } else {
-          setError(result.error || 'Sign in failed')
+          setStep('not-found')
         }
       } else {
-        const existingStatus = await CreatorService.getCreatorStatus(address)
-        if (existingStatus.canAccessCreatorFeatures) {
+        // Sign up flow
+        if (isRegistered) {
           setStep('already-exists')
           return
         }
@@ -46,10 +59,8 @@ export function useAuthFlow(mode: 'signin' | 'signup', onSuccess: () => void, on
         const authResult = await signInWithEthereum(address, async (message: string) => {
           return await signMessageAsync({ message, account: address })
         })
-        
+
         if (authResult.success) {
-          localStorage.setItem('kudobit_temp_token', authResult.token || '')
-          localStorage.setItem('kudobit_temp_address', address)
           onClose()
           navigate({ to: '/register' })
         } else {
@@ -66,10 +77,12 @@ export function useAuthFlow(mode: 'signin' | 'signup', onSuccess: () => void, on
 
   const handleSignInExisting = async () => {
     if (!address) return
-    
-    const result = await CreatorService.signInCreator(address)
-    if (result.success && result.profile) {
-      CreatorService.saveCreatorSession(result.profile)
+
+    const authResult = await signInWithEthereum(address, async (message: string) => {
+      return await signMessageAsync({ message, account: address })
+    })
+
+    if (authResult.success) {
       setStep('complete')
       setTimeout(() => {
         onSuccess()

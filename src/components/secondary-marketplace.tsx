@@ -204,7 +204,7 @@ export function SecondaryMarketplace() {
       <div className="mb-6">
         <h1 className="text-3xl font-bold mb-4">Secondary Marketplace</h1>
         <div className="flex items-center gap-4 mb-4">
-          <span className="text-sm text-gray-600">
+          <span className="text-sm text-muted-foreground">
             USDC Balance: {usdcBalance ? formatUnits(usdcBalance, 6) : '0'} USDC
           </span>
           <Button onClick={handleGetUSDC} variant="outline" size="sm">
@@ -217,7 +217,7 @@ export function SecondaryMarketplace() {
       <div className="flex border-b mb-6">
         <button
           className={`px-4 py-2 font-medium ${
-            activeTab === 'browse' ? 'border-b-2 border-blue-500 text-blue-600' : 'text-gray-600'
+            activeTab === 'browse' ? 'border-b-2 border-primary text-primary' : 'text-muted-foreground'
           }`}
           onClick={() => setActiveTab('browse')}
         >

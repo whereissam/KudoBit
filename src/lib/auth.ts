@@ -2,7 +2,7 @@ import { SiweMessage } from 'siwe'
 
 // Fallback system: try backend first, use localStorage if backend fails
 const PREFER_BACKEND = true
-const API_BASE_URL = 'http://localhost:3001'
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001'
 
 export class AuthService {
   private static token: string | null = localStorage.getItem('kudobit_token')
@@ -11,7 +11,7 @@ export class AuthService {
   static async getNonce(): Promise<string> {
     if (PREFER_BACKEND) {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/v1/auth/nonce`)
+        const response = await fetch(`${API_BASE_URL}/api/auth/nonce`)
         const data = await response.json()
         return data.nonce
       } catch (error) {
@@ -45,7 +45,7 @@ export class AuthService {
       // Try backend authentication first
       if (PREFER_BACKEND) {
         try {
-          const response = await fetch(`${API_BASE_URL}/api/v1/auth/login`, {
+          const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ export class AuthService {
     // Try backend logout if backend is available
     if (PREFER_BACKEND && this.token) {
       try {
-        await fetch(`${API_BASE_URL}/api/v1/auth/logout`, {
+        await fetch(`${API_BASE_URL}/api/auth/logout`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${this.token}`,
@@ -121,7 +121,7 @@ export class AuthService {
     // Try backend verification first
     if (PREFER_BACKEND) {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/v1/auth/verify`, {
+        const response = await fetch(`${API_BASE_URL}/api/auth/me`, {
           headers: {
             'Authorization': `Bearer ${this.token}`,
           },
@@ -162,7 +162,7 @@ export class AuthService {
     // Try backend first
     if (PREFER_BACKEND) {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/creator/${address}`, {
+        const response = await fetch(`${API_BASE_URL}/api/creators/${address}`, {
           method: 'GET',
           mode: 'cors',
           credentials: 'omit',
@@ -215,7 +215,7 @@ export class AuthService {
     // Try backend update first
     if (PREFER_BACKEND) {
       try {
-        const response = await fetch(`${API_BASE_URL}/api/creator/profile`, {
+        const response = await fetch(`${API_BASE_URL}/api/creators/profile`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -269,7 +269,7 @@ export class AuthService {
     }
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/analytics/${address}`, {
+      const response = await fetch(`${API_BASE_URL}/api/creators/${address}/analytics`, {
         headers: {
           'Authorization': `Bearer ${this.token}`,
         },

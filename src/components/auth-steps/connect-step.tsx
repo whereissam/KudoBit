@@ -21,8 +21,8 @@ export function ConnectStep({ isConnected, address, onContinue }: ConnectStepPro
 
   return (
     <div className="space-y-4">
-      <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
-        <p className="text-sm text-green-800">
+      <div className="p-3 bg-chart-2/5 border border-chart-2/20 rounded-lg">
+        <p className="text-sm text-chart-2">
           ✅ Wallet connected: {address?.slice(0, 6)}...{address?.slice(-4)}
         </p>
       </div>

@@ -1,104 +1,95 @@
-import { useState, useMemo, useCallback } from 'react';
-import { useAccount, useReadContract } from 'wagmi';
-import { ipfsService } from '../services/ipfs-service';
-import { contractService, ProductMetadata } from '../services/contract-service';
+import { useMemo, useCallback } from 'react'
+import { useAccount, useReadContract } from 'wagmi'
+import { CONTRACTS, PRODUCT_NFT_ABI, CREATOR_REGISTRY_ABI } from '@/lib/contracts'
+import { ipfsService } from '@/services/ipfs-service'
+import { contractService, ProductMetadata } from '@/services/contract-service'
 
 export interface ProductFormData {
-  name: string;
-  description: string;
-  price: string;
-  category: string;
-  files: FileList;
-  coverImage: File | null;
+  name: string
+  description: string
+  price: string
+  category: string
+  files: FileList
+  coverImage: File | null
 }
 
 export function useCreator() {
-  const { address } = useAccount();
-  const [isLoading, setIsLoading] = useState(false);
-  const [products, setProducts] = useState<any[]>([]);
-  const [earnings, setEarnings] = useState<Record<string, string>>({});
-  
-  const createProduct = useCallback(async (formData: ProductFormData) => {
-    if (!address) throw new Error('Wallet not connected');
-    
-    setIsLoading(true);
-    try {
-      // 1. Upload cover image to IPFS
-      let imageHash = '';
-      if (formData.coverImage) {
-        imageHash = await ipfsService.uploadFile(formData.coverImage);
-      }
-      
-      // 2. Upload content files to IPFS
-      const contentHashes: string[] = [];
-      for (let i = 0; i < formData.files.length; i++) {
-        const file = formData.files[i];
-        const hash = await ipfsService.uploadFile(file);
-        contentHashes.push(hash);
-      }
-      
-      // 3. Create product metadata
-      const metadata: ProductMetadata = {
-        name: formData.name,
-        description: formData.description,
-        image: imageHash ? ipfsService.getFileURL(imageHash) : '',
-        price: formData.price,
-        category: formData.category,
-      };
-      
-      // 4. Upload metadata to IPFS
-      await ipfsService.uploadJSON(metadata);
-      
-      // 5. Return metadata for product creation (actual blockchain interaction should be done in the component using wagmi hooks)
-      return { metadata, contentHash: contentHashes[0] };
-    } finally {
-      setIsLoading(false);
+  const { address } = useAccount()
+
+  // Read creator registration status from chain
+  const { data: isRegistered, isLoading: isCheckingRegistration } = useReadContract({
+    address: CONTRACTS.creatorRegistry,
+    abi: CREATOR_REGISTRY_ABI,
+    functionName: 'isRegistered',
+    args: address ? [address] : undefined,
+    query: { enabled: !!address },
+  })
+
+  // Read creator profile from chain
+  const { data: creatorData, isLoading: isLoadingProfile } = useReadContract({
+    address: CONTRACTS.creatorRegistry,
+    abi: CREATOR_REGISTRY_ABI,
+    functionName: 'creators',
+    args: address ? [address] : undefined,
+    query: { enabled: !!address && !!isRegistered },
+  })
+
+  // Read creator's product IDs from chain
+  const { data: productIds, isLoading: isLoadingProducts } = useReadContract({
+    address: CONTRACTS.productNFT,
+    abi: PRODUCT_NFT_ABI,
+    functionName: 'getCreatorProducts',
+    args: address ? [address] : undefined,
+    query: { enabled: !!address && !!isRegistered },
+  })
+
+  const isLoading = isCheckingRegistration || isLoadingProfile || isLoadingProducts
+
+  // Build profile from on-chain data
+  const profile = creatorData ? {
+    address,
+    name: (creatorData as any)[0] || '',
+    bio: (creatorData as any)[1] || '',
+    avatar: (creatorData as any)[2] || '',
+    verified: (creatorData as any)[3] || false,
+    productCount: Number((creatorData as any)[4] || 0),
+    totalSales: Number((creatorData as any)[5] || 0),
+  } : null
+
+  // Prepare product creation data (upload to IPFS, return config for wagmi write)
+  const prepareCreateProduct = useCallback(async (formData: ProductFormData) => {
+    if (!address) throw new Error('Wallet not connected')
+
+    let imageHash = ''
+    if (formData.coverImage) {
+      imageHash = await ipfsService.uploadFile(formData.coverImage)
     }
-  }, [address]);
-  
-  const loadCreatorData = useCallback(async () => {
-    if (!address) return;
-    
-    setIsLoading(true);
-    try {
-      // Load creator products (this should be done with useReadContract in the component)
-      // For now, return empty array
-      setProducts([]);
-      
-      // Load earnings for common tokens
-      const tokens = ['0x...USDC', '0x...WETH']; // Add actual token addresses
-      const earningsData: Record<string, string> = {};
-      
-      for (const token of tokens) {
-        const balance = await contractService.getCreatorEarnings();
-        earningsData[token] = (balance as bigint).toString();
-      }
-      
-      setEarnings(earningsData);
-    } finally {
-      setIsLoading(false);
+
+    const contentHashes: string[] = []
+    for (let i = 0; i < formData.files.length; i++) {
+      const hash = await ipfsService.uploadFile(formData.files[i])
+      contentHashes.push(hash)
     }
-  }, [address]);
-  
-  const claimEarnings = useCallback(async () => {
-    if (!address) throw new Error('Wallet not connected');
-    
-    setIsLoading(true);
-    try {
-      await contractService.claimEarnings();
-      await loadCreatorData(); // Refresh data
-    } finally {
-      setIsLoading(false);
+
+    const metadata: ProductMetadata = {
+      name: formData.name,
+      description: formData.description,
+      image: imageHash ? ipfsService.getFileURL(imageHash) : '',
+      price: formData.price,
+      category: formData.category,
     }
-  }, [address, loadCreatorData]);
-  
+
+    await ipfsService.uploadJSON(metadata)
+
+    return contractService.getCreateProductConfig(metadata, contentHashes[0] || '')
+  }, [address])
+
   return useMemo(() => ({
-    createProduct,
-    loadCreatorData,
-    claimEarnings,
-    products,
-    earnings,
+    isRegistered: !!isRegistered,
     isLoading,
-    isCreator: !!address,
-  }), [createProduct, loadCreatorData, claimEarnings, products, earnings, isLoading, address]);
+    profile,
+    productIds: (productIds as bigint[]) || [],
+    prepareCreateProduct,
+    isCreator: !!isRegistered,
+  }), [isRegistered, isLoading, profile, productIds, prepareCreateProduct])
 }

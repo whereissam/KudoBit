@@ -282,19 +282,3 @@ export class CreatorOnboardingService {
   }
 }
 
-// Legacy compatibility - minimal stub
-export const CreatorService = {
-  getCurrentCreatorProfile: async () => ({ address: '', profile: null }),
-  signInCreator: async (address: string) => ({ 
-    success: false, 
-    error: 'Use CreatorOnboardingService instead', 
-    profile: null,
-    needsRegistration: false 
-  }),
-  saveCreatorSession: async (profile: any) => ({ success: false }),
-  getCreatorStatus: async (address: string) => ({ 
-    isRegistered: false, 
-    profile: null,
-    canAccessCreatorFeatures: false
-  })
-}

@@ -29,7 +29,7 @@ export function WishlistContent({ children, wishlistCount }: WishlistContentProp
               variant="outline" 
               size="sm" 
               disabled
-              className="text-red-600 hover:text-red-700"
+              className="text-destructive hover:text-destructive/80"
             >
               <Trash2 className="h-3 w-3 mr-1" />
               Clear All
@@ -55,9 +55,9 @@ export function WishlistContent({ children, wishlistCount }: WishlistContentProp
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="text-center mt-12 p-6 bg-gradient-to-r from-morph-green-50/50 to-morph-purple-50/50 dark:from-morph-green-900/10 dark:to-morph-purple-900/10 rounded-lg border border-morph-green-200/30"
+        className="text-center mt-12 p-6 bg-gradient-to-r from-accent/10 to-primary/10 rounded-lg border border-border"
       >
-        <h3 className="text-lg font-semibold mb-2 bg-gradient-to-r from-morph-green-600 to-morph-purple-600 bg-clip-text text-transparent">
+        <h3 className="text-lg font-semibold mb-2 bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">
           Ready to make a purchase?
         </h3>
         <p className="text-sm text-muted-foreground mb-4">

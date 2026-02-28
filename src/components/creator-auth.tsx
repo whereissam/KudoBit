@@ -168,7 +168,7 @@ export function CreatorAuth() {
   }
 
   return (
-    <Card className="border-green-200 bg-green-50/30">
+    <Card className="border-chart-2/20 bg-chart-2/5">
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <span className="flex items-center gap-2">
@@ -179,7 +179,7 @@ export function CreatorAuth() {
             onClick={handleLogout}
             variant="outline"
             size="sm"
-            className="text-destructive border-red-200 hover:bg-red-50"
+            className="text-destructive border-destructive/20 hover:bg-destructive/5"
           >
             <LogOut className="h-4 w-4 mr-1" />
             Logout
@@ -286,9 +286,9 @@ export function CreatorAuth() {
               Edit Profile
             </Button>
             
-            <div className="bg-chart-1/10 rounded-lg p-3 text-sm">
-              <p className="text-green-800 font-medium mb-1">✅ Authentication Benefits:</p>
-              <ul className="text-green-700 text-xs space-y-1">
+            <div className="bg-chart-2/10 rounded-lg p-3 text-sm">
+              <p className="text-chart-2 font-medium mb-1">✅ Authentication Benefits:</p>
+              <ul className="text-chart-2/80 text-xs space-y-1">
                 <li>• Secure wallet-based identity</li>
                 <li>• No centralized account to lose</li>
                 <li>• Cryptographic proof of ownership</li>

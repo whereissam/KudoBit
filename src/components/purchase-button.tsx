@@ -48,7 +48,7 @@ export function PurchaseButton({ flow, itemId, onPurchase, disabled }: PurchaseB
 
   return (
     <Button
-      className="w-full bg-gradient-to-r from-morph-green-500 to-morph-green-600 hover:from-morph-green-600 hover:to-morph-green-700"
+      className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
       onClick={onPurchase}
       disabled={disabled || isProcessing}
     >

@@ -109,7 +109,7 @@ export function LazyAvatar({
       style={{ width: size, height: size }}
       placeholder={
         <div 
-          className="bg-gradient-to-br from-morph-green-100 to-morph-purple-100 rounded-full"
+          className="bg-gradient-to-br from-accent/20 to-primary/20 rounded-full"
           style={{ width: size, height: size }}
         />
       }

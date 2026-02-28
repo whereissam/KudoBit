@@ -10,11 +10,11 @@ interface AuthStepProps {
 export function AuthStep({ mode, isLoading, error, onAuth }: AuthStepProps) {
   return (
     <div className="space-y-4">
-      <div className="p-4 bg-primary/5 border border-blue-200 rounded-lg">
-        <h4 className="font-medium text-blue-900 mb-2">
+      <div className="p-4 bg-primary/5 border border-primary/20 rounded-lg">
+        <h4 className="font-medium text-primary mb-2">
           {mode === 'signin' ? 'Sign In' : 'Create Account'}
         </h4>
-        <p className="text-sm text-blue-800">
+        <p className="text-sm text-primary/80">
           {mode === 'signin' 
             ? 'Verify your wallet ownership to access your account'
             : 'Sign a message to create your secure account'
@@ -23,8 +23,8 @@ export function AuthStep({ mode, isLoading, error, onAuth }: AuthStepProps) {
       </div>
 
       {error && (
-        <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-          <p className="text-sm text-red-800">{error}</p>
+        <div className="p-3 bg-destructive/5 border border-destructive/20 rounded-lg">
+          <p className="text-sm text-destructive">{error}</p>
         </div>
       )}
 

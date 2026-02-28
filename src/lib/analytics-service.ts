@@ -279,7 +279,7 @@ export class AnalyticsService {
     profileViews: number
   }> {
     try {
-      const response = await fetch(`${this.baseUrl}/api/v1/analytics/creator/${creatorAddress}`)
+      const response = await fetch(`${this.baseUrl}/api/creators/${creatorAddress}/analytics`)
       if (!response.ok) {
         throw new Error('Failed to fetch backend analytics')
       }
@@ -297,7 +297,7 @@ export class AnalyticsService {
 
   private static async getCreatorProductsFromBackend(creatorAddress: string): Promise<any[]> {
     try {
-      const response = await fetch(`${this.baseUrl}/api/products/creator/${creatorAddress}`)
+      const response = await fetch(`${this.baseUrl}/api/creators/${creatorAddress}/products`)
       if (!response.ok) {
         throw new Error('Failed to fetch creator products')
       }

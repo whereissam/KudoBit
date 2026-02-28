@@ -13,8 +13,8 @@ export function NotFoundStep({ onCreateAccount, onTryDifferentWallet }: NotFound
         <User className="h-6 w-6 text-chart-4" />
       </div>
       <div>
-        <h4 className="font-medium text-orange-900">No Account Found</h4>
-        <p className="text-sm text-orange-800 mb-4">
+        <h4 className="font-medium text-chart-4">No Account Found</h4>
+        <p className="text-sm text-chart-4/80 mb-4">
           This wallet doesn't have a creator account yet.
         </p>
       </div>
@@ -42,8 +42,8 @@ export function AlreadyExistsStep({ onSignIn, onTryDifferentWallet }: AlreadyExi
         <User className="h-6 w-6 text-primary" />
       </div>
       <div>
-        <h4 className="font-medium text-blue-900">Account Exists</h4>
-        <p className="text-sm text-blue-800 mb-4">
+        <h4 className="font-medium text-primary">Account Exists</h4>
+        <p className="text-sm text-primary/80 mb-4">
           This wallet already has a creator account.
         </p>
       </div>
