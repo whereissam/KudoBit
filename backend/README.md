@@ -1,402 +1,373 @@
 # KudoBit Backend API
 
-> **The Web3 Gumroad** - Digital value, instantly rewarded. Backend API with SIWE authentication, event indexing, and creator management.
+**Decentralized Gumroad - Creator Marketplace on Blockchain**
 
-## 🚀 Quick Start
+A comprehensive REST API backend for the KudoBit platform, providing off-chain indexing, caching, social features, analytics, and Web2-friendly endpoints for the decentralized creator economy.
 
-```bash
-# Install dependencies
-npm install
+## 📊 Current Status
 
-# Set up environment variables
-cp .env.example .env
-# Edit .env with your configuration
+**Phase 1 & 2: COMPLETE** ✅
+**Implementation:** 81% (51/63 features)
 
-# Start development server
-npm run dev
+See [IMPLEMENTATION-STATUS.md](./IMPLEMENTATION-STATUS.md) for details.
 
-# Start production server
-npm start
-```
-
-The API will be available at `http://localhost:3001`
-
-## 📋 Table of Contents
-
-- [Features](#-features)
-- [Architecture](#-architecture)
-- [API Documentation](#-api-documentation)
-- [Authentication](#-authentication)
-- [Database](#-database)
-- [Event Indexing](#-event-indexing)
-- [Environment Variables](#-environment-variables)
-- [Development](#-development)
-- [File Structure](#-file-structure)
-
-## ✨ Features
-
-- **🔐 SIWE Authentication** - Sign-In with Ethereum using secure message signing
-- **📊 Event Indexing** - Real-time blockchain event monitoring and indexing
-- **👥 Creator Management** - Profile management and content creation tools
-- **📈 Analytics** - Purchase tracking, revenue analytics, and user insights
-- **🗄️ SQLite Database** - Lightweight, efficient data storage
-- **📝 API Documentation** - Auto-generated Swagger/OpenAPI docs
-- **🛡️ Security Middleware** - Rate limiting, validation, and error handling
-- **📧 Email Service** - Transactional emails via Resend
-- **☁️ IPFS Integration** - Decentralized content storage (temporarily disabled)
+---
 
 ## 🏗️ Architecture
 
-```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Frontend      │    │   Backend API   │    │   Blockchain    │
-│   (React)       │◄──►│   (Hono.js)     │◄──►│   (Hardhat)     │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-                              │
-                              ▼
-                       ┌─────────────────┐
-                       │   SQLite DB     │
-                       │   + Event Index │
-                       └─────────────────┘
-```
-
-### Core Components
-
-- **Hono.js Framework** - Fast, lightweight web framework
-- **SIWE Authentication** - Ethereum-native authentication
-- **Event Indexer** - Monitors smart contract events
-- **MVC Architecture** - Controllers, Services, Models separation
-- **Middleware Stack** - Security, validation, rate limiting
-
-## 📚 API Documentation
-
-### Base URL
-```
-http://localhost:3001
-```
-
-### Core Endpoints
-
-#### Authentication
-```http
-GET  /auth/nonce              # Get nonce for SIWE
-POST /auth/verify             # Verify SIWE signature
-POST /auth/refresh            # Refresh JWT token
-GET  /auth/profile            # Get user profile
-```
-
-#### Creators (Protected)
-```http
-GET    /v1/creators/profile         # Get creator profile
-PUT    /v1/creators/profile         # Update creator profile
-GET    /v1/creators/products        # Get creator's products
-GET    /v1/creators/analytics       # Get creator analytics
-POST   /v1/creators/withdraw        # Withdraw earnings
-```
-
-#### Products (Protected)
-```http
-GET    /v1/products                 # List all products
-POST   /v1/products                 # Create new product
-GET    /v1/products/:id             # Get product details
-PUT    /v1/products/:id             # Update product
-DELETE /v1/products/:id             # Delete product
-```
-
-#### Analytics (Public)
-```http
-GET    /v1/analytics/overview       # Platform overview
-GET    /v1/analytics/products       # Product statistics
-GET    /v1/analytics/creators       # Creator statistics
-```
-
-#### Event Indexer (Protected)
-```http
-GET    /v1/indexer/events           # Get indexed events
-GET    /v1/indexer/status           # Get indexer status
-POST   /v1/indexer/sync             # Manual sync trigger
-```
-
-## 🔐 Authentication
-
-KudoBit uses **Sign-In with Ethereum (SIWE)** for authentication:
-
-### Flow
-1. **Get Nonce**: `GET /auth/nonce`
-2. **Sign Message**: Client signs SIWE message with wallet
-3. **Verify**: `POST /auth/verify` with signed message
-4. **JWT Token**: Receive JWT for authenticated requests
-
-### Example SIWE Message
-```
-localhost:3001 wants you to sign in with your Ethereum account:
-0x1234...5678
-
-KudoBit - The Web3 Gumroad
-
-URI: http://localhost:3001
-Version: 1
-Chain ID: 1337
-Nonce: abc123def456
-Issued At: 2024-01-01T00:00:00.000Z
-```
-
-### Protected Routes
-All `/v1/creators/*`, `/v1/products/*`, and `/v1/indexer/*` routes require:
-```http
-Authorization: Bearer <jwt-token>
-```
-
-## 🗄️ Database
-
-### SQLite Schema
-
-#### Users Table
-```sql
-CREATE TABLE users (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  address TEXT UNIQUE NOT NULL,
-  nonce TEXT,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-```
-
-#### Creator Profiles Table
-```sql
-CREATE TABLE creator_profiles (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  user_id INTEGER REFERENCES users(id),
-  display_name TEXT,
-  bio TEXT,
-  avatar_url TEXT,
-  banner_url TEXT,
-  social_links JSON,
-  is_verified BOOLEAN DEFAULT FALSE,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-```
-
-#### Products Table
-```sql
-CREATE TABLE products (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  creator_id INTEGER REFERENCES users(id),
-  contract_product_id INTEGER,
-  name TEXT NOT NULL,
-  description TEXT,
-  price_usdc REAL,
-  ipfs_hash TEXT,
-  category TEXT,
-  tags JSON,
-  is_active BOOLEAN DEFAULT TRUE,
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-```
-
-## ⚡ Event Indexing
-
-The backend continuously monitors blockchain events:
-
-### Indexed Events
-- **ProductPurchased** - Track all purchases
-- **LoyaltyBadgeAwarded** - Monitor badge awards
-- **ProductListed** - New product listings
-- **CreatorRegistered** - New creator signups
-
-### Indexer Features
-- **Real-time Monitoring** - WebSocket connection to blockchain
-- **Historical Sync** - Backfill past events
-- **Retry Logic** - Robust error handling
-- **Performance Optimization** - Efficient batch processing
-
-### Indexer Status
-```http
-GET /v1/indexer/status
-```
-```json
-{
-  "status": "running",
-  "latestBlock": 19028950,
-  "eventsIndexed": 1247,
-  "lastSync": "2024-01-01T12:00:00Z"
-}
-```
-
-## 🔧 Environment Variables
-
-Create a `.env` file in the backend directory:
-
-```env
-# Server Configuration
-PORT=3001
-NODE_ENV=development
-
-# JWT Configuration
-JWT_SECRET=your-super-secret-jwt-key
-JWT_EXPIRES_IN=24h
-
-# Database
-DATABASE_URL=./kudobit.db
-
-# Blockchain Configuration
-RPC_URL=http://localhost:8545
-CREATOR_STORE_ADDRESS=0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
-LOYALTY_TOKEN_ADDRESS=0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512
-MOCK_USDC_ADDRESS=0x5FbDB2315678afecb367f032d93F642f64180aa3
-
-# External Services
-RESEND_API_KEY=re_your_resend_api_key
-PINATA_JWT=your_pinata_jwt_token
-
-# CORS Origins
-CORS_ORIGINS=http://localhost:5173,http://localhost:3000
-
-# Rate Limiting
-RATE_LIMIT_WINDOW_MS=900000
-RATE_LIMIT_MAX_REQUESTS=100
-```
-
-## 🛠️ Development
-
-### Scripts
-```bash
-npm run dev      # Development with auto-reload
-npm start        # Production server
-npm test         # Run tests (not implemented)
-```
-
-### Development Workflow
-1. **Start Hardhat Node**: `npx hardhat node` (from root)
-2. **Deploy Contracts**: `npm run dev:check` (from root)
-3. **Start Backend**: `npm run dev` (from backend/)
-4. **Start Frontend**: `bun run dev` (from root)
-
-### Testing API
-```bash
-# Test health endpoint
-curl http://localhost:3001
-
-# Get nonce
-curl http://localhost:3001/auth/nonce
-
-# Test analytics (public)
-curl http://localhost:3001/v1/analytics/overview
-```
-
-### Logging
-Logs are written to:
-- Console (development)
-- `server.log` (production)
-- `enhanced-server.log` (detailed logs)
-
-## 📁 File Structure
+This backend follows **clean architecture principles** with clear separation of concerns:
 
 ```
 backend/
-├── 📄 README.md                    # This file
-├── 📦 package.json                 # Dependencies & scripts
-├── 🚀 index.js                     # Main server entry point
-├── 🗄️ database-sqlite.js          # Database setup & migrations
-├── ⚡ event-indexer.js             # Blockchain event indexer
-│
-├── 📁 controllers/                 # Request handlers
-│   ├── authController.js           # Authentication logic
-│   ├── creatorController.js        # Creator management
-│   └── productController.js        # Product operations
-│
-├── 📁 services/                    # Business logic
-│   ├── authService.js              # Auth utilities
-│   ├── creatorService.js           # Creator operations
-│   └── productService.js           # Product utilities
-│
-├── 📁 models/                      # Data models
-│   ├── authModel.js                # User & auth models
-│   ├── creatorModel.js             # Creator profile models
-│   └── productModel.js             # Product models
-│
-├── 📁 routes/v1/                   # API route definitions
-│   ├── index.js                    # Route mounting
-│   ├── authRoutes.js               # Auth endpoints
-│   ├── creatorRoutes.js            # Creator endpoints
-│   ├── productRoutes.js            # Product endpoints
-│   ├── analyticsRoutes.js          # Analytics endpoints
-│   └── indexerRoutes.js            # Indexer endpoints
-│
-├── 📁 middleware/                  # Express middleware
-│   ├── auth.js                     # JWT authentication
-│   ├── rateLimit.js                # Rate limiting
-│   ├── security.js                 # Security headers
-│   └── validation.js               # Input validation
-│
-├── 📁 utils/                       # Utility functions
-│   ├── errorHandler.js             # Error handling
-│   ├── logger.js                   # Logging utilities
-│   └── pagination.js               # Pagination helpers
-│
-├── 📁 docs/                        # Documentation
-│   └── swagger.js                  # API documentation
-│
-└── 📁 data/                        # Data storage
-    ├── kudobit.db                  # SQLite database
-    ├── server.log                  # Application logs
-    └── enhanced-server.log         # Detailed logs
+├── src/
+│   ├── config/          # Database and environment configuration
+│   │   ├── database.js           # PostgreSQL connection & schema
+│   │   ├── schema-extensions.sql # Extended tables & triggers
+│   │   └── env.js                # Environment variables
+│   ├── middleware/      # Request/response middleware
+│   │   ├── auth.js               # SIWE + JWT authentication
+│   │   ├── validation.js         # Input validation
+│   │   └── errorHandler.js       # Error handling
+│   ├── models/          # Data access layer (8 models)
+│   │   ├── creatorModel.js
+│   │   ├── productModel.js
+│   │   ├── purchaseModel.js
+│   │   ├── categoryModel.js      # NEW
+│   │   ├── tagModel.js           # NEW
+│   │   ├── searchModel.js        # NEW
+│   │   ├── reviewModel.js        # NEW
+│   │   ├── wishlistModel.js      # NEW
+│   │   ├── followModel.js        # NEW
+│   │   ├── analyticsModel.js     # NEW
+│   │   └── downloadModel.js      # NEW
+│   ├── controllers/     # Business logic layer (8 controllers)
+│   ├── routes/          # API route definitions (8 route files)
+│   └── index.js         # Application entry point
+├── Dockerfile
+├── docker-compose.yml
+└── package.json
 ```
 
-## 🔧 Configuration Files
+---
 
-### Core Configuration
-- `package.json` - Dependencies and scripts
-- `.env` - Environment variables
-- `database-sqlite.js` - Database schema and migrations
+## 🚀 Quick Start
 
-### Feature Configuration
-- `event-indexer.js` - Blockchain monitoring setup
-- `docs/swagger.js` - API documentation config
-- `middleware/` - Security and validation rules
+### Prerequisites
+- Node.js >= 18.0.0
+- Docker & Docker Compose
+- PostgreSQL (or use Docker)
 
-## 🚦 Error Handling
+### Installation
 
-### HTTP Status Codes
-- `200` - Success
-- `201` - Created
-- `400` - Bad Request
-- `401` - Unauthorized
-- `403` - Forbidden
-- `404` - Not Found
-- `429` - Too Many Requests
-- `500` - Internal Server Error
+1. **Install dependencies**
+```bash
+npm install
+```
 
-### Error Response Format
-```json
-{
-  "error": {
-    "code": "INVALID_SIGNATURE",
-    "message": "SIWE signature verification failed",
-    "details": {
-      "address": "0x1234...5678",
-      "timestamp": "2024-01-01T12:00:00Z"
-    }
+2. **Configure environment**
+```bash
+cp .env.example .env
+# Edit .env with your configuration
+```
+
+3. **Start PostgreSQL with Docker**
+```bash
+docker-compose up -d postgres
+```
+
+4. **Start the development server**
+```bash
+npm run dev
+# or
+npm start
+```
+
+The API will be available at:
+- **API**: http://localhost:6000/api
+- **Swagger Docs**: http://localhost:6000/docs
+- **Health Check**: http://localhost:6000/health
+
+---
+
+## 🔌 API Endpoints
+
+### 🔐 Authentication (SIWE)
+- `GET /api/auth/nonce` - Generate authentication nonce
+- `POST /api/auth/verify` - Verify SIWE signature and get JWT
+- `POST /api/auth/logout` - Logout and invalidate session
+- `GET /api/auth/me` - Get current user info
+
+### 👤 Creators
+- `GET /api/creators` - Get all creators
+- `GET /api/creators/:address` - Get creator by address
+- `GET /api/creators/:address/products` - Get creator's products
+- `PUT /api/creators/profile` - Update creator profile [AUTH]
+
+### 📦 Products
+- `GET /api/products` - Get all products (supports ?creator=address filter)
+- `POST /api/products` - Create product [AUTH]
+- `GET /api/products/:id` - Get product by ID
+- `PUT /api/products/:id` - Update product [AUTH]
+- `DELETE /api/products/:id` - Delete product [AUTH]
+
+### 💰 Purchases
+- `POST /api/purchases` - Record a purchase [AUTH]
+- `GET /api/purchases` - Get user purchases [AUTH]
+- `GET /api/purchases/:id` - Get purchase details [AUTH]
+- `GET /api/purchases/:id/content` - Get content download URL [AUTH]
+
+---
+
+## 🆕 NEW ENDPOINTS (Phase 1 & 2)
+
+### 🏷️ Categories
+- `GET /api/categories` - Get all categories
+- `GET /api/categories/:slug` - Get category by slug
+- `GET /api/categories/:slug/products` - Get products in category
+
+### 🔖 Tags
+- `GET /api/tags` - Get all tags
+- `GET /api/tags/popular` - Get popular tags (by usage)
+- `GET /api/tags/:slug/products` - Get products with tag
+
+### 🔍 Search & Discovery
+- `POST /api/search` - Full-text search with filters
+  ```json
+  {
+    "query": "string",
+    "category": "number",
+    "tags": ["number[]"],
+    "minPrice": "number",
+    "maxPrice": "number",
+    "sortBy": "relevance|newest|price_asc|price_desc"
   }
-}
+  ```
+- `GET /api/search/trending` - Get trending products
+- `GET /api/search/featured` - Get featured products
+
+### ⭐ Reviews & Ratings
+- `GET /api/products/:id/reviews` - Get product reviews
+- `POST /api/products/:id/reviews` - Create review [AUTH]
+- `PUT /api/reviews/:id` - Update review [AUTH]
+- `DELETE /api/reviews/:id` - Delete review [AUTH]
+- `POST /api/reviews/:id/helpful` - Mark review helpful [AUTH]
+
+### ❤️ Wishlist
+- `GET /api/wishlist` - Get user's wishlist [AUTH]
+- `POST /api/wishlist/:productId` - Add to wishlist [AUTH]
+- `DELETE /api/wishlist/:productId` - Remove from wishlist [AUTH]
+- `GET /api/wishlist/:productId/check` - Check if in wishlist [AUTH]
+
+### 👥 Follow/Social
+- `POST /api/creators/:address/follow` - Follow creator [AUTH]
+- `DELETE /api/creators/:address/follow` - Unfollow creator [AUTH]
+- `GET /api/creators/:address/followers` - Get creator's followers
+- `GET /api/following` - Get creators user follows [AUTH]
+- `GET /api/creators/:address/follow/check` - Check if following [AUTH]
+- `GET /api/creators/:address/stats` - Get follower/following stats
+
+### 📊 Analytics
+- `GET /api/products/:id/analytics` - Get product analytics
+- `POST /api/products/:id/view` - Track product view
+- `GET /api/creators/:address/analytics` - Get creator analytics [AUTH, OWN]
+- `GET /api/creators/:address/sales` - Get sales history [AUTH]
+- `GET /api/creators/:address/revenue` - Get revenue over time [AUTH]
+- `GET /api/creators/:address/top-products` - Get top products [AUTH]
+
+### 📥 Downloads
+- `POST /api/purchases/:id/download` - Create download link [AUTH]
+- `GET /api/downloads/:token` - Download file (token-based)
+- `GET /api/downloads` - Get download history [AUTH]
+- `GET /api/products/:id/download-stats` - Get download stats
+
+---
+
+## 📚 Database Schema
+
+### Core Tables
+1. **creators** - Creator profiles
+2. **products** - Digital products
+3. **purchases** - Purchase records
+4. **sessions** - User sessions
+
+### Extended Tables (Phase 1 & 2)
+5. **categories** - Product categories (10 seeded)
+6. **tags** - Product tags (10 seeded)
+7. **product_categories** - Many-to-many relationship
+8. **product_tags** - Many-to-many relationship
+9. **product_analytics** - View/download tracking
+10. **downloads** - Secure download tokens
+11. **reviews** - Product reviews & ratings
+12. **review_helpful** - Review helpfulness votes
+13. **wishlists** - User wishlists
+14. **follows** - Creator follow relationships
+15. **creator_analytics** - Aggregated creator stats
+
+### Auto-Updating Triggers
+- ✅ Auto-update creator analytics on purchase
+- ✅ Auto-increment product views
+- ✅ Auto-increment download counts
+- ✅ Auto-update review helpful count
+- ✅ Auto-update creator follower count
+- ✅ Auto-update creator product count
+- ✅ Auto-update creator average rating
+
+---
+
+## 📦 Environment Variables
+
+Create a `.env` file with the following:
+
+```env
+# Application
+NODE_ENV=development
+PORT=6000
+
+# Database (Docker defaults)
+DB_USER=postgres
+DB_PASSWORD=postgres
+DB_HOST=localhost
+DB_NAME=kudobit
+DB_PORT=5434
+DB_SSL=false
+
+# JWT Authentication
+JWT_SECRET=your-secret-key-change-in-production
+
+# CORS
+CORS_ORIGINS=http://localhost:5173,http://localhost:5174,http://localhost:3000
+
+# IPFS
+IPFS_GATEWAY=gateway.pinata.cloud
+
+# SIWE
+SIWE_DOMAIN=localhost
+SIWE_EMAIL_DOMAIN=kudobit.com
 ```
 
 ---
 
-## 📄 License
+## 🐳 Docker Deployment
 
-This project is licensed under the ISC License.
+```bash
+# Build and start all services
+docker-compose up -d
 
-## 🤝 Contributing
+# View API logs
+docker-compose logs -f api
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+# View database logs
+docker-compose logs -f postgres
+
+# Stop services
+docker-compose down
+
+# Restart services
+docker-compose restart
+```
+
+### Docker Services
+- **postgres** - PostgreSQL database (port 5434)
+- **api** - Node.js backend (port 6000)
 
 ---
 
-Built with ❤️ for the Web3 creator economy.
+## 🔐 Authentication
+
+Uses **Sign-In with Ethereum (SIWE)** for wallet-based authentication:
+
+### Flow
+1. Frontend requests nonce: `GET /api/auth/nonce`
+2. User signs SIWE message with wallet (e.g., MetaMask)
+3. Frontend sends message + signature: `POST /api/auth/verify`
+4. Backend verifies signature and returns JWT
+5. Use JWT in `Authorization: Bearer <token>` header for protected routes
+
+### Development Testing
+For development, use the `X-Test-Address` header to bypass authentication:
+
+```bash
+curl http://localhost:6000/api/wishlist \
+  -H "X-Test-Address: 0x742d35cc6634c0532925a3b844bc9e7595f0beb0"
+```
+
+---
+
+## 🧪 Testing
+
+### Health Check
+```bash
+curl http://localhost:6000/health
+```
+
+### Get Categories
+```bash
+curl http://localhost:6000/api/categories
+```
+
+### Search Products
+```bash
+curl -X POST http://localhost:6000/api/search \
+  -H "Content-Type: application/json" \
+  -d '{
+    "query": "art",
+    "category": 1,
+    "limit": 10,
+    "sortBy": "newest"
+  }'
+```
+
+### Get Trending Products
+```bash
+curl http://localhost:6000/api/search/trending
+```
+
+### Wishlist (with dev auth)
+```bash
+curl http://localhost:6000/api/wishlist \
+  -H "X-Test-Address: 0x1234567890abcdef1234567890abcdef12345678"
+```
+
+---
+
+## 📖 API Documentation
+
+Interactive Swagger/OpenAPI documentation is available at:
+**http://localhost:6000/docs**
+
+---
+
+## 🎯 Features
+
+### ✅ Implemented
+- SIWE wallet authentication
+- Creator profiles & analytics
+- Product CRUD operations
+- Purchase tracking
+- **Full-text search** with filters
+- **Categories & tags**
+- **Product reviews & ratings**
+- **User wishlists**
+- **Follow creators**
+- **Creator analytics** (sales, revenue, followers)
+- **Secure downloads** with token-based access
+- **Auto-updating analytics** via database triggers
+
+### 🚧 Coming Soon (Phase 3 & 4)
+- DAO governance & voting
+- Multi-creator revenue splits
+- Multi-chain support
+- Subscription models
+- Referral/affiliate system
+
+---
+
+## 📝 License
+
+MIT
+
+---
+
+**Built with ❤️ for the decentralized creator economy.**
+
+For detailed implementation status, see [IMPLEMENTATION-STATUS.md](./IMPLEMENTATION-STATUS.md)

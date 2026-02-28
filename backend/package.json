@@ -1,37 +1,52 @@
 {
   "name": "kudobit-backend",
-  "version": "1.0.0",
-  "description": "KudoBit Backend API with SIWE authentication",
-  "main": "index.js",
+  "version": "2.0.0",
+  "description": "KudoBit Backend API - Decentralized Gumroad on Blockchain",
+  "main": "src/index.ts",
   "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "dev": "node --watch index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "bun src/index.ts",
+    "dev": "bun --watch src/index.ts",
+    "build": "bun run tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:logs": "docker-compose logs -f api",
+    "db:create": "createdb kudobit",
+    "db:drop": "dropdb kudobit"
   },
   "keywords": [
     "web3",
-    "creator",
+    "blockchain",
+    "creator-economy",
     "ethereum",
-    "siwe"
+    "siwe",
+    "decentralized-marketplace",
+    "nft"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "KudoBit Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "@hono/node-server": "^1.17.1",
     "@hono/swagger-ui": "^0.5.2",
-    "cors": "^2.8.5",
     "dotenv": "^17.2.0",
     "ethers": "^6.15.0",
     "hono": "^4.8.5",
     "jsonwebtoken": "^9.0.2",
-    "multer": "^2.0.2",
     "pg": "^8.16.3",
-    "pinata": "^2.4.9",
-    "resend": "^4.7.0",
     "siwe": "^3.0.0",
-    "sqlite": "^5.1.1",
-    "sqlite3": "^5.1.7",
-    "swagger-jsdoc": "^6.2.8"
+    "viem": "^2.38.3",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^22.15.0",
+    "@types/pg": "^8.11.14",
+    "@types/ws": "^8.18.0",
+    "typescript": "^5.7.0"
   }
 }
