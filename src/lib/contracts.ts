@@ -2,14 +2,14 @@ import { Address } from 'viem'
 
 // Development/placeholder addresses - replace with actual deployed addresses
 const DEV_ADDRESSES = {
-  mockUSDC: '0x68B1D87F95878fE05B998F19b66F4baba5De1aed',
-  loyaltyToken: '0x3Aa5ebB10DC797CAC828524e59A333d0A371443c',
-  productNFT: '0xc6e7DF5E7b4f2A278906862b61205850344D4e7d',
-  creatorRegistry: '0x59b670e9fA9D0A427751Af201D676719a970857b',
-  royaltyManager: '0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1',
-  contentAccess: '0x322813Fd9A801c5507c9de605d63CEA4f2CE6c44',
-  gumroadCore: '0x4A679253410272dd5232B3Ff7cF5dbB88f295319',
-  shopfront: '0xc6e7DF5E7b4f2A278906862b61205850344D4e7d', // Using ProductNFT address as fallback
+  mockUSDC: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
+  loyaltyToken: '0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512',
+  productNFT: '0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0',
+  creatorRegistry: '0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9',
+  royaltyManager: '0x8A791620dd6260079BF849Dc5567aDC3F2FdC318',
+  contentAccess: '0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9',
+  gumroadCore: '0x610178dA211FEF7D417bC0e6FeD39F05609AD788',
+  shopfront: '0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e',
 }
 
 export const CONTRACTS = {
@@ -418,9 +418,9 @@ export const WISHLIST_ABI = [
 // Add missing contract addresses
 export const CONTRACTS_EXTENDED = {
   ...CONTRACTS,
-  creatorStore: CONTRACTS.shopfront, // Use shopfront as fallback
-  secondaryMarketplace: CONTRACTS.shopfront, // Use shopfront as fallback
-  wishlist: '0xa85233C63b9Ee964Add6F2cffe00Fd84eb32338f' as Address,
+  creatorStore: (import.meta.env.VITE_CREATOR_STORE_ADDRESS || '0xA51c1fc2f0D1a1b8494Ed1FE312d7C3a78Ed91C0') as Address,
+  secondaryMarketplace: (import.meta.env.VITE_SECONDARY_MARKETPLACE_ADDRESS || '0x0DCd1Bf9A1b36cE34237eEaFef220932846BCD82') as Address,
+  wishlist: (import.meta.env.VITE_WISHLIST_ADDRESS || '0xa513E6E4b8f2a923D98304ec87F64353C4D5C853') as Address,
 }
 
 // Re-export extension contracts and ABIs

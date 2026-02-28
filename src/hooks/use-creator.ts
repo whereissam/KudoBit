@@ -45,8 +45,8 @@ export function useCreator() {
 
   const isLoading = isCheckingRegistration || isLoadingProfile || isLoadingProducts
 
-  // Build profile from on-chain data
-  const profile = creatorData ? {
+  // Build profile from on-chain data (memoized to avoid new ref every render)
+  const profile = useMemo(() => creatorData ? {
     address,
     name: (creatorData as any)[0] || '',
     bio: (creatorData as any)[1] || '',
@@ -54,7 +54,7 @@ export function useCreator() {
     verified: (creatorData as any)[3] || false,
     productCount: Number((creatorData as any)[4] || 0),
     totalSales: Number((creatorData as any)[5] || 0),
-  } : null
+  } : null, [creatorData, address])
 
   // Prepare product creation data (upload to IPFS, return config for wagmi write)
   const prepareCreateProduct = useCallback(async (formData: ProductFormData) => {

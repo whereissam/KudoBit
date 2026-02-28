@@ -391,7 +391,7 @@ function TreasuryDashboard() {
             <CardContent>
               {transactions.length === 0 ? (
                 <div className="text-center py-8">
-                  <Clock className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+                  <Clock className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
                   <p className="text-muted-foreground">No transactions found</p>
                 </div>
               ) : (
@@ -418,11 +418,9 @@ function TreasuryDashboard() {
                                 {tx.category}
                               </Badge>
                               {tx.proposalId && (
-                                <Link to={`/dao/proposals/${tx.proposalId}`}>
-                                  <Badge variant="outline" className="text-xs hover:bg-muted">
+                                <Badge variant="outline" className="text-xs">
                                     Proposal #{tx.proposalId}
                                   </Badge>
-                                </Link>
                               )}
                             </div>
                           </div>
@@ -508,7 +506,7 @@ function TreasuryDashboard() {
                   Request Treasury Funding
                 </Button>
               </Link>
-              <Link to="/dao/proposals">
+              <Link to="/dao/dashboard">
                 <Button variant="outline" className="w-full flex items-center gap-2">
                   <Clock className="w-4 h-4" />
                   View Active Proposals
@@ -518,10 +516,10 @@ function TreasuryDashboard() {
                 <Download className="w-4 h-4" />
                 Download Treasury Report
               </Button>
-              <Link to="/dao/analytics">
+              <Link to="/dao/dashboard">
                 <Button variant="outline" className="w-full flex items-center gap-2">
                   <PieChart className="w-4 h-4" />
-                  Financial Analytics
+                  DAO Dashboard
                 </Button>
               </Link>
             </div>

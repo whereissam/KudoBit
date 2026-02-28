@@ -15,7 +15,7 @@ export function useAuthFlow(mode: 'signin' | 'signup', onSuccess: () => void, on
   const [step, setStep] = useState<AuthStep>('connect')
 
   // Check on-chain creator registration
-  const { data: isRegistered } = useReadContract({
+  const { data: isRegistered, isLoading: isCheckingRegistration } = useReadContract({
     address: CONTRACTS.creatorRegistry,
     abi: CREATOR_REGISTRY_ABI,
     functionName: 'isRegistered',
@@ -26,12 +26,18 @@ export function useAuthFlow(mode: 'signin' | 'signup', onSuccess: () => void, on
   const handleWalletAuth = async () => {
     if (!address || !isConnected) return
 
+    // Don't act on registration status while the query is still loading
+    if (isCheckingRegistration) {
+      setError('Checking registration status, please try again.')
+      return
+    }
+
     setIsLoading(true)
     setError('')
 
     try {
       if (mode === 'signin') {
-        if (isRegistered) {
+        if (isRegistered === true) {
           // SIWE auth for registered creators
           const authResult = await signInWithEthereum(address, async (message: string) => {
             return await signMessageAsync({ message, account: address })
@@ -51,7 +57,7 @@ export function useAuthFlow(mode: 'signin' | 'signup', onSuccess: () => void, on
         }
       } else {
         // Sign up flow
-        if (isRegistered) {
+        if (isRegistered === true) {
           setStep('already-exists')
           return
         }
@@ -78,16 +84,28 @@ export function useAuthFlow(mode: 'signin' | 'signup', onSuccess: () => void, on
   const handleSignInExisting = async () => {
     if (!address) return
 
-    const authResult = await signInWithEthereum(address, async (message: string) => {
-      return await signMessageAsync({ message, account: address })
-    })
+    setIsLoading(true)
+    setError('')
 
-    if (authResult.success) {
-      setStep('complete')
-      setTimeout(() => {
-        onSuccess()
-        onClose()
-      }, 1500)
+    try {
+      const authResult = await signInWithEthereum(address, async (message: string) => {
+        return await signMessageAsync({ message, account: address })
+      })
+
+      if (authResult.success) {
+        setStep('complete')
+        setTimeout(() => {
+          onSuccess()
+          onClose()
+        }, 1500)
+      } else {
+        setError(authResult.error || 'Sign in failed')
+      }
+    } catch (err) {
+      console.error('Auth error:', err)
+      setError('Authentication failed. Please try again.')
+    } finally {
+      setIsLoading(false)
     }
   }
 

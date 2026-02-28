@@ -47,6 +47,15 @@ function CreateCollaborativeProduct() {
     }
   ])
 
+  // Keep first collaborator's wallet in sync with connected wallet
+  useEffect(() => {
+    if (address) {
+      setCollaborators(prev => prev.map((c, i) =>
+        i === 0 ? { ...c, wallet: address } : c
+      ))
+    }
+  }, [address])
+
   const [requiresAllApproval, setRequiresAllApproval] = useState(false)
   const [error, setError] = useState('')
 

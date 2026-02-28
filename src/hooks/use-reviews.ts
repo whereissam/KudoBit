@@ -25,12 +25,12 @@ export function useProductReviews(productId: bigint | undefined) {
   const { writeContract, data: txHash, isPending: isWriting } = useWriteContract()
   const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({ hash: txHash })
 
-  const createReview = (productId: bigint, reviewRating: number, comment: string) => {
+  const createReview = (targetProductId: bigint, reviewRating: number, comment: string) => {
     writeContract({
       address: EXTENSION_CONTRACTS.reviews,
       abi: REVIEWS_ABI,
       functionName: 'createReview',
-      args: [productId, reviewRating, comment],
+      args: [targetProductId, reviewRating, comment],
     })
   }
 

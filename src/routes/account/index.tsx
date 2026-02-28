@@ -158,7 +158,7 @@ function AccountOverview() {
           </Card>
 
           <Card className="hover:shadow-lg transition-all duration-300 cursor-pointer group">
-            <Link to="/account/settings">
+            <Link to="/profile">
               <CardHeader className="text-center">
                 <div className="w-12 h-12 mx-auto mb-2 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900/30 dark:to-gray-800/30 rounded-full flex items-center justify-center group-hover:scale-105 transition-transform">
                   <Settings className="h-6 w-6 text-muted-foreground" />

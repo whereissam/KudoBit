@@ -155,7 +155,7 @@ function PerksDiscoverPage() {
           usageLimit: 100,
           timesUsed: 23,
           expirationTimestamp: Math.floor(Date.now() / 1000) + (30 * 24 * 60 * 60), // 30 days
-          redemptionCode: 'ART20OFF'
+          redemptionCode: ''
         },
         {
           id: 2,
@@ -171,7 +171,7 @@ function PerksDiscoverPage() {
           usageLimit: 50,
           timesUsed: 12,
           expirationTimestamp: Math.floor(Date.now() / 1000) + (7 * 24 * 60 * 60), // 7 days
-          redemptionCode: 'SYMPHONY2024'
+          redemptionCode: ''
         },
         {
           id: 3,
@@ -187,7 +187,7 @@ function PerksDiscoverPage() {
           usageLimit: 0,
           timesUsed: 89,
           expirationTimestamp: 0, // Never expires
-          redemptionCode: 'WEB3GUIDE'
+          redemptionCode: ''
         },
         {
           id: 4,
@@ -203,7 +203,7 @@ function PerksDiscoverPage() {
           usageLimit: 25,
           timesUsed: 8,
           expirationTimestamp: 0,
-          redemptionCode: 'VIPCREATOR'
+          redemptionCode: ''
         }
       ]
 
@@ -235,7 +235,7 @@ function PerksDiscoverPage() {
     }
 
     redeemPerk(BigInt(perk.id), '')
-    toast.success(`Perk redeem submitted! Code: ${perk.redemptionCode}`)
+    toast.success('Perk redemption submitted! You will receive your code after confirmation.')
   }
 
   const filteredPerks = perks.filter(perk => {

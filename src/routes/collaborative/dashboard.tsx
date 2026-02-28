@@ -75,7 +75,7 @@ function CollaborativeDashboard() {
 
   const formatPrice = (price: string | number) => {
     const priceNum = typeof price === 'string' ? parseFloat(price) : price
-    return (priceNum / 1000000).toFixed(6) // Convert from 6 decimal places
+    return priceNum.toFixed(2)
   }
 
   const formatDate = (dateString: string) => {
@@ -209,7 +209,7 @@ function CollaborativeDashboard() {
           <CardContent>
             {products.length === 0 ? (
               <div className="text-center py-8">
-                <Package className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+                <Package className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
                 <p className="text-muted-foreground mb-4">No collaborative products yet</p>
                 <Link to="/collaborative/create">
                   <Button>Create Your First Product</Button>
@@ -239,22 +239,16 @@ function CollaborativeDashboard() {
                     </div>
                     
                     <div className="flex items-center gap-2">
-                      <Link to={`/collaborative/products/${product.id}`}>
+                      <Link to={`/collaborative/product/${product.id}`}>
                         <Button size="sm" variant="outline" className="flex items-center gap-1">
                           <Eye className="w-3 h-3" />
                           View
                         </Button>
                       </Link>
-                      <Link to={`/collaborative/products/${product.id}/analytics`}>
+                      <Link to={`/collaborative/product/${product.id}`}>
                         <Button size="sm" variant="outline" className="flex items-center gap-1">
                           <BarChart3 className="w-3 h-3" />
-                          Analytics
-                        </Button>
-                      </Link>
-                      <Link to={`/collaborative/proposals/${product.id}`}>
-                        <Button size="sm" variant="outline" className="flex items-center gap-1">
-                          <Vote className="w-3 h-3" />
-                          Proposals
+                          Details
                         </Button>
                       </Link>
                     </div>
@@ -276,7 +270,7 @@ function CollaborativeDashboard() {
           <CardContent>
             {recentDistributions.length === 0 ? (
               <div className="text-center py-8">
-                <DollarSign className="w-12 h-12 text-gray-300 mx-auto mb-4" />
+                <DollarSign className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
                 <p className="text-muted-foreground">No earnings yet</p>
                 <p className="text-sm text-muted-foreground">
                   Start collaborating on products to earn royalties!
@@ -322,16 +316,10 @@ function CollaborativeDashboard() {
                 Create New Product
               </Button>
             </Link>
-            <Link to="/collaborative/browse">
+            <Link to="/collaborative/create">
               <Button variant="outline" className="w-full flex items-center gap-2">
                 <Eye className="w-4 h-4" />
                 Browse Collaborations
-              </Button>
-            </Link>
-            <Link to="/collaborative/earnings">
-              <Button variant="outline" className="w-full flex items-center gap-2">
-                <BarChart3 className="w-4 h-4" />
-                View Full Analytics
               </Button>
             </Link>
           </div>

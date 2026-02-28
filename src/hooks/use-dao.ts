@@ -1,6 +1,10 @@
 import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
 import { EXTENSION_CONTRACTS, DAO_ABI, GOVERNANCE_TOKEN_ABI } from '@/lib/extension-contracts'
 
+const ZERO = '0x0000000000000000000000000000000000000000'
+const daoEnabled = EXTENSION_CONTRACTS.dao !== ZERO
+const govEnabled = EXTENSION_CONTRACTS.governanceToken !== ZERO
+
 export function useDAO() {
   const { address } = useAccount()
 
@@ -8,14 +12,14 @@ export function useDAO() {
     address: EXTENSION_CONTRACTS.dao,
     abi: DAO_ABI,
     functionName: 'getDAOStats',
-    query: { enabled: EXTENSION_CONTRACTS.dao !== '0x0000000000000000000000000000000000000000' },
+    query: { enabled: daoEnabled },
   })
 
   const { data: activeProposalIds, isLoading: isLoadingProposals } = useReadContract({
     address: EXTENSION_CONTRACTS.dao,
     abi: DAO_ABI,
     functionName: 'getActiveProposals',
-    query: { enabled: EXTENSION_CONTRACTS.dao !== '0x0000000000000000000000000000000000000000' },
+    query: { enabled: daoEnabled },
   })
 
   const { data: votingPower } = useReadContract({
@@ -23,7 +27,7 @@ export function useDAO() {
     abi: DAO_ABI,
     functionName: 'getVotingPower',
     args: address ? [address] : undefined,
-    query: { enabled: !!address && EXTENSION_CONTRACTS.dao !== '0x0000000000000000000000000000000000000000' },
+    query: { enabled: !!address && daoEnabled },
   })
 
   const { data: tokenBalance } = useReadContract({
@@ -31,21 +35,21 @@ export function useDAO() {
     abi: GOVERNANCE_TOKEN_ABI,
     functionName: 'balanceOf',
     args: address ? [address] : undefined,
-    query: { enabled: !!address && EXTENSION_CONTRACTS.governanceToken !== '0x0000000000000000000000000000000000000000' },
+    query: { enabled: !!address && govEnabled },
   })
 
   const { data: treasuryBalance } = useReadContract({
     address: EXTENSION_CONTRACTS.dao,
     abi: DAO_ABI,
     functionName: 'treasuryBalance',
-    query: { enabled: EXTENSION_CONTRACTS.dao !== '0x0000000000000000000000000000000000000000' },
+    query: { enabled: daoEnabled },
   })
 
   const { data: proposalThreshold } = useReadContract({
     address: EXTENSION_CONTRACTS.dao,
     abi: DAO_ABI,
     functionName: 'PROPOSAL_THRESHOLD',
-    query: { enabled: EXTENSION_CONTRACTS.dao !== '0x0000000000000000000000000000000000000000' },
+    query: { enabled: daoEnabled },
   })
 
   const { writeContract, data: txHash, isPending: isWriting } = useWriteContract()
@@ -113,7 +117,7 @@ export function useProposal(proposalId: bigint | undefined) {
     abi: DAO_ABI,
     functionName: 'getProposal',
     args: proposalId !== undefined ? [proposalId] : undefined,
-    query: { enabled: proposalId !== undefined && EXTENSION_CONTRACTS.dao !== '0x0000000000000000000000000000000000000000' },
+    query: { enabled: proposalId !== undefined && daoEnabled },
   })
 
   const { data: vote } = useReadContract({
@@ -121,7 +125,7 @@ export function useProposal(proposalId: bigint | undefined) {
     abi: DAO_ABI,
     functionName: 'getVote',
     args: proposalId !== undefined && address ? [proposalId, address] : undefined,
-    query: { enabled: proposalId !== undefined && !!address },
+    query: { enabled: proposalId !== undefined && !!address && daoEnabled },
   })
 
   const parsed = proposal ? {

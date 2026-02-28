@@ -154,7 +154,7 @@ function AnalyticsDashboard() {
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span className="flex items-center gap-2">
-                        <div className="w-3 h-3 bg-chart-5/10 rounded-full"></div>
+                        <div className="w-3 h-3 bg-chart-5 rounded-full"></div>
                         Bronze
                       </span>
                       <span>{analytics?.loyaltyStats.bronzeBadges || 0}</span>
@@ -174,7 +174,7 @@ function AnalyticsDashboard() {
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span className="flex items-center gap-2">
-                        <div className="w-3 h-3 bg-chart-3/10 rounded-full"></div>
+                        <div className="w-3 h-3 bg-chart-3 rounded-full"></div>
                         Gold
                       </span>
                       <span>{analytics?.loyaltyStats.goldBadges || 0}</span>
@@ -184,7 +184,7 @@ function AnalyticsDashboard() {
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span className="flex items-center gap-2">
-                        <div className="w-3 h-3 bg-primary/10 rounded-full"></div>
+                        <div className="w-3 h-3 bg-primary rounded-full"></div>
                         Diamond
                       </span>
                       <span>{analytics?.loyaltyStats.diamondBadges || 0}</span>

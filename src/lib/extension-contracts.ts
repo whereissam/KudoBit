@@ -1,21 +1,21 @@
 import { Address } from 'viem'
 
-// Extension contract addresses - not yet deployed, use env vars when available
+// Extension contract addresses - deployed to local node
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000' as Address
 
 export const EXTENSION_CONTRACTS = {
-  dao: (import.meta.env.VITE_DAO_ADDRESS || ZERO_ADDRESS) as Address,
-  governanceToken: (import.meta.env.VITE_GOVERNANCE_TOKEN_ADDRESS || ZERO_ADDRESS) as Address,
-  affiliateProgram: (import.meta.env.VITE_AFFILIATE_PROGRAM_ADDRESS || ZERO_ADDRESS) as Address,
-  gamification: (import.meta.env.VITE_GAMIFICATION_ADDRESS || ZERO_ADDRESS) as Address,
-  perksRegistry: (import.meta.env.VITE_PERKS_REGISTRY_ADDRESS || ZERO_ADDRESS) as Address,
-  subscriptionTiers: (import.meta.env.VITE_SUBSCRIPTION_TIERS_ADDRESS || ZERO_ADDRESS) as Address,
-  tippingAndCrowdfunding: (import.meta.env.VITE_TIPPING_ADDRESS || ZERO_ADDRESS) as Address,
-  nftGatedContent: (import.meta.env.VITE_NFT_GATED_CONTENT_ADDRESS || ZERO_ADDRESS) as Address,
-  collaborativeProducts: (import.meta.env.VITE_COLLABORATIVE_PRODUCTS_ADDRESS || ZERO_ADDRESS) as Address,
-  badgeChecker: (import.meta.env.VITE_BADGE_CHECKER_ADDRESS || ZERO_ADDRESS) as Address,
-  reviews: (import.meta.env.VITE_REVIEWS_ADDRESS || ZERO_ADDRESS) as Address,
-  categories: (import.meta.env.VITE_CATEGORIES_ADDRESS || ZERO_ADDRESS) as Address,
+  dao: (import.meta.env.VITE_DAO_ADDRESS || '0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE') as Address,
+  governanceToken: (import.meta.env.VITE_GOVERNANCE_TOKEN_ADDRESS || '0x959922bE3CAee4b8Cd9a407cc3ac1C251C2007B1') as Address,
+  affiliateProgram: (import.meta.env.VITE_AFFILIATE_PROGRAM_ADDRESS || '0x68B1D87F95878fE05B998F19b66F4baba5De1aed') as Address,
+  gamification: (import.meta.env.VITE_GAMIFICATION_ADDRESS || '0x3Aa5ebB10DC797CAC828524e59A333d0A371443c') as Address,
+  perksRegistry: (import.meta.env.VITE_PERKS_REGISTRY_ADDRESS || '0xc6e7DF5E7b4f2A278906862b61205850344D4e7d') as Address,
+  subscriptionTiers: (import.meta.env.VITE_SUBSCRIPTION_TIERS_ADDRESS || '0x59b670e9fA9D0A427751Af201D676719a970857b') as Address,
+  tippingAndCrowdfunding: (import.meta.env.VITE_TIPPING_ADDRESS || '0x4ed7c70F96B99c776995fB64377f0d4aB3B0e1C1') as Address,
+  nftGatedContent: (import.meta.env.VITE_NFT_GATED_CONTENT_ADDRESS || '0xa85233C63b9Ee964Add6F2cffe00Fd84eb32338f') as Address,
+  collaborativeProducts: (import.meta.env.VITE_COLLABORATIVE_PRODUCTS_ADDRESS || '0x322813Fd9A801c5507c9de605d63CEA4f2CE6c44') as Address,
+  badgeChecker: (import.meta.env.VITE_BADGE_CHECKER_ADDRESS || '0x0B306BF915C4d645ff596e518fAf3F9669b97016') as Address,
+  reviews: (import.meta.env.VITE_REVIEWS_ADDRESS || '0x0165878A594ca255338adfa4d48449f69242Eb8F') as Address,
+  categories: (import.meta.env.VITE_CATEGORIES_ADDRESS || '0x5FC8d32690cc91D4c39d9d3abcBD16989F875707') as Address,
 }
 
 // ============================================================

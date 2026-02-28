@@ -161,7 +161,7 @@ function CheckoutPage() {
   const [name, description, price, active, creator] = product
   const priceInUSDC = formatUnits(price, 6)
 
-  if (isSuccess) {
+  if (isSuccess && purchaseStep === 'buying') {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background via-morph-green-50/5 to-morph-purple-50/5">
         <div className="container mx-auto px-4 py-16">
@@ -241,8 +241,6 @@ function CheckoutPage() {
 
     setStep('processing')
 
-    const needsApproval = !usdcAllowance || (usdcAllowance as bigint) < price
-
     if (needsApproval) {
       // Step 1: Approve USDC spending
       setPurchaseStep('approving')
@@ -268,6 +266,7 @@ function CheckoutPage() {
     }
   }
 
+  const needsApproval = !usdcAllowance || (usdcAllowance as bigint) < price
   const hasEnoughBalance = usdcBalance ? parseFloat(formatUnits(usdcBalance, 6)) >= parseFloat(priceInUSDC) : false
 
   return (
@@ -402,7 +401,7 @@ function CheckoutPage() {
                       Lightning-fast confirmation times on Morph
                     </div>
                     {error && (
-                      <div className="mt-4 p-3 bg-red-50  rounded-lg text-sm text-destructive">
+                      <div className="mt-4 p-3 bg-destructive/10 rounded-lg text-sm text-destructive">
                         Transaction failed: {error.message}
                       </div>
                     )}
@@ -469,7 +468,7 @@ function CheckoutPage() {
                           >
                             <ShoppingCart className="h-5 w-5 mr-2" />
                             {isPending || isConfirming ? 'Processing...' :
-                              (!usdcAllowance || (usdcAllowance as bigint) < price)
+                              needsApproval
                                 ? `Approve & Pay ${priceInUSDC} USDC`
                                 : `Pay ${priceInUSDC} USDC`
                             }

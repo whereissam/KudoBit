@@ -67,7 +67,7 @@ function CreateProposal() {
     if (isSuccess) {
       navigate({ to: '/dao/dashboard' })
     }
-  }, [isSuccess])
+  }, [isSuccess, navigate])
 
   if (!isConnected) {
     return (
@@ -491,15 +491,9 @@ function CreateProposal() {
               </div>
             ))}
 
-            <Button
-              type="button"
-              variant="outline"
-              onClick={addAction}
-              className="flex items-center gap-2"
-            >
-              <Plus className="w-4 h-4" />
-              Add Action
-            </Button>
+            <p className="text-xs text-muted-foreground">
+              Only one action per proposal is supported by the contract.
+            </p>
           </CardContent>
         </Card>
 
@@ -537,7 +531,7 @@ function CreateProposal() {
 
         {/* Error Display */}
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
             <p className="text-destructive">{error}</p>
           </div>
         )}
@@ -572,7 +566,7 @@ function CreateProposal() {
           </Button>
         </div>
 
-        <div className="bg-primary/5 border border-blue-200 rounded-lg p-4">
+        <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
           <div className="flex items-start gap-3">
             <Info className="w-5 h-5 text-primary mt-0.5" />
             <div className="text-sm text-primary">

@@ -1,10 +1,9 @@
 import { ReactNode } from 'react'
 import { Link } from '@tanstack/react-router'
-import { useAccount, useReadContract } from 'wagmi'
+import { useAccount } from 'wagmi'
 import { WalletConnect } from './wallet-connect'
 import { ThemeToggle } from './theme-toggle'
 import { MobileNav } from './mobile-nav'
-import { CONTRACTS, CREATOR_REGISTRY_ABI } from '@/lib/contracts'
 import { Button } from './ui/button'
 
 interface AppleLayoutProps {
@@ -14,16 +13,7 @@ interface AppleLayoutProps {
 }
 
 export function AppleLayout({ children, showHero = false, onAuthModal }: AppleLayoutProps) {
-  const { address, isConnected } = useAccount()
-
-  // Check creator status on-chain
-  const { data: isCreator } = useReadContract({
-    address: CONTRACTS.creatorRegistry,
-    abi: CREATOR_REGISTRY_ABI,
-    functionName: 'isRegistered',
-    args: address ? [address] : undefined,
-    query: { enabled: isConnected && !!address },
-  })
+  const { isConnected } = useAccount()
 
   return (
     <div className="min-h-screen bg-background font-sans tracking-normal overflow-x-hidden">

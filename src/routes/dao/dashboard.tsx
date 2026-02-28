@@ -300,22 +300,10 @@ function DAODashboard() {
                     Create Proposal
                   </Button>
                 </Link>
-                <Link to="/dao/delegate">
-                  <Button variant="outline" className="w-full flex items-center gap-2">
-                    <Users className="w-4 h-4" />
-                    Delegate Votes
-                  </Button>
-                </Link>
-                <Link to="/dao/analytics">
+                <Link to="/dao/treasury">
                   <Button variant="outline" className="w-full flex items-center gap-2">
                     <BarChart3 className="w-4 h-4" />
-                    View Analytics
-                  </Button>
-                </Link>
-                <Link to="/dao/settings">
-                  <Button variant="outline" className="w-full flex items-center gap-2">
-                    <Settings className="w-4 h-4" />
-                    DAO Settings
+                    View Treasury
                   </Button>
                 </Link>
               </div>

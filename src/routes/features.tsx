@@ -17,8 +17,8 @@ export const Route = createFileRoute('/features')({
         <div className="grid lg:grid-cols-2 gap-8 mb-16">
           <div className="bg-card rounded-lg shadow-sm p-8">
             <div className="flex items-center mb-6">
-              <div className="p-2 bg-primary/10  rounded-lg mr-3">
-                <Zap className="h-6 w-6 text-primary " />
+              <div className="p-2 bg-primary/10 rounded-lg mr-3">
+                <Zap className="h-6 w-6 text-primary" />
               </div>
               <h2 className="text-2xl font-semibold text-foreground">
                 Development Experience
@@ -42,8 +42,8 @@ export const Route = createFileRoute('/features')({
 
           <div className="bg-card rounded-lg shadow-sm p-8">
             <div className="flex items-center mb-6">
-              <div className="p-2 bg-chart-1/10  rounded-lg mr-3">
-                <Shield className="h-6 w-6 text-chart-1 " />
+              <div className="p-2 bg-chart-1/10 rounded-lg mr-3">
+                <Shield className="h-6 w-6 text-chart-1" />
               </div>
               <h2 className="text-2xl font-semibold text-foreground">
                 Production Ready
@@ -68,8 +68,8 @@ export const Route = createFileRoute('/features')({
 
         <div className="bg-card rounded-lg shadow-sm p-8 mb-16">
           <div className="flex items-center mb-8 justify-center">
-            <div className="p-2 bg-chart-3/10  rounded-lg mr-3">
-              <Wrench className="h-6 w-6 text-chart-3 " />
+            <div className="p-2 bg-chart-3/10 rounded-lg mr-3">
+              <Wrench className="h-6 w-6 text-chart-3" />
             </div>
             <h2 className="text-2xl font-semibold text-foreground">
               Technology Stack
