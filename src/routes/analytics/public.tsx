@@ -258,11 +258,11 @@ function PublicAnalyticsPage() {
 
   const getLoyaltyTierColor = (tier: number) => {
     switch (tier) {
-      case 1: return 'bg-orange-100 text-orange-800'
-      case 2: return 'bg-gray-100 text-gray-800'
-      case 3: return 'bg-yellow-100 text-yellow-800'
-      case 4: return 'bg-blue-100 text-blue-800'
-      default: return 'bg-gray-100 text-gray-500'
+      case 1: return 'bg-orange-100 text-chart-5'
+      case 2: return 'bg-muted/30 text-gray-800'
+      case 3: return 'bg-yellow-100 text-chart-3'
+      case 4: return 'bg-blue-100 text-primary'
+      default: return 'bg-muted/30 text-muted-foreground'
     }
   }
 
@@ -280,13 +280,13 @@ function PublicAnalyticsPage() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="animate-pulse space-y-6">
-          <div className="h-32 bg-gray-200 rounded-lg"></div>
+          <div className="h-32 bg-muted/50 rounded-lg"></div>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {[1, 2, 3, 4].map(i => (
-              <div key={i} className="h-32 bg-gray-200 rounded-lg"></div>
+              <div key={i} className="h-32 bg-muted/50 rounded-lg"></div>
             ))}
           </div>
-          <div className="h-96 bg-gray-200 rounded-lg"></div>
+          <div className="h-96 bg-muted/50 rounded-lg"></div>
         </div>
       </div>
     )
@@ -296,8 +296,8 @@ function PublicAnalyticsPage() {
     <div className="container mx-auto px-4 py-8 space-y-6">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Platform Analytics</h1>
-        <p className="text-gray-600">Real-time insights into KudoBit's ecosystem and growth</p>
+        <h1 className="text-3xl font-bold text-foreground mb-2">Platform Analytics</h1>
+        <p className="text-muted-foreground">Real-time insights into KudoBit's ecosystem and growth</p>
       </div>
 
       {/* Key Metrics */}
@@ -305,13 +305,13 @@ function PublicAnalyticsPage() {
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <Users className="h-6 w-6 text-blue-600" />
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <Users className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <p className="text-sm text-gray-600">Total Users</p>
+                <p className="text-sm text-muted-foreground">Total Users</p>
                 <p className="text-2xl font-bold">{formatNumber(platformStats.totalUsers)}</p>
-                <p className="text-xs text-green-600">+12% this month</p>
+                <p className="text-xs text-chart-2">+12% this month</p>
               </div>
             </div>
           </CardContent>
@@ -320,13 +320,13 @@ function PublicAnalyticsPage() {
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-purple-100 rounded-lg">
-                <Crown className="h-6 w-6 text-purple-600" />
+              <div className="p-2 bg-chart-3/10 rounded-lg">
+                <Crown className="h-6 w-6 text-chart-3" />
               </div>
               <div>
-                <p className="text-sm text-gray-600">Creators</p>
+                <p className="text-sm text-muted-foreground">Creators</p>
                 <p className="text-2xl font-bold">{formatNumber(platformStats.totalCreators)}</p>
-                <p className="text-xs text-gray-500">
+                <p className="text-xs text-muted-foreground">
                   {platformStats.verifiedCreators} verified
                 </p>
               </div>
@@ -337,13 +337,13 @@ function PublicAnalyticsPage() {
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-green-100 rounded-lg">
-                <DollarSign className="h-6 w-6 text-green-600" />
+              <div className="p-2 bg-chart-2/10 rounded-lg">
+                <DollarSign className="h-6 w-6 text-chart-2" />
               </div>
               <div>
-                <p className="text-sm text-gray-600">Total Volume</p>
+                <p className="text-sm text-muted-foreground">Total Volume</p>
                 <p className="text-2xl font-bold">${formatNumber(platformStats.totalVolume)}</p>
-                <p className="text-xs text-green-600">+8.5% this month</p>
+                <p className="text-xs text-chart-2">+8.5% this month</p>
               </div>
             </div>
           </CardContent>
@@ -352,13 +352,13 @@ function PublicAnalyticsPage() {
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-orange-100 rounded-lg">
-                <Package className="h-6 w-6 text-orange-600" />
+              <div className="p-2 bg-chart-5/10 rounded-lg">
+                <Package className="h-6 w-6 text-chart-5" />
               </div>
               <div>
-                <p className="text-sm text-gray-600">Products</p>
+                <p className="text-sm text-muted-foreground">Products</p>
                 <p className="text-2xl font-bold">{formatNumber(platformStats.totalProducts)}</p>
-                <p className="text-xs text-blue-600">+15% this month</p>
+                <p className="text-xs text-primary">+15% this month</p>
               </div>
             </div>
           </CardContent>
@@ -371,10 +371,10 @@ function PublicAnalyticsPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Total Sales</p>
+                <p className="text-sm text-muted-foreground">Total Sales</p>
                 <p className="text-xl font-bold">{formatNumber(platformStats.totalSales)}</p>
               </div>
-              <Activity className="h-8 w-8 text-gray-400" />
+              <Activity className="h-8 w-8 text-muted-foreground" />
             </div>
           </CardContent>
         </Card>
@@ -383,10 +383,10 @@ function PublicAnalyticsPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Avg Transaction</p>
+                <p className="text-sm text-muted-foreground">Avg Transaction</p>
                 <p className="text-xl font-bold">${platformStats.averageTransactionSize.toFixed(2)}</p>
               </div>
-              <BarChart3 className="h-8 w-8 text-gray-400" />
+              <BarChart3 className="h-8 w-8 text-muted-foreground" />
             </div>
           </CardContent>
         </Card>
@@ -395,10 +395,10 @@ function PublicAnalyticsPage() {
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Active Subscriptions</p>
+                <p className="text-sm text-muted-foreground">Active Subscriptions</p>
                 <p className="text-xl font-bold">{formatNumber(platformStats.activeSubscriptions)}</p>
               </div>
-              <Star className="h-8 w-8 text-gray-400" />
+              <Star className="h-8 w-8 text-muted-foreground" />
             </div>
           </CardContent>
         </Card>
@@ -428,12 +428,12 @@ function PublicAnalyticsPage() {
             <CardContent>
               <div className="space-y-4">
                 {topCreators.map((creator) => (
-                  <div key={creator.rank} className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
+                  <div key={creator.rank} className="flex items-center gap-4 p-4 bg-muted/20 rounded-lg">
                     <div className={`flex items-center justify-center w-10 h-10 rounded-full font-bold ${
-                      creator.rank === 1 ? 'bg-yellow-400 text-white' :
-                      creator.rank === 2 ? 'bg-gray-400 text-white' :
-                      creator.rank === 3 ? 'bg-orange-400 text-white' :
-                      'bg-gray-200 text-gray-700'
+                      creator.rank === 1 ? 'bg-chart-3 text-white' :
+                      creator.rank === 2 ? 'bg-muted-foreground text-white' :
+                      creator.rank === 3 ? 'bg-chart-5 text-white' :
+                      'bg-muted/50 text-foreground'
                     }`}>
                       {creator.rank <= 3 ? (
                         creator.rank === 1 ? '🥇' : creator.rank === 2 ? '🥈' : '🥉'
@@ -455,12 +455,12 @@ function PublicAnalyticsPage() {
                           {getTierName(creator.loyaltyTier)}
                         </Badge>
                       </div>
-                      <p className="text-sm text-gray-500">{creator.address}</p>
+                      <p className="text-sm text-muted-foreground">{creator.address}</p>
                     </div>
                     
                     <div className="text-right">
                       <p className="font-bold">${creator.totalRevenue.toLocaleString()}</p>
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-muted-foreground">
                         {creator.totalSales.toLocaleString()} sales • {creator.products} products
                       </p>
                     </div>
@@ -494,15 +494,15 @@ function PublicAnalyticsPage() {
                     
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                       <div>
-                        <p className="text-gray-600">Total Products</p>
+                        <p className="text-muted-foreground">Total Products</p>
                         <p className="font-semibold">{category.totalProducts.toLocaleString()}</p>
                       </div>
                       <div>
-                        <p className="text-gray-600">Avg Price</p>
+                        <p className="text-muted-foreground">Avg Price</p>
                         <p className="font-semibold">${category.averagePrice.toFixed(2)}</p>
                       </div>
                       <div>
-                        <p className="text-gray-600">Top Creator</p>
+                        <p className="text-muted-foreground">Top Creator</p>
                         <p className="font-semibold">{category.topCreator}</p>
                       </div>
                     </div>
@@ -536,13 +536,13 @@ function PublicAnalyticsPage() {
                   {timeSeriesData.slice(-30).map((data, index) => (
                     <div key={index} className="flex flex-col items-center gap-1">
                       <div 
-                        className="bg-blue-500 w-3 rounded-t"
+                        className="bg-primary w-3 rounded-t"
                         style={{ 
                           height: `${(data.users / Math.max(...timeSeriesData.map(d => d.users))) * 200}px`
                         }}
                       ></div>
                       {index % 5 === 0 && (
-                        <span className="text-xs text-gray-500 transform -rotate-45">
+                        <span className="text-xs text-muted-foreground transform -rotate-45">
                           {new Date(data.date).getDate()}
                         </span>
                       )}
@@ -564,13 +564,13 @@ function PublicAnalyticsPage() {
                   {timeSeriesData.slice(-30).map((data, index) => (
                     <div key={index} className="flex flex-col items-center gap-1">
                       <div 
-                        className="bg-green-500 w-3 rounded-t"
+                        className="bg-chart-2 w-3 rounded-t"
                         style={{ 
                           height: `${(data.volume / Math.max(...timeSeriesData.map(d => d.volume))) * 200}px`
                         }}
                       ></div>
                       {index % 5 === 0 && (
-                        <span className="text-xs text-gray-500 transform -rotate-45">
+                        <span className="text-xs text-muted-foreground transform -rotate-45">
                           {new Date(data.date).getDate()}
                         </span>
                       )}
@@ -587,21 +587,21 @@ function PublicAnalyticsPage() {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="text-center p-4 bg-blue-50 rounded-lg">
-                  <p className="text-2xl font-bold text-blue-600">+12%</p>
-                  <p className="text-sm text-gray-600">User Growth (30d)</p>
+                <div className="text-center p-4 bg-primary/10 rounded-lg">
+                  <p className="text-2xl font-bold text-primary">+12%</p>
+                  <p className="text-sm text-muted-foreground">User Growth (30d)</p>
                 </div>
-                <div className="text-center p-4 bg-green-50 rounded-lg">
-                  <p className="text-2xl font-bold text-green-600">+8.5%</p>
-                  <p className="text-sm text-gray-600">Volume Growth (30d)</p>
+                <div className="text-center p-4 bg-chart-2/10 rounded-lg">
+                  <p className="text-2xl font-bold text-chart-2">+8.5%</p>
+                  <p className="text-sm text-muted-foreground">Volume Growth (30d)</p>
                 </div>
-                <div className="text-center p-4 bg-purple-50 rounded-lg">
-                  <p className="text-2xl font-bold text-purple-600">+15%</p>
-                  <p className="text-sm text-gray-600">Products Added (30d)</p>
+                <div className="text-center p-4 bg-chart-3/10 rounded-lg">
+                  <p className="text-2xl font-bold text-chart-3">+15%</p>
+                  <p className="text-sm text-muted-foreground">Products Added (30d)</p>
                 </div>
-                <div className="text-center p-4 bg-orange-50 rounded-lg">
-                  <p className="text-2xl font-bold text-orange-600">+23%</p>
-                  <p className="text-sm text-gray-600">Creator Signups (30d)</p>
+                <div className="text-center p-4 bg-chart-5/10 rounded-lg">
+                  <p className="text-2xl font-bold text-chart-5">+23%</p>
+                  <p className="text-sm text-muted-foreground">Creator Signups (30d)</p>
                 </div>
               </div>
             </CardContent>
@@ -682,19 +682,19 @@ function PublicAnalyticsPage() {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-green-600 mb-2">99.9%</div>
-                  <p className="text-sm text-gray-600">Uptime</p>
-                  <p className="text-xs text-gray-500">Last 30 days</p>
+                  <div className="text-3xl font-bold text-chart-2 mb-2">99.9%</div>
+                  <p className="text-sm text-muted-foreground">Uptime</p>
+                  <p className="text-xs text-muted-foreground">Last 30 days</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-600 mb-2">1.2s</div>
-                  <p className="text-sm text-gray-600">Avg Response Time</p>
-                  <p className="text-xs text-gray-500">Global average</p>
+                  <div className="text-3xl font-bold text-primary mb-2">1.2s</div>
+                  <p className="text-sm text-muted-foreground">Avg Response Time</p>
+                  <p className="text-xs text-muted-foreground">Global average</p>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-purple-600 mb-2">$9,471</div>
-                  <p className="text-sm text-gray-600">Platform Revenue</p>
-                  <p className="text-xs text-gray-500">This month</p>
+                  <div className="text-3xl font-bold text-chart-3 mb-2">$9,471</div>
+                  <p className="text-sm text-muted-foreground">Platform Revenue</p>
+                  <p className="text-xs text-muted-foreground">This month</p>
                 </div>
               </div>
             </CardContent>

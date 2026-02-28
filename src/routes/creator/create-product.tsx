@@ -1,27 +1,31 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { useState } from 'react'
-import { useAccount } from 'wagmi'
+import { useState, useEffect } from 'react'
+import { useAccount, useWriteContract, useWaitForTransactionReceipt, useChainId } from 'wagmi'
+import { parseUnits } from 'viem'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Badge } from '@/components/ui/badge'
-import { 
-  Package, 
-  Upload, 
-  Image as ImageIcon, 
-  DollarSign, 
-  FileText, 
+import {
+  Package,
+  Upload,
+  Image as ImageIcon,
+  DollarSign,
+  FileText,
   Settings,
   Eye,
   Save,
   ArrowLeft,
   Plus,
-  X
+  X,
+  Loader2
 } from 'lucide-react'
-import { AuthService } from '@/lib/auth'
 import toast from 'react-hot-toast'
+import { CONTRACTS, PRODUCT_NFT_ABI } from '@/lib/contracts'
+import { ipfsService } from '@/services/ipfs-service'
+import { getChainById } from '@/lib/wagmi'
 
 export const Route = createFileRoute('/creator/create-product')({
   component: CreateProductPage,
@@ -46,10 +50,30 @@ interface ProductFormData {
 
 function CreateProductPage() {
   const { address, isConnected } = useAccount()
+  const chainId = useChainId()
   const navigate = useNavigate()
-  
+
   const [currentStep, setCurrentStep] = useState(1)
   const [isLoading, setIsLoading] = useState(false)
+
+  const { writeContract, data: txHash } = useWriteContract()
+  const { isSuccess, isError } = useWaitForTransactionReceipt({ hash: txHash })
+
+  // Handle transaction success
+  useEffect(() => {
+    if (isSuccess) {
+      setIsLoading(false)
+      toast.success('Product created on-chain!')
+      navigate({ to: '/creator/dashboard' })
+    }
+  }, [isSuccess, navigate])
+
+  useEffect(() => {
+    if (isError) {
+      setIsLoading(false)
+      toast.error('Transaction failed. Please try again.')
+    }
+  }, [isError])
   const [newTag, setNewTag] = useState('')
   
   const [formData, setFormData] = useState<ProductFormData>({
@@ -135,53 +159,58 @@ function CreateProductPage() {
       return
     }
 
-    if (!AuthService.isAuthenticated()) {
-      toast.error('Please authenticate as a creator first')
-      return
-    }
-
     setIsLoading(true)
-    
+
     try {
-      // Here we would integrate with the backend API to create the product
-      // For now, we'll simulate the creation
-      
-      const productData = {
-        ...formData,
-        creatorAddress: address,
-        createdAt: new Date().toISOString()
+      // 1. Upload cover image to IPFS (if provided)
+      let imageUrl = ''
+      if (formData.coverImage) {
+        const hash = await ipfsService.uploadFile(formData.coverImage)
+        imageUrl = ipfsService.getFileURL(hash)
       }
 
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000))
-      
-      toast.success(
-        <div className="flex items-center gap-2">
-          <Package className="h-4 w-4 text-primary" />
-          <div>
-            <div className="font-semibold text-foreground">Product Created!</div>
-            <div className="text-xs text-foreground/70">Your product is now live on KudoBit</div>
-          </div>
-        </div>,
-        { 
-          duration: 5000,
-          style: {
-            background: 'hsl(var(--card))',
-            color: 'hsl(var(--card-foreground))',
-            border: '1px solid hsl(var(--border))',
-            borderRadius: 'var(--radius)',
-            boxShadow: 'var(--shadow-lg)',
-          }
-        }
-      )
+      // 2. Upload digital files to IPFS
+      let contentHash = ''
+      if (formData.digitalFiles.length > 0) {
+        contentHash = await ipfsService.uploadFile(formData.digitalFiles[0])
+      }
 
-      // Navigate to creator dashboard or product management page
-      navigate({ to: '/creator/dashboard' })
-      
-    } catch (error) {
+      // 3. Create metadata JSON and upload to IPFS
+      const metadata = {
+        name: formData.name,
+        description: formData.description,
+        image: imageUrl,
+        category: formData.category,
+        tags: formData.tags,
+        productType: formData.productType,
+      }
+      const metadataHash = await ipfsService.uploadJSON(metadata)
+      const metadataUri = ipfsService.getFileURL(metadataHash)
+
+      // 4. Mint product on-chain
+      const priceInWei = parseUnits(formData.price || '0', 6) // USDC has 6 decimals
+
+      toast.loading('Confirm transaction in your wallet...')
+      writeContract({
+        address: CONTRACTS.productNFT,
+        abi: PRODUCT_NFT_ABI,
+        functionName: 'mintProduct',
+        args: [
+          formData.name,
+          formData.description,
+          metadataUri,
+          priceInWei,
+          contentHash,
+        ],
+        chain: getChainById(chainId),
+        account: address,
+      })
+    } catch (error: unknown) {
       console.error('Product creation error:', error)
-      toast.error('Failed to create product. Please try again.')
-    } finally {
+      const message = error && typeof error === 'object' && 'shortMessage' in error
+        ? (error as { shortMessage: string }).shortMessage
+        : 'Failed to create product. Please try again.'
+      toast.error(message)
       setIsLoading(false)
     }
   }

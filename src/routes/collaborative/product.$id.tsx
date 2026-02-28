@@ -1,12 +1,12 @@
 import { createFileRoute, useParams, Link } from '@tanstack/react-router'
 import { useState, useEffect } from 'react'
 import { useAccount } from 'wagmi'
-import { Button } from '../components/ui/button'
-import { Input } from '../components/ui/input'
-import { Label } from '../components/ui/label'
-import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card'
-import { Badge } from '../components/ui/badge'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { 
   Users, 
   DollarSign, 
@@ -331,7 +331,7 @@ function CollaborativeProductDetail() {
 
       {/* Error Display */}
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+        <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4 mb-6">
           <p className="text-destructive">{error}</p>
         </div>
       )}

@@ -192,23 +192,7 @@ function Discover() {
         </motion.div>
 
         {/* Products Grid/List */}
-        {!isConnected ? (
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center p-12"
-          >
-            <div className="max-w-md mx-auto">
-              <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-morph-green-100 to-morph-purple-100 dark:from-morph-green-900/30 dark:to-morph-purple-900/30 rounded-full flex items-center justify-center">
-                <Package className="h-8 w-8 text-morph-green-600" />
-              </div>
-              <h3 className="text-xl font-semibold mb-4">Connect Your Wallet</h3>
-              <p className="text-muted-foreground mb-6">
-                Connect your wallet to discover and purchase amazing digital products
-              </p>
-            </div>
-          </motion.div>
-        ) : counterLoading ? (
+        {counterLoading ? (
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -255,14 +239,13 @@ function Discover() {
   )
 }
 
-function ProductCard({ 
-  productId, 
-  index, 
-  viewMode, 
-  searchQuery, 
- 
-  priceFilter 
-}: { 
+function ProductCard({
+  productId,
+  index,
+  viewMode,
+  searchQuery,
+  priceFilter
+}: {
   productId: number
   index: number
   viewMode: 'grid' | 'list'
@@ -320,7 +303,7 @@ function ProductCard({
             <div className="flex-1">
               <div className="flex items-start justify-between mb-2">
                 <Link to={`/product/${productId}`}>
-                  <h3 className="font-semibold hover:text-morph-green-600 transition-colors">{name}</h3>
+                  <h3 className="font-semibold hover:text-primary transition-colors">{name}</h3>
                 </Link>
                 <span className="text-lg font-bold text-morph-green-600">
                   {formatUnits(price, 6)} USDC

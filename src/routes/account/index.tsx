@@ -125,7 +125,7 @@ function AccountOverview() {
             <Link to="/account/purchases">
               <CardHeader className="text-center">
                 <div className="w-12 h-12 mx-auto mb-2 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30 rounded-full flex items-center justify-center group-hover:scale-105 transition-transform">
-                  <ShoppingBag className="h-6 w-6 text-blue-600" />
+                  <ShoppingBag className="h-6 w-6 text-primary" />
                 </div>
                 <CardTitle className="text-sm">My Purchases</CardTitle>
                 <CardDescription className="text-xs">View purchase history</CardDescription>
@@ -149,7 +149,7 @@ function AccountOverview() {
             <Link to="/discover">
               <CardHeader className="text-center">
                 <div className="w-12 h-12 mx-auto mb-2 bg-gradient-to-br from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30 rounded-full flex items-center justify-center group-hover:scale-105 transition-transform">
-                  <TrendingUp className="h-6 w-6 text-green-600" />
+                  <TrendingUp className="h-6 w-6 text-chart-2" />
                 </div>
                 <CardTitle className="text-sm">Discover</CardTitle>
                 <CardDescription className="text-xs">Browse products</CardDescription>
@@ -161,7 +161,7 @@ function AccountOverview() {
             <Link to="/account/settings">
               <CardHeader className="text-center">
                 <div className="w-12 h-12 mx-auto mb-2 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900/30 dark:to-gray-800/30 rounded-full flex items-center justify-center group-hover:scale-105 transition-transform">
-                  <Settings className="h-6 w-6 text-gray-600" />
+                  <Settings className="h-6 w-6 text-muted-foreground" />
                 </div>
                 <CardTitle className="text-sm">Settings</CardTitle>
                 <CardDescription className="text-xs">Account preferences</CardDescription>

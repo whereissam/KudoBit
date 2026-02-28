@@ -154,10 +154,10 @@ function AdminPanel() {
           </div>
         ) : !hasAdminAccess ? (
           <div className="text-center p-6 sm:p-8">
-            <div className="p-3 bg-red-100 dark:bg-red-900/30 rounded-full w-fit mx-auto mb-4">
-              <Settings className="h-8 w-8 text-destructive dark:text-red-400" />
+            <div className="p-3 bg-destructive/10  rounded-full w-fit mx-auto mb-4">
+              <Settings className="h-8 w-8 text-destructive " />
             </div>
-            <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-destructive dark:text-red-400">Access Denied</h3>
+            <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-destructive ">Access Denied</h3>
             <p className="text-sm sm:text-base text-muted-foreground px-2 mb-4">
               You don't have admin privileges to access this panel.
             </p>
@@ -183,11 +183,11 @@ function AdminPanel() {
                   <Award className="h-4 w-4 sm:h-5 sm:w-5" />
                   Award Loyalty Badge
                   {isLoyaltyTokenOwner ? (
-                    <span className="text-xs bg-chart-1/10 dark:bg-green-900/30 text-chart-1 dark:text-green-400 px-2 py-1 rounded">
+                    <span className="text-xs bg-chart-1/10  text-chart-1  px-2 py-1 rounded">
                       Authorized
                     </span>
                   ) : (
-                    <span className="text-xs bg-red-100 dark:bg-red-900/30 text-destructive dark:text-red-400 px-2 py-1 rounded">
+                    <span className="text-xs bg-destructive/10  text-destructive  px-2 py-1 rounded">
                       No Access
                     </span>
                   )}
@@ -263,11 +263,11 @@ function AdminPanel() {
                   <Award className="h-4 w-4 sm:h-5 sm:w-5" />
                   Merchant Earnings
                   {isCreatorStoreOwner ? (
-                    <span className="text-xs bg-chart-1/10 dark:bg-green-900/30 text-chart-1 dark:text-green-400 px-2 py-1 rounded">
+                    <span className="text-xs bg-chart-1/10  text-chart-1  px-2 py-1 rounded">
                       Authorized
                     </span>
                   ) : (
-                    <span className="text-xs bg-red-100 dark:bg-red-900/30 text-destructive dark:text-red-400 px-2 py-1 rounded">
+                    <span className="text-xs bg-destructive/10  text-destructive  px-2 py-1 rounded">
                       No Access
                     </span>
                   )}

@@ -41,15 +41,15 @@ function LoyaltyDashboard() {
     {
       id: 3,
       name: 'Gold Badge',
-      icon: <Star className="h-6 w-6 text-yellow-600" />,
-      color: 'bg-yellow-50 border-yellow-200 text-yellow-800',
+      icon: <Star className="h-6 w-6 text-chart-3" />,
+      color: 'bg-yellow-50 border-yellow-200 text-chart-3',
       description: 'Granted for high-value purchases and loyal engagement'
     },
     {
       id: 4,
       name: 'Diamond Badge',
       icon: <Crown className="h-6 w-6 text-chart-3" />,
-      color: 'bg-purple-50 border-purple-200 text-purple-800',
+      color: 'bg-purple-50 border-purple-200 text-chart-3',
       description: 'The ultimate badge for premium supporters and top-tier purchases'
     }
   ]

@@ -86,7 +86,8 @@ function RegisterPage() {
       // Try backend registration first
       let backendSuccess = false;
       try {
-        const response = await fetch('http://localhost:3001/api/creator/register', {
+        const apiBase = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001'
+        const response = await fetch(`${apiBase}/api/creators`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -247,7 +248,7 @@ function RegisterPage() {
 
               {warning && (
                 <div className="p-3 bg-yellow-50 border border-yellow-200 rounded-md">
-                  <p className="text-sm text-yellow-800">{warning}</p>
+                  <p className="text-sm text-chart-3">{warning}</p>
                 </div>
               )}
 

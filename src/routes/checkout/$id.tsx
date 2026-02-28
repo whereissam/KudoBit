@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -57,12 +57,46 @@ function CheckoutPage() {
     account: address,
   })
 
+  // Check USDC allowance for GumroadCore
+  const { data: usdcAllowance } = useReadContract({
+    address: CONTRACTS.mockUSDC,
+    abi: MOCK_USDC_ABI,
+    functionName: 'allowance',
+    args: address ? [address, CONTRACTS.gumroadCore] : undefined,
+    query: { enabled: !!address },
+    chainId,
+  })
+
   // Purchase transaction
   const { writeContract, data: hash, error, isPending } = useWriteContract()
-  
+
   const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({
     hash,
   })
+
+  // Track purchase step: 'approve' or 'buy'
+  const [purchaseStep, setPurchaseStep] = useState<'idle' | 'approving' | 'buying'>('idle')
+
+  // After approval succeeds, automatically proceed to purchase
+  const prevSuccess = useRef(false)
+  useEffect(() => {
+    if (isSuccess && !prevSuccess.current) {
+      prevSuccess.current = true
+      if (purchaseStep === 'approving') {
+        setPurchaseStep('buying')
+        prevSuccess.current = false // Reset for next tx
+        writeContract({
+          address: CONTRACTS.gumroadCore,
+          abi: GUMROAD_CORE_ABI,
+          functionName: 'purchaseProduct',
+          chain: getChainById(chainId),
+          account: address,
+          args: [BigInt(productId), CONTRACTS.mockUSDC],
+        })
+      }
+      // If purchaseStep === 'buying', isSuccess means purchase is complete (handled by success UI)
+    }
+  }, [isSuccess, purchaseStep, address, chainId, productId, writeContract])
 
   const formatAddress = (addr: string) => {
     if (!addr) return ''
@@ -107,7 +141,7 @@ function CheckoutPage() {
       <div className="min-h-screen bg-gradient-to-br from-background via-morph-green-50/5 to-morph-purple-50/5">
         <div className="container mx-auto px-4 py-16 text-center">
           <div className="max-w-md mx-auto">
-            <CheckCircle className="h-16 w-16 mx-auto mb-6 text-green-500" />
+            <CheckCircle className="h-16 w-16 mx-auto mb-6 text-chart-2" />
             <h2 className="text-2xl font-bold mb-4">Already Owned</h2>
             <p className="text-muted-foreground mb-6">You already own this product</p>
             <div className="flex gap-2 justify-center">
@@ -137,8 +171,8 @@ function CheckoutPage() {
             className="max-w-2xl mx-auto text-center"
           >
             <div className="mb-8">
-              <div className="w-20 h-20 mx-auto mb-6 bg-green-100 rounded-full flex items-center justify-center">
-                <CheckCircle className="h-10 w-10 text-green-600" />
+              <div className="w-20 h-20 mx-auto mb-6 bg-chart-2/10 rounded-full flex items-center justify-center">
+                <CheckCircle className="h-10 w-10 text-chart-2" />
               </div>
               <h1 className="text-3xl font-bold mb-4">Purchase Complete! 🎉</h1>
               <p className="text-lg text-muted-foreground">
@@ -180,7 +214,7 @@ function CheckoutPage() {
 
             <div className="space-y-4">
               <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-                <Shield className="h-4 w-4 text-green-500" />
+                <Shield className="h-4 w-4 text-chart-2" />
                 Your NFT ownership is now secured on the blockchain
               </div>
               
@@ -204,17 +238,34 @@ function CheckoutPage() {
 
   const handlePurchase = () => {
     if (!address || !product) return
-    
+
     setStep('processing')
-    
-    writeContract({
-      address: CONTRACTS.gumroadCore,
-      abi: GUMROAD_CORE_ABI,
-      functionName: 'purchaseProduct',
-      chain: getChainById(chainId),
-      account: address,
-      args: [BigInt(productId), CONTRACTS.mockUSDC],
-    })
+
+    const needsApproval = !usdcAllowance || (usdcAllowance as bigint) < price
+
+    if (needsApproval) {
+      // Step 1: Approve USDC spending
+      setPurchaseStep('approving')
+      writeContract({
+        address: CONTRACTS.mockUSDC,
+        abi: MOCK_USDC_ABI,
+        functionName: 'approve',
+        chain: getChainById(chainId),
+        account: address,
+        args: [CONTRACTS.gumroadCore, price],
+      })
+    } else {
+      // Already approved, go straight to purchase
+      setPurchaseStep('buying')
+      writeContract({
+        address: CONTRACTS.gumroadCore,
+        abi: GUMROAD_CORE_ABI,
+        functionName: 'purchaseProduct',
+        chain: getChainById(chainId),
+        account: address,
+        args: [BigInt(productId), CONTRACTS.mockUSDC],
+      })
+    }
   }
 
   const hasEnoughBalance = usdcBalance ? parseFloat(formatUnits(usdcBalance, 6)) >= parseFloat(priceInUSDC) : false
@@ -308,19 +359,19 @@ function CheckoutPage() {
                 <CardContent>
                   <div className="space-y-3">
                     <div className="flex items-center gap-3">
-                      <CheckCircle className="h-5 w-5 text-green-500" />
+                      <CheckCircle className="h-5 w-5 text-chart-2" />
                       <span className="text-sm">Instant NFT ownership certificate</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <CheckCircle className="h-5 w-5 text-green-500" />
+                      <CheckCircle className="h-5 w-5 text-chart-2" />
                       <span className="text-sm">Lifetime access to content</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <CheckCircle className="h-5 w-5 text-green-500" />
+                      <CheckCircle className="h-5 w-5 text-chart-2" />
                       <span className="text-sm">Resale rights on secondary markets</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <CheckCircle className="h-5 w-5 text-green-500" />
+                      <CheckCircle className="h-5 w-5 text-chart-2" />
                       <span className="text-sm">Blockchain-verified authenticity</span>
                     </div>
                   </div>
@@ -338,16 +389,20 @@ function CheckoutPage() {
                 <Card>
                   <CardContent className="p-8 text-center">
                     <Loader2 className="h-12 w-12 animate-spin mx-auto mb-4 text-morph-green-500" />
-                    <h3 className="text-lg font-semibold mb-2">Processing Transaction</h3>
+                    <h3 className="text-lg font-semibold mb-2">
+                      {purchaseStep === 'approving' ? 'Approving USDC...' : 'Processing Purchase...'}
+                    </h3>
                     <p className="text-sm text-muted-foreground mb-4">
-                      Please wait while your transaction is being processed on Morph...
+                      {purchaseStep === 'approving'
+                        ? 'Please approve USDC spending in your wallet...'
+                        : 'Please wait while your purchase is being confirmed on Morph...'}
                     </p>
                     <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
                       <Zap className="h-3 w-3 text-morph-green-500" />
                       Lightning-fast confirmation times on Morph
                     </div>
                     {error && (
-                      <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg text-sm text-red-600">
+                      <div className="mt-4 p-3 bg-red-50  rounded-lg text-sm text-destructive">
                         Transaction failed: {error.message}
                       </div>
                     )}
@@ -372,7 +427,7 @@ function CheckoutPage() {
                           onClick={() => setPaymentMethod('usdc')}
                         >
                           <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                            <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
                               💰
                             </div>
                             <div className="flex-1">
@@ -394,7 +449,7 @@ function CheckoutPage() {
                     <CardContent className="p-6">
                       {!hasEnoughBalance ? (
                         <div className="text-center space-y-4">
-                          <AlertCircle className="h-12 w-12 mx-auto text-yellow-500" />
+                          <AlertCircle className="h-12 w-12 mx-auto text-chart-3" />
                           <div>
                             <h3 className="font-semibold mb-2">Insufficient Balance</h3>
                             <p className="text-sm text-muted-foreground mb-4">
@@ -413,12 +468,16 @@ function CheckoutPage() {
                             disabled={!active || isPending || isConfirming}
                           >
                             <ShoppingCart className="h-5 w-5 mr-2" />
-                            {isPending || isConfirming ? 'Processing...' : `Pay ${priceInUSDC} USDC`}
+                            {isPending || isConfirming ? 'Processing...' :
+                              (!usdcAllowance || (usdcAllowance as bigint) < price)
+                                ? `Approve & Pay ${priceInUSDC} USDC`
+                                : `Pay ${priceInUSDC} USDC`
+                            }
                           </Button>
                           
                           <div className="text-xs text-muted-foreground text-center space-y-1">
                             <div className="flex items-center justify-center gap-1">
-                              <Shield className="h-3 w-3 text-green-500" />
+                              <Shield className="h-3 w-3 text-chart-2" />
                               Secured by blockchain technology
                             </div>
                             <div className="flex items-center justify-center gap-1">

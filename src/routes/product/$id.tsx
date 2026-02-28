@@ -158,7 +158,7 @@ function ProductDetail() {
                     Morph Testnet
                   </div>
                   {hasPurchased && (
-                    <Badge className="bg-green-100 text-green-800">
+                    <Badge className="bg-green-100 text-chart-2">
                       <CheckCircle className="h-3 w-3 mr-1" />
                       Owned
                     </Badge>
@@ -195,7 +195,7 @@ function ProductDetail() {
               <CardContent className="p-6">
                 {hasPurchased ? (
                   <div className="text-center space-y-4">
-                    <Badge className="bg-green-100 text-green-800 text-sm px-4 py-2">
+                    <Badge className="bg-green-100 text-chart-2 text-sm px-4 py-2">
                       <CheckCircle className="h-4 w-4 mr-2" />
                       You own this product
                     </Badge>

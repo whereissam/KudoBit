@@ -124,76 +124,9 @@ function CommunityPage() {
 
   const loadForumPosts = async () => {
     try {
-      // Mock data - replace with actual API calls
-      const posts: ForumPost[] = [
-        {
-          id: '1',
-          title: 'Welcome to the KudoBit Community!',
-          content: 'Welcome everyone to our new community forum! Here you can discuss everything related to KudoBit, share feedback, and connect with other users and creators.',
-          author: {
-            address: '0x1234...5678',
-            displayName: 'KudoBit Team',
-            isCreator: true,
-            isVerified: true,
-            loyaltyTier: 4
-          },
-          createdAt: Date.now() - 86400000,
-          updatedAt: Date.now() - 86400000,
-          category: 'General Discussion',
-          tags: ['welcome', 'announcement'],
-          likes: 25,
-          replies: 8,
-          isPinned: true,
-          isLocked: false,
-          hasLiked: false
-        },
-        {
-          id: '2',
-          title: 'How to maximize your loyalty rewards?',
-          content: 'I\'ve been using KudoBit for a while and wanted to share some tips on how to get the most out of the loyalty system. What strategies have worked for you?',
-          author: {
-            address: '0x9876...4321',
-            displayName: 'CryptoCollector',
-            isCreator: false,
-            isVerified: false,
-            loyaltyTier: 3
-          },
-          createdAt: Date.now() - 3600000,
-          updatedAt: Date.now() - 3600000,
-          category: 'Product Feedback',
-          tags: ['loyalty', 'rewards', 'tips'],
-          likes: 12,
-          replies: 15,
-          isPinned: false,
-          isLocked: false,
-          hasLiked: true
-        },
-        {
-          id: '3',
-          title: 'New Creator Looking for Feedback',
-          content: 'Hi everyone! I just joined as a creator and would love to get some feedback on my first few products. Any suggestions for new creators?',
-          author: {
-            address: '0xabcd...efgh',
-            displayName: 'NewArtist',
-            isCreator: true,
-            isVerified: false,
-            loyaltyTier: 1
-          },
-          createdAt: Date.now() - 7200000,
-          updatedAt: Date.now() - 7200000,
-          category: 'Creator Spotlight',
-          tags: ['newbie', 'feedback', 'creator'],
-          likes: 8,
-          replies: 6,
-          isPinned: false,
-          isLocked: false,
-          hasLiked: false
-        }
-      ]
-      setForumPosts(posts)
+      setForumPosts([])
     } catch (error) {
       console.error('Failed to load forum posts:', error)
-      toast.error('Failed to load forum posts')
     } finally {
       setLoading(false)
     }
@@ -201,43 +134,7 @@ function CommunityPage() {
 
   const loadChatMessages = async () => {
     try {
-      // Mock data - replace with actual WebSocket connection
-      const messages: ChatMessage[] = [
-        {
-          id: '1',
-          content: 'Welcome to the KudoBit community chat!',
-          author: {
-            address: '0x1234...5678',
-            displayName: 'KudoBit Bot',
-            isCreator: false
-          },
-          timestamp: Date.now() - 86400000,
-          type: 'system'
-        },
-        {
-          id: '2',
-          content: 'Hey everyone! Excited to be here!',
-          author: {
-            address: '0x9876...4321',
-            displayName: 'CryptoCollector',
-            isCreator: false
-          },
-          timestamp: Date.now() - 3600000,
-          type: 'message'
-        },
-        {
-          id: '3',
-          content: 'Just dropped a new collection! Check it out 🎨',
-          author: {
-            address: '0xabcd...efgh',
-            displayName: 'NewArtist',
-            isCreator: true
-          },
-          timestamp: Date.now() - 1800000,
-          type: 'message'
-        }
-      ]
-      setChatMessages(messages)
+      setChatMessages([])
     } catch (error) {
       console.error('Failed to load chat messages:', error)
     }
@@ -249,70 +146,19 @@ function CommunityPage() {
       return
     }
 
-    try {
-      const newPost: ForumPost = {
-        id: Date.now().toString(),
-        title: newPostTitle,
-        content: newPostContent,
-        author: {
-          address: address || '0x...',
-          displayName: `${address?.slice(0, 6)}...${address?.slice(-4)}` || 'Anonymous',
-          isCreator: false, // This would come from your user service
-          isVerified: false,
-          loyaltyTier: 1
-        },
-        createdAt: Date.now(),
-        updatedAt: Date.now(),
-        category: newPostCategory,
-        tags: [],
-        likes: 0,
-        replies: 0,
-        isPinned: false,
-        isLocked: false,
-        hasLiked: false
-      }
-
-      setForumPosts(prev => [newPost, ...prev])
-      setNewPostTitle('')
-      setNewPostContent('')
-      setShowCreatePost(false)
-      toast.success('Post created successfully!')
-    } catch (error) {
-      console.error('Failed to create post:', error)
-      toast.error('Failed to create post')
-    }
+    toast.error('Forum functionality not yet implemented')
+    setShowCreatePost(false)
   }
 
   const sendChatMessage = async () => {
     if (!chatInput.trim()) return
-
-    try {
-      const newMessage: ChatMessage = {
-        id: Date.now().toString(),
-        content: chatInput,
-        author: {
-          address: address || '0x...',
-          displayName: `${address?.slice(0, 6)}...${address?.slice(-4)}` || 'Anonymous',
-          isCreator: false
-        },
-        timestamp: Date.now(),
-        type: 'message'
-      }
-
-      setChatMessages(prev => [...prev, newMessage])
-      setChatInput('')
-    } catch (error) {
-      console.error('Failed to send message:', error)
-      toast.error('Failed to send message')
-    }
+    
+    toast.error('Chat functionality not yet implemented')
+    setChatInput('')
   }
 
-  const likePost = async (postId: string) => {
-    setForumPosts(prev => prev.map(post => 
-      post.id === postId 
-        ? { ...post, likes: post.hasLiked ? post.likes - 1 : post.likes + 1, hasLiked: !post.hasLiked }
-        : post
-    ))
+  const likePost = async (_postId: string) => {
+    toast.error('Like functionality not yet implemented')
   }
 
   const formatTimeAgo = (timestamp: number) => {
@@ -329,11 +175,11 @@ function CommunityPage() {
 
   const getLoyaltyBadgeColor = (tier: number) => {
     switch (tier) {
-      case 1: return 'bg-orange-100 text-orange-800'
-      case 2: return 'bg-gray-100 text-gray-800'
-      case 3: return 'bg-yellow-100 text-yellow-800'
-      case 4: return 'bg-blue-100 text-blue-800'
-      default: return 'bg-gray-100 text-gray-500'
+      case 1: return 'bg-orange-100 text-chart-5'
+      case 2: return 'bg-muted/30 text-gray-800'
+      case 3: return 'bg-yellow-100 text-chart-3'
+      case 4: return 'bg-blue-100 text-primary'
+      default: return 'bg-muted/30 text-muted-foreground'
     }
   }
 
@@ -365,8 +211,8 @@ function CommunityPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Community</h1>
-        <p className="text-gray-600">Connect with creators and fellow users</p>
+        <h1 className="text-3xl font-bold text-foreground mb-2">Community</h1>
+        <p className="text-muted-foreground">Connect with creators and fellow users</p>
       </div>
 
       <Tabs defaultValue="forum" className="w-full">
@@ -381,7 +227,7 @@ function CommunityPage() {
           <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
             <div className="flex gap-2 flex-wrap">
               <div className="relative">
-                <Search className="h-4 w-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                <Search className="h-4 w-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground" />
                 <Input
                   placeholder="Search posts..."
                   value={searchQuery}
@@ -457,7 +303,7 @@ function CommunityPage() {
               <div className="space-y-4">
                 {[1, 2, 3].map(i => (
                   <div key={i} className="animate-pulse">
-                    <div className="h-24 bg-gray-200 rounded-lg"></div>
+                    <div className="h-24 bg-muted/50 rounded-lg"></div>
                   </div>
                 ))}
               </div>
@@ -475,13 +321,13 @@ function CommunityPage() {
                       
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-2">
-                          {post.isPinned && <Pin className="h-4 w-4 text-yellow-500" />}
-                          <h3 className="font-semibold text-gray-900 truncate">
+                          {post.isPinned && <Pin className="h-4 w-4 text-chart-3" />}
+                          <h3 className="font-semibold text-foreground truncate">
                             {post.title}
                           </h3>
                         </div>
                         
-                        <div className="flex items-center gap-2 mb-2 text-sm text-gray-600">
+                        <div className="flex items-center gap-2 mb-2 text-sm text-muted-foreground">
                           <span className="font-medium">{post.author.displayName}</span>
                           {post.author.isCreator && (
                             <Badge variant="secondary" className="text-xs">
@@ -498,28 +344,28 @@ function CommunityPage() {
                           <Badge className={`text-xs ${getLoyaltyBadgeColor(post.author.loyaltyTier)}`}>
                             Tier {post.author.loyaltyTier}
                           </Badge>
-                          <span className="text-xs text-gray-500">
+                          <span className="text-xs text-muted-foreground">
                             <Clock className="h-3 w-3 inline mr-1" />
                             {formatTimeAgo(post.createdAt)}
                           </span>
                         </div>
                         
-                        <p className="text-gray-700 text-sm mb-3 line-clamp-2">
+                        <p className="text-foreground text-sm mb-3 line-clamp-2">
                           {post.content}
                         </p>
                         
-                        <div className="flex items-center gap-4 text-sm text-gray-500">
+                        <div className="flex items-center gap-4 text-sm text-muted-foreground">
                           <button
                             onClick={() => likePost(post.id)}
-                            className={`flex items-center gap-1 hover:text-red-500 transition-colors ${
-                              post.hasLiked ? 'text-red-500' : ''
+                            className={`flex items-center gap-1 hover:text-destructive transition-colors ${
+                              post.hasLiked ? 'text-destructive' : ''
                             }`}
                           >
                             <Heart className={`h-4 w-4 ${post.hasLiked ? 'fill-current' : ''}`} />
                             {post.likes}
                           </button>
                           
-                          <button className="flex items-center gap-1 hover:text-blue-500 transition-colors">
+                          <button className="flex items-center gap-1 hover:text-primary transition-colors">
                             <MessageCircle className="h-4 w-4" />
                             {post.replies}
                           </button>
@@ -555,9 +401,9 @@ function CommunityPage() {
             ) : (
               <Card>
                 <CardContent className="text-center py-8">
-                  <MessageCircle className="h-12 w-12 text-gray-400 mx-auto mb-3" />
-                  <p className="text-gray-500">No posts found</p>
-                  <p className="text-xs text-gray-400">Be the first to start a discussion!</p>
+                  <MessageCircle className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
+                  <p className="text-muted-foreground">No posts found</p>
+                  <p className="text-xs text-muted-foreground">Be the first to start a discussion!</p>
                 </CardContent>
               </Card>
             )}
@@ -573,7 +419,7 @@ function CommunityPage() {
                 <CardHeader className="pb-3">
                   <div className="flex items-center justify-between">
                     <CardTitle className="text-lg">Community Chat</CardTitle>
-                    <div className="flex items-center gap-2 text-sm text-gray-500">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <Users className="h-4 w-4" />
                       <span>42 online</span>
                     </div>
@@ -602,14 +448,14 @@ function CommunityPage() {
                                 Creator
                               </Badge>
                             )}
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs text-muted-foreground">
                               {formatTimeAgo(message.timestamp)}
                             </span>
                           </div>
                           <p className={`text-sm ${
                             message.type === 'system' 
-                              ? 'text-gray-500 italic' 
-                              : 'text-gray-900'
+                              ? 'text-muted-foreground italic' 
+                              : 'text-foreground'
                           }`}>
                             {message.content}
                           </p>
@@ -645,13 +491,9 @@ function CommunityPage() {
                   <CardTitle className="text-lg">Online Users</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                  {[
-                    { name: 'KudoBit Team', isCreator: true, isOnline: true },
-                    { name: 'CryptoCollector', isCreator: false, isOnline: true },
-                    { name: 'NewArtist', isCreator: true, isOnline: true },
-                    { name: 'User123', isCreator: false, isOnline: false },
-                  ].map((user, index) => (
-                    <div key={index} className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-50">
+                  {/* Online users will be populated via WebSocket */
+                  [].map((user: any, index: number) => (
+                    <div key={index} className="flex items-center gap-2 p-2 rounded-lg hover:bg-muted/20">
                       <div className="relative">
                         <Avatar className="h-8 w-8">
                           <AvatarFallback className="bg-primary/10 text-primary text-xs">
@@ -659,7 +501,7 @@ function CommunityPage() {
                           </AvatarFallback>
                         </Avatar>
                         <div className={`absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-white ${
-                          user.isOnline ? 'bg-green-500' : 'bg-gray-400'
+                          user.isOnline ? 'bg-chart-2' : 'bg-muted-foreground'
                         }`} />
                       </div>
                       <div className="flex-1 min-w-0">
@@ -682,6 +524,6 @@ function CommunityPage() {
   )
 }
 
-export const Route = createFileRoute('/community')({
+export const Route = createFileRoute('/utility/community')({
   component: CommunityPage,
 })

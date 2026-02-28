@@ -1,6 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useState, useEffect } from 'react'
 import { useAccount } from 'wagmi'
+import { useAffiliate } from '@/hooks/use-affiliate'
+import { formatUnits } from 'viem'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -61,200 +63,77 @@ interface CommissionTier {
 
 function AffiliatePage() {
   const { address, isConnected } = useAccount()
-  const [profile, setProfile] = useState<AffiliateProfile>({
-    isAffiliate: false,
-    referralCode: '',
-    displayName: '',
-    bio: '',
-    joinedAt: 0,
-    totalReferrals: 0,
-    totalEarnings: 0,
-    pendingEarnings: 0,
-    currentTier: 1,
-    tierName: 'Bronze Affiliate',
-    isVerified: false,
-    creatorReferrals: 0,
-    buyerReferrals: 0,
-    subscriptionReferrals: 0,
-    totalSalesGenerated: 0
-  })
-  const [referrals, setReferrals] = useState<ReferralRecord[]>([])
-  const [commissionTiers, setCommissionTiers] = useState<CommissionTier[]>([])
-  const [topAffiliates, setTopAffiliates] = useState<any[]>([])
-  
-  // Registration form
+  const {
+    isAffiliate: hookIsAffiliate,
+    profile: hookProfile,
+    stats: hookStats,
+    topAffiliates: hookTopAffiliates,
+    isLoading: loading,
+    isWriting,
+    isConfirming,
+    isSuccess,
+    contractDeployed,
+    register: hookRegister,
+    withdrawCommissions: hookWithdraw,
+  } = useAffiliate()
+
+  // Registration form state
   const [displayName, setDisplayName] = useState('')
   const [bio, setBio] = useState('')
-  const [loading, setLoading] = useState(true)
   const [copying, setCopying] = useState(false)
 
-  useEffect(() => {
-    if (isConnected && address) {
-      loadAffiliateProfile()
-      loadCommissionTiers()
-      loadTopAffiliates()
-    }
-  }, [isConnected, address])
+  const formatEth = (val: bigint | undefined) => val ? parseFloat(formatUnits(val, 18)).toFixed(4) : '0'
 
-  const loadAffiliateProfile = async () => {
-    try {
-      // Mock data - replace with contract calls
-      const mockProfile: AffiliateProfile = {
-        isAffiliate: true,
-        referralCode: 'KUDOBIT_CRYPTO123',
-        displayName: 'CryptoAffiliate',
-        bio: 'Helping people discover the best Web3 creator marketplace!',
-        joinedAt: Date.now() - 2592000000, // 30 days ago
-        totalReferrals: 15,
-        totalEarnings: 23.45,
-        pendingEarnings: 5.67,
-        currentTier: 2,
-        tierName: 'Silver Affiliate',
-        isVerified: true,
-        creatorReferrals: 3,
-        buyerReferrals: 12,
-        subscriptionReferrals: 8,
-        totalSalesGenerated: 156.78
-      }
-      setProfile(mockProfile)
-      
-      if (mockProfile.isAffiliate) {
-        loadReferrals()
-      }
-    } catch (error) {
-      console.error('Failed to load affiliate profile:', error)
-    } finally {
-      setLoading(false)
-    }
+  // Map hook data to the AffiliateProfile shape used by the template
+  const profile: AffiliateProfile = {
+    isAffiliate: hookIsAffiliate,
+    referralCode: hookProfile?.referralCode || '',
+    displayName: hookProfile?.displayName || '',
+    bio: hookProfile?.bio || '',
+    joinedAt: hookProfile?.joinedAt ? hookProfile.joinedAt * 1000 : 0,
+    totalReferrals: hookStats?.totalReferrals ?? 0,
+    totalEarnings: hookStats?.totalEarnings ? parseFloat(formatUnits(hookStats.totalEarnings, 18)) : 0,
+    pendingEarnings: hookStats?.pendingEarnings ? parseFloat(formatUnits(hookStats.pendingEarnings, 18)) : 0,
+    currentTier: hookStats?.currentTier ?? 0,
+    tierName: hookStats?.tierName ?? 'Bronze Affiliate',
+    isVerified: hookProfile?.isVerified ?? false,
+    creatorReferrals: hookStats?.creatorReferrals ?? 0,
+    buyerReferrals: hookStats?.buyerReferrals ?? 0,
+    subscriptionReferrals: hookStats?.subscriptionReferrals ?? 0,
+    totalSalesGenerated: hookStats?.totalSalesGenerated ? parseFloat(formatUnits(hookStats.totalSalesGenerated, 18)) : 0,
   }
 
-  const loadReferrals = async () => {
-    try {
-      // Mock data - replace with contract calls
-      const mockReferrals: ReferralRecord[] = [
-        {
-          referee: '0x1234...5678',
-          referralType: 'buyer',
-          timestamp: Date.now() - 86400000,
-          purchaseAmount: 0
-        },
-        {
-          referee: '0x2345...6789',
-          referralType: 'purchase',
-          timestamp: Date.now() - 172800000,
-          purchaseAmount: 15.50
-        },
-        {
-          referee: '0x3456...7890',
-          referralType: 'creator',
-          timestamp: Date.now() - 259200000,
-          purchaseAmount: 0
-        },
-        {
-          referee: '0x4567...8901',
-          referralType: 'subscription',
-          timestamp: Date.now() - 345600000,
-          purchaseAmount: 5.00
-        }
-      ]
-      setReferrals(mockReferrals)
-    } catch (error) {
-      console.error('Failed to load referrals:', error)
-    }
-  }
+  // Referrals need event indexer — empty for now
+  const referrals: ReferralRecord[] = []
 
-  const loadCommissionTiers = async () => {
-    try {
-      // Mock data - replace with contract calls
-      const tiers: CommissionTier[] = [
-        {
-          tierName: 'Bronze Affiliate',
-          minReferrals: 0,
-          purchaseCommission: 2,
-          subscriptionCommission: 3,
-          creatorSignupBonus: 0.50,
-          buyerSignupBonus: 0.10
-        },
-        {
-          tierName: 'Silver Affiliate',
-          minReferrals: 10,
-          purchaseCommission: 2.5,
-          subscriptionCommission: 3.5,
-          creatorSignupBonus: 0.75,
-          buyerSignupBonus: 0.15
-        },
-        {
-          tierName: 'Gold Affiliate',
-          minReferrals: 50,
-          purchaseCommission: 3,
-          subscriptionCommission: 4,
-          creatorSignupBonus: 1.00,
-          buyerSignupBonus: 0.20
-        },
-        {
-          tierName: 'Diamond Affiliate',
-          minReferrals: 200,
-          purchaseCommission: 4,
-          subscriptionCommission: 5,
-          creatorSignupBonus: 2.00,
-          buyerSignupBonus: 0.40
-        }
-      ]
-      setCommissionTiers(tiers)
-    } catch (error) {
-      console.error('Failed to load commission tiers:', error)
-    }
-  }
+  // Commission tiers are contract-level constants — load from contract or hardcode
+  const commissionTiers: CommissionTier[] = [
+    { tierName: 'Bronze Affiliate', minReferrals: 0, purchaseCommission: 2, subscriptionCommission: 3, creatorSignupBonus: 0.50, buyerSignupBonus: 0.10 },
+    { tierName: 'Silver Affiliate', minReferrals: 10, purchaseCommission: 2.5, subscriptionCommission: 3.5, creatorSignupBonus: 0.75, buyerSignupBonus: 0.15 },
+    { tierName: 'Gold Affiliate', minReferrals: 50, purchaseCommission: 3, subscriptionCommission: 4, creatorSignupBonus: 1.00, buyerSignupBonus: 0.20 },
+    { tierName: 'Diamond Affiliate', minReferrals: 200, purchaseCommission: 4, subscriptionCommission: 5, creatorSignupBonus: 2.00, buyerSignupBonus: 0.40 },
+  ]
 
-  const loadTopAffiliates = async () => {
-    try {
-      // Mock data - replace with API calls
-      const top = [
-        { rank: 1, displayName: 'TopAffiliate1', totalReferrals: 456, totalEarnings: 1234.56 },
-        { rank: 2, displayName: 'SuperReferrer', totalReferrals: 234, totalEarnings: 890.12 },
-        { rank: 3, displayName: 'CryptoInfluencer', totalReferrals: 189, totalEarnings: 567.89 },
-        { rank: 4, displayName: 'You', totalReferrals: 15, totalEarnings: 23.45 },
-      ]
-      setTopAffiliates(top)
-    } catch (error) {
-      console.error('Failed to load top affiliates:', error)
-    }
-  }
+  // Build top affiliates from hook data
+  const topAffiliates = hookTopAffiliates
+    ? hookTopAffiliates.addresses.map((addr, i) => ({
+        rank: i + 1,
+        displayName: hookTopAffiliates.displayNames[i] || addr.slice(0, 8),
+        totalReferrals: hookTopAffiliates.totalReferrals[i] || 0,
+        totalEarnings: hookTopAffiliates.totalEarnings[i] ? parseFloat(formatUnits(hookTopAffiliates.totalEarnings[i], 18)) : 0,
+      }))
+    : []
 
-  const registerAffiliate = async () => {
+  const registerAffiliate = () => {
     if (!displayName.trim()) {
       toast.error('Please enter a display name')
       return
     }
-
-    try {
-      setLoading(true)
-      // Mock registration - replace with contract call
-      const newCode = `KUDOBIT_${displayName.toUpperCase().replace(/[^A-Z0-9]/g, '')}_${Math.random().toString(36).substr(2, 6).toUpperCase()}`
-      
-      setProfile(prev => ({
-        ...prev,
-        isAffiliate: true,
-        referralCode: newCode,
-        displayName,
-        bio,
-        joinedAt: Date.now(),
-        currentTier: 1,
-        tierName: 'Bronze Affiliate'
-      }))
-      
-      toast.success('Successfully registered as affiliate!')
-    } catch (error) {
-      console.error('Failed to register affiliate:', error)
-      toast.error('Failed to register as affiliate')
-    } finally {
-      setLoading(false)
-    }
+    hookRegister(displayName, bio)
   }
 
   const copyReferralLink = async () => {
     const link = `${window.location.origin}?ref=${profile.referralCode}`
-    
     try {
       await navigator.clipboard.writeText(link)
       setCopying(true)
@@ -265,46 +144,27 @@ function AffiliatePage() {
     }
   }
 
-  const withdrawCommissions = async () => {
-    if (profile.pendingEarnings < 1) {
-      toast.error('Minimum withdrawal is $1.00')
-      return
-    }
-
-    try {
-      setLoading(true)
-      // Mock withdrawal - replace with contract call
-      toast.success(`Withdrew $${profile.pendingEarnings.toFixed(2)} to your wallet`)
-      
-      setProfile(prev => ({
-        ...prev,
-        pendingEarnings: 0
-      }))
-    } catch (error) {
-      console.error('Failed to withdraw commissions:', error)
-      toast.error('Failed to withdraw commissions')
-    } finally {
-      setLoading(false)
-    }
+  const withdrawCommissions = () => {
+    hookWithdraw()
   }
 
   const getReferralTypeColor = (type: string) => {
     switch (type) {
-      case 'buyer': return 'bg-blue-100 text-blue-800'
-      case 'creator': return 'bg-purple-100 text-purple-800'
-      case 'purchase': return 'bg-green-100 text-green-800'
-      case 'subscription': return 'bg-yellow-100 text-yellow-800'
-      default: return 'bg-gray-100 text-gray-800'
+      case 'buyer': return 'bg-primary/10 text-primary'
+      case 'creator': return 'bg-chart-3/10 text-chart-3'
+      case 'purchase': return 'bg-chart-2/10 text-chart-2'
+      case 'subscription': return 'bg-chart-3/10 text-chart-3'
+      default: return 'bg-muted/30 text-muted-foreground'
     }
   }
 
   const getTierColor = (tier: number) => {
     switch (tier) {
-      case 1: return 'bg-orange-100 text-orange-800'
-      case 2: return 'bg-gray-100 text-gray-800'
-      case 3: return 'bg-yellow-100 text-yellow-800'
-      case 4: return 'bg-blue-100 text-blue-800'
-      default: return 'bg-gray-100 text-gray-500'
+      case 1: return 'bg-chart-5/10 text-chart-5'
+      case 2: return 'bg-muted/30 text-muted-foreground'
+      case 3: return 'bg-chart-3/10 text-chart-3'
+      case 4: return 'bg-primary/10 text-primary'
+      default: return 'bg-muted/30 text-muted-foreground'
     }
   }
 
@@ -327,11 +187,11 @@ function AffiliatePage() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="animate-pulse space-y-6">
-          <div className="h-32 bg-gray-200 rounded-lg"></div>
+          <div className="h-32 bg-muted/50 rounded-lg"></div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="h-48 bg-gray-200 rounded-lg"></div>
-            <div className="h-48 bg-gray-200 rounded-lg"></div>
-            <div className="h-48 bg-gray-200 rounded-lg"></div>
+            <div className="h-48 bg-muted/50 rounded-lg"></div>
+            <div className="h-48 bg-muted/50 rounded-lg"></div>
+            <div className="h-48 bg-muted/50 rounded-lg"></div>
           </div>
         </div>
       </div>
@@ -342,13 +202,12 @@ function AffiliatePage() {
     <div className="container mx-auto px-4 py-8 space-y-6">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Affiliate Program</h1>
-        <p className="text-gray-600">Earn commissions by referring new users to KudoBit</p>
+        <h1 className="text-3xl font-bold text-foreground mb-2">Affiliate Program</h1>
+        <p className="text-muted-foreground">Earn commissions by referring new users to KudoBit</p>
       </div>
-
       {!profile.isAffiliate ? (
         /* Registration Form */
-        <Card className="max-w-2xl mx-auto">
+        (<Card className="max-w-2xl mx-auto">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Users className="h-5 w-5" />
@@ -381,7 +240,7 @@ function AffiliatePage() {
             </div>
             
             {/* Commission Structure Preview */}
-            <div className="bg-gray-50 p-4 rounded-lg">
+            <div className="bg-muted/20 p-4 rounded-lg">
               <h3 className="font-semibold mb-2">Earning Opportunities:</h3>
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <div>• Creator signup: $0.50</div>
@@ -391,24 +250,24 @@ function AffiliatePage() {
               </div>
             </div>
             
-            <Button onClick={registerAffiliate} className="w-full" disabled={loading}>
-              {loading ? 'Registering...' : 'Join Affiliate Program'}
+            <Button onClick={registerAffiliate} className="w-full" disabled={isWriting || isConfirming}>
+              {isWriting ? 'Signing...' : isConfirming ? 'Confirming...' : 'Join Affiliate Program'}
             </Button>
           </CardContent>
-        </Card>
+        </Card>)
       ) : (
         /* Affiliate Dashboard */
-        <>
+        (<>
           {/* Stats Overview */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <Card>
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-blue-100 rounded-lg">
-                    <Users className="h-6 w-6 text-blue-600" />
+                  <div className="p-2 bg-primary/10 rounded-lg">
+                    <Users className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Total Referrals</p>
+                    <p className="text-sm text-muted-foreground">Total Referrals</p>
                     <p className="text-2xl font-bold">{profile.totalReferrals}</p>
                   </div>
                 </div>
@@ -418,11 +277,11 @@ function AffiliatePage() {
             <Card>
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-green-100 rounded-lg">
-                    <DollarSign className="h-6 w-6 text-green-600" />
+                  <div className="p-2 bg-chart-2/10 rounded-lg">
+                    <DollarSign className="h-6 w-6 text-chart-2" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Total Earnings</p>
+                    <p className="text-sm text-muted-foreground">Total Earnings</p>
                     <p className="text-2xl font-bold">${profile.totalEarnings.toFixed(2)}</p>
                   </div>
                 </div>
@@ -432,11 +291,11 @@ function AffiliatePage() {
             <Card>
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-purple-100 rounded-lg">
-                    <Wallet className="h-6 w-6 text-purple-600" />
+                  <div className="p-2 bg-chart-3/10 rounded-lg">
+                    <Wallet className="h-6 w-6 text-chart-3" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Pending</p>
+                    <p className="text-sm text-muted-foreground">Pending</p>
                     <p className="text-2xl font-bold">${profile.pendingEarnings.toFixed(2)}</p>
                     {profile.pendingEarnings >= 1 && (
                       <Button 
@@ -455,18 +314,18 @@ function AffiliatePage() {
             <Card>
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-yellow-100 rounded-lg">
-                    <Crown className="h-6 w-6 text-yellow-600" />
+                  <div className="p-2 bg-chart-3/10 rounded-lg">
+                    <Crown className="h-6 w-6 text-chart-3" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-600">Tier</p>
+                    <p className="text-sm text-muted-foreground">Tier</p>
                     <Badge className={getTierColor(profile.currentTier)}>
                       {profile.tierName}
                     </Badge>
                     {profile.isVerified && (
                       <div className="flex items-center gap-1 mt-1">
-                        <Check className="h-3 w-3 text-green-500" />
-                        <span className="text-xs text-green-500">Verified</span>
+                        <Check className="h-3 w-3 text-chart-2" />
+                        <span className="text-xs text-chart-2">Verified</span>
                       </div>
                     )}
                   </div>
@@ -474,7 +333,6 @@ function AffiliatePage() {
               </CardContent>
             </Card>
           </div>
-
           {/* Referral Link */}
           <Card>
             <CardHeader>
@@ -494,12 +352,11 @@ function AffiliatePage() {
                   {copying ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                 </Button>
               </div>
-              <p className="text-sm text-gray-500 mt-2">
+              <p className="text-sm text-muted-foreground mt-2">
                 Share this link to earn commissions from new user signups and purchases
               </p>
             </CardContent>
           </Card>
-
           {/* Tabs */}
           <Tabs defaultValue="activity" className="w-full">
             <TabsList className="grid w-full grid-cols-3">
@@ -544,14 +401,14 @@ function AffiliatePage() {
                   <CardContent>
                     <div className="space-y-3">
                       {referrals.slice(0, 5).map((referral, index) => (
-                        <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                        <div key={index} className="flex items-center justify-between p-3 bg-muted/20 rounded-lg">
                           <div>
                             <p className="text-sm font-medium">{referral.referee}</p>
                             <div className="flex items-center gap-2 mt-1">
                               <Badge className={`text-xs ${getReferralTypeColor(referral.referralType)}`}>
                                 {referral.referralType}
                               </Badge>
-                              <span className="text-xs text-gray-500">
+                              <span className="text-xs text-muted-foreground">
                                 {new Date(referral.timestamp).toLocaleDateString()}
                               </span>
                             </div>
@@ -559,7 +416,7 @@ function AffiliatePage() {
                           {referral.purchaseAmount > 0 && (
                             <div className="text-right">
                               <p className="text-sm font-medium">${referral.purchaseAmount.toFixed(2)}</p>
-                              <p className="text-xs text-gray-500">purchase</p>
+                              <p className="text-xs text-muted-foreground">purchase</p>
                             </div>
                           )}
                         </div>
@@ -575,12 +432,12 @@ function AffiliatePage() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {commissionTiers.map((tier, index) => (
                   <Card key={index} className={`${
-                    index + 1 === profile.currentTier ? 'border-blue-200 bg-blue-50' : ''
+                    index + 1 === profile.currentTier ? 'border-primary/20 bg-primary/5' : ''
                   }`}>
                     <CardHeader className="pb-3">
                       <CardTitle className="text-lg flex items-center gap-2">
                         {index + 1 === profile.currentTier && (
-                          <Crown className="h-5 w-5 text-yellow-500" />
+                          <Crown className="h-5 w-5 text-chart-3" />
                         )}
                         {tier.tierName}
                       </CardTitle>
@@ -624,13 +481,13 @@ function AffiliatePage() {
                   <div className="space-y-3">
                     {topAffiliates.map((affiliate, index) => (
                       <div key={index} className={`flex items-center gap-3 p-3 rounded-lg ${
-                        affiliate.displayName === 'You' ? 'bg-blue-50 border border-blue-200' : 'bg-gray-50'
+                        affiliate.displayName === 'You' ? 'bg-primary/5 border border-primary/20' : 'bg-muted/20'
                       }`}>
                         <div className={`flex items-center justify-center w-8 h-8 rounded-full font-bold text-sm ${
-                          affiliate.rank === 1 ? 'bg-yellow-400 text-white' :
-                          affiliate.rank === 2 ? 'bg-gray-400 text-white' :
-                          affiliate.rank === 3 ? 'bg-orange-400 text-white' :
-                          'bg-gray-200 text-gray-700'
+                          affiliate.rank === 1 ? 'bg-chart-3 text-white' :
+                          affiliate.rank === 2 ? 'bg-muted-foreground text-white' :
+                          affiliate.rank === 3 ? 'bg-chart-5 text-white' :
+                          'bg-muted/50 text-foreground'
                         }`}>
                           {affiliate.rank <= 3 ? (
                             affiliate.rank === 1 ? '🥇' : affiliate.rank === 2 ? '🥈' : '🥉'
@@ -650,7 +507,7 @@ function AffiliatePage() {
                         
                         <div className="text-right">
                           <p className="font-bold">{affiliate.totalReferrals} referrals</p>
-                          <p className="text-sm text-gray-500">${affiliate.totalEarnings.toFixed(2)} earned</p>
+                          <p className="text-sm text-muted-foreground">${affiliate.totalEarnings.toFixed(2)} earned</p>
                         </div>
                       </div>
                     ))}
@@ -659,12 +516,12 @@ function AffiliatePage() {
               </Card>
             </TabsContent>
           </Tabs>
-        </>
+        </>)
       )}
     </div>
   )
 }
 
-export const Route = createFileRoute('/affiliate')({
+export const Route = createFileRoute('/utility/affiliate')({
   component: AffiliatePage,
 })

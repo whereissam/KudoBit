@@ -1,12 +1,12 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
-import { Button } from '../components/ui/button';
-import { Input } from '../components/ui/input';
-import { Label } from '../components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
-import { WalletConnect } from '../components/wallet-connect';
-import { AuthService } from '../lib/auth';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { WalletConnect } from '@/components/wallet-connect';
+import { AuthService } from '@/lib/auth';
 
 export const Route = createFileRoute('/creator/profile')({
   component: CreatorProfilePage,
@@ -231,7 +231,7 @@ function CreatorProfilePage() {
 
               {profile?.isVerified && (
                 <div className="p-3 bg-green-50 border border-green-200 rounded-md">
-                  <p className="text-sm text-green-700">✅ Verified Creator</p>
+                  <p className="text-sm text-chart-2">✅ Verified Creator</p>
                 </div>
               )}
 

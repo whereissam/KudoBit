@@ -1,42 +1,45 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { useAccount } from 'wagmi'
-import { useCreator } from '@/hooks/use-creator'
-import { useEffect } from 'react'
+import { useAccount, useReadContract } from 'wagmi'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { 
-  TrendingUp, 
-  Package, 
-  Users, 
-  DollarSign, 
+import {
+  TrendingUp,
+  Package,
+  Users,
+  DollarSign,
   Plus,
   BarChart3,
   Download,
-  Star
 } from 'lucide-react'
 import { formatUnits } from 'viem'
 import { motion } from 'framer-motion'
+import { CONTRACTS, PRODUCT_NFT_ABI, CREATOR_REGISTRY_ABI } from '@/lib/contracts'
 
 export const Route = createFileRoute('/creator/')({
-  component: CreatorDashboard,
+  component: CreatorIndex,
 })
 
-function CreatorDashboard() {
+function CreatorIndex() {
   const { address, isConnected } = useAccount()
-  const { products, earnings, loadCreatorData, claimEarnings, isLoading } = useCreator()
 
-  useEffect(() => {
-    if (isConnected && address) {
-      loadCreatorData()
-    }
-  }, [isConnected, address, loadCreatorData])
+  // Read creator profile from chain
+  const { data: creatorData } = useReadContract({
+    address: CONTRACTS.creatorRegistry,
+    abi: CREATOR_REGISTRY_ABI,
+    functionName: 'creators',
+    args: address ? [address] : undefined,
+    query: { enabled: isConnected && !!address },
+  })
 
-  // const { data: items } = useReadContract({
-  //   address: CONTRACTS.shopfront,
-  //   abi: SHOPFRONT_ABI,
-  //   functionName: 'getAllItems',
-  // })
+  // Read creator's product IDs from chain
+  const { data: productIds } = useReadContract({
+    address: CONTRACTS.productNFT,
+    abi: PRODUCT_NFT_ABI,
+    functionName: 'getCreatorProducts',
+    args: address ? [address] : undefined,
+    query: { enabled: isConnected && !!address },
+  })
 
   if (!isConnected) {
     return (
@@ -51,45 +54,37 @@ function CreatorDashboard() {
     )
   }
 
+  const products = (productIds as bigint[]) || []
   const totalProducts = products.length
-  const totalRevenue = Object.values(earnings).reduce((sum, amount) => sum + BigInt(amount || '0'), BigInt('0'))
-  const totalSales = 42 // This would come from analytics contract
-  const totalCustomers = 28 // This would come from analytics contract
+  const totalSales = creatorData ? Number((creatorData as any)[5] || 0) : 0
+  const productCount = creatorData ? Number((creatorData as any)[4] || 0) : 0
 
   const quickStats = [
     {
-      title: 'Total Revenue',
-      value: `${formatUnits(totalRevenue, 6)} USDC`,
-      icon: DollarSign,
-      change: '+12.5%',
-      trend: 'up'
-    },
-    {
       title: 'Products',
-      value: totalProducts.toString(),
+      value: (productCount || totalProducts).toString(),
       icon: Package,
-      change: '+2',
-      trend: 'up'
     },
     {
       title: 'Sales',
       value: totalSales.toString(),
       icon: TrendingUp,
-      change: '+8',
-      trend: 'up'
     },
     {
       title: 'Customers',
-      value: totalCustomers.toString(),
+      value: totalSales > 0 ? totalSales.toString() : '0',
       icon: Users,
-      change: '+5',
-      trend: 'up'
+    },
+    {
+      title: 'Earnings',
+      value: 'View',
+      icon: DollarSign,
     }
   ]
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="space-y-8"
@@ -102,7 +97,7 @@ function CreatorDashboard() {
               Manage your products and track your sales
             </p>
           </div>
-          <Link to="/creator/products/new">
+          <Link to="/creator/create-product">
             <Button>
               <Plus className="h-4 w-4 mr-2" />
               Create Product
@@ -127,10 +122,6 @@ function CreatorDashboard() {
                         {stat.title}
                       </p>
                       <p className="text-2xl font-bold">{stat.value}</p>
-                      <p className="text-xs text-green-600 flex items-center mt-1">
-                        <TrendingUp className="h-3 w-3 mr-1" />
-                        {stat.change}
-                      </p>
                     </div>
                     <div className="h-12 w-12 bg-primary/10 rounded-full flex items-center justify-center">
                       <stat.icon className="h-6 w-6 text-primary" />
@@ -155,9 +146,9 @@ function CreatorDashboard() {
               <p className="text-sm text-muted-foreground mb-3">
                 Create, edit, and manage your digital products
               </p>
-              <Link to="/creator/products">
+              <Link to="/creator/create-product">
                 <Button variant="outline" size="sm" className="w-full">
-                  View Products
+                  Create Product
                 </Button>
               </Link>
             </CardContent>
@@ -174,7 +165,7 @@ function CreatorDashboard() {
               <p className="text-sm text-muted-foreground mb-3">
                 View detailed sales and performance analytics
               </p>
-              <Link to="/creator/analytics">
+              <Link to="/creator/earnings">
                 <Button variant="outline" size="sm" className="w-full">
                   View Analytics
                 </Button>
@@ -202,40 +193,7 @@ function CreatorDashboard() {
           </Card>
         </div>
 
-        {/* Earnings Section */}
-        {Object.keys(earnings).length > 0 && (
-          <Card>
-            <CardHeader>
-              <CardTitle>Available Earnings</CardTitle>
-              <CardDescription>
-                Withdraw your earned revenue from product sales
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {Object.entries(earnings).map(([token, amount]) => (
-                  amount && amount !== '0' ? (
-                    <div key={token} className="flex items-center justify-between p-3 border rounded-lg">
-                      <div>
-                        <p className="font-medium">{formatUnits(BigInt(amount), 6)} USDC</p>
-                        <p className="text-sm text-muted-foreground">Token: {token.slice(0, 6)}...{token.slice(-4)}</p>
-                      </div>
-                      <Button 
-                        onClick={() => claimEarnings()}
-                        disabled={isLoading}
-                        size="sm"
-                      >
-                        {isLoading ? 'Claiming...' : 'Claim'}
-                      </Button>
-                    </div>
-                  ) : null
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Recent Products */}
+        {/* Products */}
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -245,9 +203,9 @@ function CreatorDashboard() {
                   Overview of your published products
                 </CardDescription>
               </div>
-              <Link to="/creator/products">
+              <Link to="/creator/create-product">
                 <Button variant="outline" size="sm">
-                  View All
+                  Create New
                 </Button>
               </Link>
             </div>
@@ -260,7 +218,7 @@ function CreatorDashboard() {
                 <p className="text-muted-foreground mb-4">
                   Create your first product to start selling
                 </p>
-                <Link to="/creator/products/new">
+                <Link to="/creator/create-product">
                   <Button>
                     <Plus className="h-4 w-4 mr-2" />
                     Create Product
@@ -269,74 +227,32 @@ function CreatorDashboard() {
               </div>
             ) : (
               <div className="space-y-4">
-                {products.slice(0, 3).map((product, index) => (
-                  <div 
-                    key={index} 
+                {products.slice(0, 5).map((productId, index) => (
+                  <div
+                    key={index}
                     className="flex items-center justify-between p-4 border rounded-lg"
                   >
                     <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-purple-100 rounded-lg flex items-center justify-center">
-                        <Package className="h-6 w-6 text-blue-600" />
+                      <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/30 dark:to-purple-900/30 rounded-lg flex items-center justify-center">
+                        <Package className="h-6 w-6 text-primary" />
                       </div>
                       <div>
-                        <h4 className="font-medium">Product #{product}</h4>
+                        <h4 className="font-medium">Product #{productId.toString()}</h4>
                         <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-                          <span>NFT ID: {product}</span>
-                          <Badge variant="default">
-                            Active
-                          </Badge>
+                          <span>NFT ID: {productId.toString()}</span>
+                          <Badge variant="default">Active</Badge>
                         </div>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="text-right text-sm">
-                        <p className="font-medium">View Details</p>
-                        <p className="text-muted-foreground">On chain</p>
-                      </div>
-                      <Button variant="ghost" size="icon">
-                        <Download className="h-4 w-4" />
+                    <Link to="/product/$id" params={{ id: productId.toString() }}>
+                      <Button variant="ghost" size="sm">
+                        View
                       </Button>
-                    </div>
+                    </Link>
                   </div>
                 ))}
               </div>
             )}
-          </CardContent>
-        </Card>
-
-        {/* Recent Activity */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Recent Activity</CardTitle>
-            <CardDescription>
-              Your latest sales and customer interactions
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="flex items-center space-x-4 p-3 bg-muted/50 rounded-lg">
-                  <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                    <DollarSign className="h-4 w-4 text-green-600" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm font-medium">
-                      Sale: Exclusive Wallpaper NFT
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      Sold to 0x1234...5678 • 2 hours ago
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-sm font-medium">10 USDC</p>
-                    <div className="flex items-center text-xs text-yellow-600">
-                      <Star className="h-3 w-3 mr-1 fill-current" />
-                      5.0
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
           </CardContent>
         </Card>
       </motion.div>

@@ -1,12 +1,13 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAccount } from 'wagmi'
-import { Button } from '../components/ui/button'
-import { Input } from '../components/ui/input'
-import { Label } from '../components/ui/label'
-import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card'
-import { Badge } from '../components/ui/badge'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select'
+import { useCollaborativeProducts } from '@/hooks/use-collaborative'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Trash2, Plus, Users, Coins, FileText, Settings } from 'lucide-react'
 
 interface Collaborator {
@@ -22,7 +23,14 @@ export const Route = createFileRoute('/collaborative/create')({
 function CreateCollaborativeProduct() {
   const navigate = useNavigate()
   const { address, isConnected } = useAccount()
-  
+  const { createProduct, isWriting, isConfirming, isSuccess } = useCollaborativeProducts()
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate({ to: '/collaborative/dashboard' })
+    }
+  }, [isSuccess, navigate])
+
   const [productData, setProductData] = useState({
     name: '',
     description: '',
@@ -40,7 +48,6 @@ function CreateCollaborativeProduct() {
   ])
 
   const [requiresAllApproval, setRequiresAllApproval] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
 
   if (!isConnected) {
@@ -121,65 +128,24 @@ function CreateCollaborativeProduct() {
     return true
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
-    
+
     if (!validateForm()) {
       return
     }
 
-    setIsSubmitting(true)
-
-    try {
-      // Get JWT token from localStorage
-      const token = localStorage.getItem('authToken')
-      if (!token) {
-        throw new Error('Authentication required')
-      }
-
-      // Generate a unique product ID (in production, this might come from the backend)
-      const productId = Date.now()
-
-      const requestData = {
-        productId,
-        name: productData.name,
-        description: productData.description,
-        priceUsdc: parseFloat(productData.priceUsdc) * 1000000, // Convert to 6 decimal places
-        ipfsContentHash: productData.ipfsContentHash || null,
-        loyaltyBadgeId: productData.loyaltyBadgeId,
-        collaborators: collaborators.map(collab => ({
-          wallet: collab.wallet.trim(),
-          contributionWeight: collab.contributionWeight,
-          role: collab.role.trim()
-        })),
-        requiresAllApproval
-      }
-
-      const response = await fetch('/api/collaborative/products', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(requestData)
-      })
-
-      const result = await response.json()
-
-      if (!response.ok) {
-        throw new Error(result.error || 'Failed to create product')
-      }
-
-      // Navigate to the collaborative dashboard
-      navigate({ to: '/collaborative/dashboard' })
-
-    } catch (err) {
-      console.error('Create collaborative product error:', err)
-      setError(err instanceof Error ? err.message : 'Failed to create product')
-    } finally {
-      setIsSubmitting(false)
-    }
+    createProduct({
+      name: productData.name,
+      description: productData.description,
+      ipfsContentHash: productData.ipfsContentHash || '',
+      priceInUSDC: BigInt(Math.round(parseFloat(productData.priceUsdc) * 1000000)),
+      loyaltyBadgeId: BigInt(productData.loyaltyBadgeId),
+      collaboratorAddresses: collaborators.map(c => c.wallet.trim() as `0x${string}`),
+      royaltyPercentages: collaborators.map(c => BigInt(c.contributionWeight)),
+      roles: collaborators.map(c => c.role.trim()),
+    })
   }
 
   return (
@@ -288,7 +254,7 @@ function CreateCollaborativeProduct() {
                       variant="outline"
                       size="sm"
                       onClick={() => removeCollaborator(index)}
-                      className="text-destructive hover:text-red-800"
+                      className="text-destructive hover:text-destructive/80"
                     >
                       <Trash2 className="w-4 h-4" />
                     </Button>
@@ -394,7 +360,7 @@ function CreateCollaborativeProduct() {
 
         {/* Error Display */}
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+          <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
             <p className="text-destructive">{error}</p>
           </div>
         )}
@@ -403,12 +369,12 @@ function CreateCollaborativeProduct() {
         <div className="flex items-center gap-4">
           <Button
             type="submit"
-            disabled={isSubmitting || !isValidWeights()}
+            disabled={isWriting || isConfirming || !isValidWeights()}
             size="lg"
             className="flex items-center gap-2"
           >
             <Coins className="w-4 h-4" />
-            {isSubmitting ? 'Creating Product...' : 'Create Collaborative Product'}
+            {isWriting ? 'Signing...' : isConfirming ? 'Confirming...' : 'Create Collaborative Product'}
           </Button>
           
           <Button

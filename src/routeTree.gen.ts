@@ -13,42 +13,41 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as QuestsRouteImport } from './routes/quests'
 import { Route as PurchasesRouteImport } from './routes/purchases'
 import { Route as ProfileRouteImport } from './routes/profile'
+import { Route as PerksRouteImport } from './routes/perks'
 import { Route as LoyaltyRouteImport } from './routes/loyalty'
-import { Route as IndexMinimalRouteImport } from './routes/index-minimal'
 import { Route as FeaturesRouteImport } from './routes/features'
-import { Route as CommunityRouteImport } from './routes/community'
-import { Route as AffiliateRouteImport } from './routes/affiliate'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DiscoverIndexRouteImport } from './routes/discover/index'
 import { Route as CreatorIndexRouteImport } from './routes/creator/index'
 import { Route as AccountIndexRouteImport } from './routes/account/index'
+import { Route as UtilityCommunityRouteImport } from './routes/utility/community'
+import { Route as UtilityAffiliateRouteImport } from './routes/utility/affiliate'
 import { Route as ProductIdRouteImport } from './routes/product/$id'
-import { Route as PerksDiscoverRouteImport } from './routes/perks.discover'
-import { Route as MarketplaceSecondaryRouteImport } from './routes/marketplace.secondary'
-import { Route as MarketplaceDiscoverRouteImport } from './routes/marketplace.discover'
-import { Route as DaoTreasuryRouteImport } from './routes/dao.treasury'
-import { Route as DaoDashboardRouteImport } from './routes/dao.dashboard'
-import { Route as DaoCreateProposalRouteImport } from './routes/dao.create-proposal'
+import { Route as MarketplaceSecondaryRouteImport } from './routes/marketplace/secondary'
+import { Route as MarketplaceDiscoverRouteImport } from './routes/marketplace/discover'
+import { Route as DaoTreasuryRouteImport } from './routes/dao/treasury'
+import { Route as DaoDashboardRouteImport } from './routes/dao/dashboard'
+import { Route as DaoCreateProposalRouteImport } from './routes/dao/create-proposal'
 import { Route as CreatorRegisterRouteImport } from './routes/creator/register'
-import { Route as CreatorProfileRouteImport } from './routes/creator.profile'
+import { Route as CreatorProfileRouteImport } from './routes/creator/profile'
 import { Route as CreatorProductsRouteImport } from './routes/creator/products'
-import { Route as CreatorOnboardingRouteImport } from './routes/creator.onboarding'
+import { Route as CreatorOnboardingRouteImport } from './routes/creator/onboarding'
 import { Route as CreatorEarningsRouteImport } from './routes/creator/earnings'
-import { Route as CreatorDashboardRouteImport } from './routes/creator.dashboard'
-import { Route as CreatorCreateProductRouteImport } from './routes/creator.create-product'
-import { Route as CreatorCreatePerkRouteImport } from './routes/creator.create-perk'
+import { Route as CreatorDashboardRouteImport } from './routes/creator/dashboard'
+import { Route as CreatorCreateProductRouteImport } from './routes/creator/create-product'
+import { Route as CreatorCreatePerkRouteImport } from './routes/creator/create-perk'
 import { Route as CreatorAnalyticsRouteImport } from './routes/creator/analytics'
-import { Route as CollaborativeDashboardRouteImport } from './routes/collaborative.dashboard'
-import { Route as CollaborativeCreateRouteImport } from './routes/collaborative.create'
+import { Route as CollaborativeDashboardRouteImport } from './routes/collaborative/dashboard'
+import { Route as CollaborativeCreateRouteImport } from './routes/collaborative/create'
 import { Route as CheckoutIdRouteImport } from './routes/checkout/$id'
-import { Route as AnalyticsPublicRouteImport } from './routes/analytics.public'
+import { Route as AnalyticsPublicRouteImport } from './routes/analytics/public'
 import { Route as AnalyticsDashboardRouteImport } from './routes/analytics/dashboard'
 import { Route as AccountWishlistRouteImport } from './routes/account/wishlist'
 import { Route as AccountPurchasesRouteImport } from './routes/account/purchases'
 import { Route as CreatorProductsNewRouteImport } from './routes/creator/products/new'
-import { Route as CollaborativeProductIdRouteImport } from './routes/collaborative.product.$id'
+import { Route as CollaborativeProductIdRouteImport } from './routes/collaborative/product.$id'
 
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
@@ -70,29 +69,19 @@ const ProfileRoute = ProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PerksRoute = PerksRouteImport.update({
+  id: '/perks',
+  path: '/perks',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoyaltyRoute = LoyaltyRouteImport.update({
   id: '/loyalty',
   path: '/loyalty',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexMinimalRoute = IndexMinimalRouteImport.update({
-  id: '/index-minimal',
-  path: '/index-minimal',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const FeaturesRoute = FeaturesRouteImport.update({
   id: '/features',
   path: '/features',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CommunityRoute = CommunityRouteImport.update({
-  id: '/community',
-  path: '/community',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AffiliateRoute = AffiliateRouteImport.update({
-  id: '/affiliate',
-  path: '/affiliate',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -125,14 +114,19 @@ const AccountIndexRoute = AccountIndexRouteImport.update({
   path: '/account/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UtilityCommunityRoute = UtilityCommunityRouteImport.update({
+  id: '/utility/community',
+  path: '/utility/community',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UtilityAffiliateRoute = UtilityAffiliateRouteImport.update({
+  id: '/utility/affiliate',
+  path: '/utility/affiliate',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProductIdRoute = ProductIdRouteImport.update({
   id: '/product/$id',
   path: '/product/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PerksDiscoverRoute = PerksDiscoverRouteImport.update({
-  id: '/perks/discover',
-  path: '/perks/discover',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MarketplaceSecondaryRoute = MarketplaceSecondaryRouteImport.update({
@@ -255,11 +249,9 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
-  '/affiliate': typeof AffiliateRoute
-  '/community': typeof CommunityRoute
   '/features': typeof FeaturesRoute
-  '/index-minimal': typeof IndexMinimalRoute
   '/loyalty': typeof LoyaltyRoute
+  '/perks': typeof PerksRoute
   '/profile': typeof ProfileRoute
   '/purchases': typeof PurchasesRoute
   '/quests': typeof QuestsRoute
@@ -285,8 +277,9 @@ export interface FileRoutesByFullPath {
   '/dao/treasury': typeof DaoTreasuryRoute
   '/marketplace/discover': typeof MarketplaceDiscoverRoute
   '/marketplace/secondary': typeof MarketplaceSecondaryRoute
-  '/perks/discover': typeof PerksDiscoverRoute
   '/product/$id': typeof ProductIdRoute
+  '/utility/affiliate': typeof UtilityAffiliateRoute
+  '/utility/community': typeof UtilityCommunityRoute
   '/account': typeof AccountIndexRoute
   '/creator': typeof CreatorIndexRoute
   '/discover': typeof DiscoverIndexRoute
@@ -297,11 +290,9 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
-  '/affiliate': typeof AffiliateRoute
-  '/community': typeof CommunityRoute
   '/features': typeof FeaturesRoute
-  '/index-minimal': typeof IndexMinimalRoute
   '/loyalty': typeof LoyaltyRoute
+  '/perks': typeof PerksRoute
   '/profile': typeof ProfileRoute
   '/purchases': typeof PurchasesRoute
   '/quests': typeof QuestsRoute
@@ -327,8 +318,9 @@ export interface FileRoutesByTo {
   '/dao/treasury': typeof DaoTreasuryRoute
   '/marketplace/discover': typeof MarketplaceDiscoverRoute
   '/marketplace/secondary': typeof MarketplaceSecondaryRoute
-  '/perks/discover': typeof PerksDiscoverRoute
   '/product/$id': typeof ProductIdRoute
+  '/utility/affiliate': typeof UtilityAffiliateRoute
+  '/utility/community': typeof UtilityCommunityRoute
   '/account': typeof AccountIndexRoute
   '/creator': typeof CreatorIndexRoute
   '/discover': typeof DiscoverIndexRoute
@@ -340,11 +332,9 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
-  '/affiliate': typeof AffiliateRoute
-  '/community': typeof CommunityRoute
   '/features': typeof FeaturesRoute
-  '/index-minimal': typeof IndexMinimalRoute
   '/loyalty': typeof LoyaltyRoute
+  '/perks': typeof PerksRoute
   '/profile': typeof ProfileRoute
   '/purchases': typeof PurchasesRoute
   '/quests': typeof QuestsRoute
@@ -370,8 +360,9 @@ export interface FileRoutesById {
   '/dao/treasury': typeof DaoTreasuryRoute
   '/marketplace/discover': typeof MarketplaceDiscoverRoute
   '/marketplace/secondary': typeof MarketplaceSecondaryRoute
-  '/perks/discover': typeof PerksDiscoverRoute
   '/product/$id': typeof ProductIdRoute
+  '/utility/affiliate': typeof UtilityAffiliateRoute
+  '/utility/community': typeof UtilityCommunityRoute
   '/account/': typeof AccountIndexRoute
   '/creator/': typeof CreatorIndexRoute
   '/discover/': typeof DiscoverIndexRoute
@@ -384,11 +375,9 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/admin'
-    | '/affiliate'
-    | '/community'
     | '/features'
-    | '/index-minimal'
     | '/loyalty'
+    | '/perks'
     | '/profile'
     | '/purchases'
     | '/quests'
@@ -414,8 +403,9 @@ export interface FileRouteTypes {
     | '/dao/treasury'
     | '/marketplace/discover'
     | '/marketplace/secondary'
-    | '/perks/discover'
     | '/product/$id'
+    | '/utility/affiliate'
+    | '/utility/community'
     | '/account'
     | '/creator'
     | '/discover'
@@ -426,11 +416,9 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/admin'
-    | '/affiliate'
-    | '/community'
     | '/features'
-    | '/index-minimal'
     | '/loyalty'
+    | '/perks'
     | '/profile'
     | '/purchases'
     | '/quests'
@@ -456,8 +444,9 @@ export interface FileRouteTypes {
     | '/dao/treasury'
     | '/marketplace/discover'
     | '/marketplace/secondary'
-    | '/perks/discover'
     | '/product/$id'
+    | '/utility/affiliate'
+    | '/utility/community'
     | '/account'
     | '/creator'
     | '/discover'
@@ -468,11 +457,9 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/admin'
-    | '/affiliate'
-    | '/community'
     | '/features'
-    | '/index-minimal'
     | '/loyalty'
+    | '/perks'
     | '/profile'
     | '/purchases'
     | '/quests'
@@ -498,8 +485,9 @@ export interface FileRouteTypes {
     | '/dao/treasury'
     | '/marketplace/discover'
     | '/marketplace/secondary'
-    | '/perks/discover'
     | '/product/$id'
+    | '/utility/affiliate'
+    | '/utility/community'
     | '/account/'
     | '/creator/'
     | '/discover/'
@@ -511,11 +499,9 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   AdminRoute: typeof AdminRoute
-  AffiliateRoute: typeof AffiliateRoute
-  CommunityRoute: typeof CommunityRoute
   FeaturesRoute: typeof FeaturesRoute
-  IndexMinimalRoute: typeof IndexMinimalRoute
   LoyaltyRoute: typeof LoyaltyRoute
+  PerksRoute: typeof PerksRoute
   ProfileRoute: typeof ProfileRoute
   PurchasesRoute: typeof PurchasesRoute
   QuestsRoute: typeof QuestsRoute
@@ -541,8 +527,9 @@ export interface RootRouteChildren {
   DaoTreasuryRoute: typeof DaoTreasuryRoute
   MarketplaceDiscoverRoute: typeof MarketplaceDiscoverRoute
   MarketplaceSecondaryRoute: typeof MarketplaceSecondaryRoute
-  PerksDiscoverRoute: typeof PerksDiscoverRoute
   ProductIdRoute: typeof ProductIdRoute
+  UtilityAffiliateRoute: typeof UtilityAffiliateRoute
+  UtilityCommunityRoute: typeof UtilityCommunityRoute
   AccountIndexRoute: typeof AccountIndexRoute
   CreatorIndexRoute: typeof CreatorIndexRoute
   DiscoverIndexRoute: typeof DiscoverIndexRoute
@@ -579,6 +566,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/perks': {
+      id: '/perks'
+      path: '/perks'
+      fullPath: '/perks'
+      preLoaderRoute: typeof PerksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/loyalty': {
       id: '/loyalty'
       path: '/loyalty'
@@ -586,32 +580,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoyaltyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/index-minimal': {
-      id: '/index-minimal'
-      path: '/index-minimal'
-      fullPath: '/index-minimal'
-      preLoaderRoute: typeof IndexMinimalRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/features': {
       id: '/features'
       path: '/features'
       fullPath: '/features'
       preLoaderRoute: typeof FeaturesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/community': {
-      id: '/community'
-      path: '/community'
-      fullPath: '/community'
-      preLoaderRoute: typeof CommunityRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/affiliate': {
-      id: '/affiliate'
-      path: '/affiliate'
-      fullPath: '/affiliate'
-      preLoaderRoute: typeof AffiliateRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -656,18 +629,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccountIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/utility/community': {
+      id: '/utility/community'
+      path: '/utility/community'
+      fullPath: '/utility/community'
+      preLoaderRoute: typeof UtilityCommunityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/utility/affiliate': {
+      id: '/utility/affiliate'
+      path: '/utility/affiliate'
+      fullPath: '/utility/affiliate'
+      preLoaderRoute: typeof UtilityAffiliateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/product/$id': {
       id: '/product/$id'
       path: '/product/$id'
       fullPath: '/product/$id'
       preLoaderRoute: typeof ProductIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/perks/discover': {
-      id: '/perks/discover'
-      path: '/perks/discover'
-      fullPath: '/perks/discover'
-      preLoaderRoute: typeof PerksDiscoverRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/marketplace/secondary': {
@@ -850,11 +830,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   AdminRoute: AdminRoute,
-  AffiliateRoute: AffiliateRoute,
-  CommunityRoute: CommunityRoute,
   FeaturesRoute: FeaturesRoute,
-  IndexMinimalRoute: IndexMinimalRoute,
   LoyaltyRoute: LoyaltyRoute,
+  PerksRoute: PerksRoute,
   ProfileRoute: ProfileRoute,
   PurchasesRoute: PurchasesRoute,
   QuestsRoute: QuestsRoute,
@@ -880,8 +858,9 @@ const rootRouteChildren: RootRouteChildren = {
   DaoTreasuryRoute: DaoTreasuryRoute,
   MarketplaceDiscoverRoute: MarketplaceDiscoverRoute,
   MarketplaceSecondaryRoute: MarketplaceSecondaryRoute,
-  PerksDiscoverRoute: PerksDiscoverRoute,
   ProductIdRoute: ProductIdRoute,
+  UtilityAffiliateRoute: UtilityAffiliateRoute,
+  UtilityCommunityRoute: UtilityCommunityRoute,
   AccountIndexRoute: AccountIndexRoute,
   CreatorIndexRoute: CreatorIndexRoute,
   DiscoverIndexRoute: DiscoverIndexRoute,

@@ -126,13 +126,13 @@ function CreatorEarnings() {
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">Total Earned</p>
                   <p className="text-2xl font-bold">{formatUnits(totalEarned, 6)} USDC</p>
-                  <p className="text-xs text-green-600 flex items-center mt-1">
+                  <p className="text-xs text-chart-2 flex items-center mt-1">
                     <TrendingUp className="h-3 w-3 mr-1" />
                     All time
                   </p>
                 </div>
-                <div className="h-12 w-12 bg-green-100 rounded-full flex items-center justify-center">
-                  <DollarSign className="h-6 w-6 text-green-600" />
+                <div className="h-12 w-12 bg-chart-2/10 rounded-full flex items-center justify-center">
+                  <DollarSign className="h-6 w-6 text-chart-2" />
                 </div>
               </div>
             </CardContent>
@@ -144,13 +144,13 @@ function CreatorEarnings() {
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">Available</p>
                   <p className="text-2xl font-bold">{formatUnits(availableBalance, 6)} USDC</p>
-                  <p className="text-xs text-blue-600 flex items-center mt-1">
+                  <p className="text-xs text-primary flex items-center mt-1">
                     <ArrowUpRight className="h-3 w-3 mr-1" />
                     Ready to withdraw
                   </p>
                 </div>
-                <div className="h-12 w-12 bg-blue-100 rounded-full flex items-center justify-center">
-                  <Wallet className="h-6 w-6 text-blue-600" />
+                <div className="h-12 w-12 bg-primary/10 rounded-full flex items-center justify-center">
+                  <Wallet className="h-6 w-6 text-primary" />
                 </div>
               </div>
             </CardContent>
@@ -162,13 +162,13 @@ function CreatorEarnings() {
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">Pending</p>
                   <p className="text-2xl font-bold">{formatUnits(pendingBalance, 6)} USDC</p>
-                  <p className="text-xs text-orange-600 flex items-center mt-1">
+                  <p className="text-xs text-chart-5 flex items-center mt-1">
                     <Clock className="h-3 w-3 mr-1" />
                     Processing
                   </p>
                 </div>
-                <div className="h-12 w-12 bg-orange-100 rounded-full flex items-center justify-center">
-                  <Clock className="h-6 w-6 text-orange-600" />
+                <div className="h-12 w-12 bg-chart-5/10 rounded-full flex items-center justify-center">
+                  <Clock className="h-6 w-6 text-chart-5" />
                 </div>
               </div>
             </CardContent>
@@ -180,13 +180,13 @@ function CreatorEarnings() {
                 <div>
                   <p className="text-sm font-medium text-muted-foreground">Withdrawn</p>
                   <p className="text-2xl font-bold">{formatUnits(totalWithdrawn, 6)} USDC</p>
-                  <p className="text-xs text-gray-600 flex items-center mt-1">
+                  <p className="text-xs text-muted-foreground flex items-center mt-1">
                     <ArrowDownRight className="h-3 w-3 mr-1" />
                     Total withdrawn
                   </p>
                 </div>
-                <div className="h-12 w-12 bg-gray-100 rounded-full flex items-center justify-center">
-                  <Download className="h-6 w-6 text-gray-600" />
+                <div className="h-12 w-12 bg-muted/30 rounded-full flex items-center justify-center">
+                  <Download className="h-6 w-6 text-muted-foreground" />
                 </div>
               </div>
             </CardContent>
@@ -293,7 +293,7 @@ function CreatorEarnings() {
                       </div>
                       <div className="text-right">
                         <p className="font-bold">{formatUnits(period.amount, 6)} USDC</p>
-                        <p className="text-xs text-green-600">{period.change}</p>
+                        <p className="text-xs text-chart-2">{period.change}</p>
                       </div>
                     </motion.div>
                   ))}
@@ -324,13 +324,13 @@ function CreatorEarnings() {
                         : 'bg-purple-100'
                     }`}>
                       {transaction.type === 'sale' && (
-                        <ArrowUpRight className="h-5 w-5 text-green-600" />
+                        <ArrowUpRight className="h-5 w-5 text-chart-2" />
                       )}
                       {transaction.type === 'withdrawal' && (
-                        <ArrowDownRight className="h-5 w-5 text-blue-600" />
+                        <ArrowDownRight className="h-5 w-5 text-primary" />
                       )}
                       {transaction.type === 'royalty' && (
-                        <DollarSign className="h-5 w-5 text-purple-600" />
+                        <DollarSign className="h-5 w-5 text-chart-3" />
                       )}
                     </div>
                     <div>

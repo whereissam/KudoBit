@@ -63,7 +63,7 @@ function ProductFromWishlist({ productId }: { productId: number }) {
             <div className="flex-1">
               <div className="flex items-start justify-between mb-2">
                 <div>
-                  <h3 className="font-semibold text-lg hover:text-morph-green-600 transition-colors">
+                  <h3 className="font-semibold text-lg hover:text-primary transition-colors">
                     <Link to={`/product/${productId}`}>
                       {name}
                     </Link>

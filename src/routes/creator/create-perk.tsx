@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { useState } from 'react'
-import { useAccount, useWriteContract, useChainId } from 'wagmi'
+import { useState, useEffect } from 'react'
+import { useAccount } from 'wagmi'
+import { usePerks } from '@/hooks/use-perks'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -20,7 +21,6 @@ import {
   Trophy
 } from 'lucide-react'
 import { CONTRACTS } from '@/lib/contracts'
-import { getChainById } from '@/lib/wagmi'
 import toast from 'react-hot-toast'
 
 export const Route = createFileRoute('/creator/create-perk')({
@@ -57,33 +57,19 @@ const BADGE_TIERS = [
   { id: 4, name: 'Diamond Badge', icon: <Crown className="h-4 w-4 text-chart-3" />, color: 'bg-chart-3/10 border-chart-3/20 text-chart-3' }
 ]
 
-// Placeholder ABI for PerksRegistry contract
-const PERKS_REGISTRY_ABI = [
-  {
-    "inputs": [
-      {"internalType": "string", "name": "name", "type": "string"},
-      {"internalType": "string", "name": "description", "type": "string"},
-      {"internalType": "string", "name": "perkType", "type": "string"},
-      {"internalType": "uint256", "name": "requiredBadgeId", "type": "uint256"},
-      {"internalType": "address", "name": "requiredBadgeContract", "type": "address"},
-      {"internalType": "uint256", "name": "minimumBadgeAmount", "type": "uint256"},
-      {"internalType": "string", "name": "metadata", "type": "string"},
-      {"internalType": "uint256", "name": "usageLimit", "type": "uint256"},
-      {"internalType": "uint256", "name": "expirationTimestamp", "type": "uint256"},
-      {"internalType": "string", "name": "redemptionCode", "type": "string"}
-    ],
-    "name": "createPerk",
-    "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  }
-] as const
 
 function CreatePerkPage() {
   const { address, isConnected } = useAccount()
   const navigate = useNavigate()
-  const { writeContract, isPending } = useWriteContract()
-  const chainId = useChainId()
+  const { createPerk, isWriting, isConfirming, isSuccess } = usePerks()
+  const isPending = isWriting || isConfirming
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Perk created successfully!')
+      navigate({ to: '/creator/dashboard' })
+    }
+  }, [isSuccess, navigate])
   
   const [formData, setFormData] = useState<PerkFormData>({
     name: '',
@@ -124,7 +110,7 @@ function CreatePerkPage() {
     return Object.keys(newErrors).length === 0
   }
 
-  const handleCreatePerk = async () => {
+  const handleCreatePerk = () => {
     if (!isConnected || !address) {
       toast.error('Please connect your wallet')
       return
@@ -135,49 +121,29 @@ function CreatePerkPage() {
       return
     }
 
-    try {
-      // Calculate expiration timestamp
-      const expirationTimestamp = formData.expirationDays === '0' ? 0 : 
-        Math.floor(Date.now() / 1000) + (parseInt(formData.expirationDays) * 24 * 60 * 60)
+    const expirationTimestamp = formData.expirationDays === '0' ? 0 :
+      Math.floor(Date.now() / 1000) + (parseInt(formData.expirationDays) * 24 * 60 * 60)
 
-      // Create metadata JSON
-      const metadata = JSON.stringify({
-        creator: address,
-        createdAt: Math.floor(Date.now() / 1000),
-        perkType: formData.perkType,
-        instructions: formData.description,
-        redemptionCode: formData.redemptionCode || null
-      })
+    const metadata = JSON.stringify({
+      creator: address,
+      createdAt: Math.floor(Date.now() / 1000),
+      perkType: formData.perkType,
+      instructions: formData.description,
+      redemptionCode: formData.redemptionCode || null,
+    })
 
-      // Note: This would need the actual deployed PerksRegistry contract address
-      const perksRegistryAddress = '0x0000000000000000000000000000000000000000' // Placeholder
-
-      await writeContract({
-        address: perksRegistryAddress,
-        abi: PERKS_REGISTRY_ABI,
-        functionName: 'createPerk',
-        chain: getChainById(chainId),
-        account: address,
-        args: [
-          formData.name,
-          formData.description,
-          formData.perkType,
-          BigInt(formData.requiredBadgeId),
-          formData.requiredBadgeContract as `0x${string}`,
-          BigInt(formData.minimumBadgeAmount),
-          metadata,
-          BigInt(formData.usageLimit),
-          BigInt(expirationTimestamp),
-          formData.redemptionCode
-        ]
-      })
-
-      toast.success('Perk created successfully!')
-      navigate({ to: '/creator/dashboard' })
-    } catch (error) {
-      console.error('Error creating perk:', error)
-      toast.error('Failed to create perk')
-    }
+    createPerk({
+      name: formData.name,
+      description: formData.description,
+      perkType: formData.perkType,
+      requiredBadgeId: BigInt(formData.requiredBadgeId),
+      requiredBadgeContract: formData.requiredBadgeContract as `0x${string}`,
+      minimumBadgeAmount: BigInt(formData.minimumBadgeAmount),
+      metadata,
+      usageLimit: BigInt(formData.usageLimit),
+      expirationTimestamp: BigInt(expirationTimestamp),
+      redemptionCode: formData.redemptionCode,
+    })
   }
 
   if (!isConnected) {
@@ -401,7 +367,7 @@ function CreatePerkPage() {
             >
               {isPending ? (
                 <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary-foreground mr-2"></div>
                   Creating Perk...
                 </>
               ) : (

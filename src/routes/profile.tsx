@@ -99,7 +99,7 @@ function ProfilePage() {
   const loadUserProfile = async () => {
     try {
       // This would integrate with your backend API
-      const response = await fetch(`/api/v1/users/${address}/profile`)
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001'}/api/creators/${address}`)
       if (response.ok) {
         const data = await response.json()
         setProfile(data)
@@ -177,7 +177,7 @@ function ProfilePage() {
   const saveProfile = async () => {
     try {
       setLoading(true)
-      const response = await fetch(`/api/v1/users/${address}/profile`, {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001'}/api/creators/${address}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -228,11 +228,11 @@ function ProfilePage() {
 
   const getLoyaltyTierColor = (tier: number) => {
     switch (tier) {
-      case 1: return 'bg-orange-100 text-orange-800'
-      case 2: return 'bg-gray-100 text-gray-800'
-      case 3: return 'bg-yellow-100 text-yellow-800'
-      case 4: return 'bg-blue-100 text-blue-800'
-      default: return 'bg-gray-100 text-gray-500'
+      case 1: return 'bg-orange-100 text-chart-5'
+      case 2: return 'bg-muted/30 text-gray-800'
+      case 3: return 'bg-yellow-100 text-chart-3'
+      case 4: return 'bg-blue-100 text-primary'
+      default: return 'bg-muted/30 text-muted-foreground'
     }
   }
 
@@ -255,12 +255,12 @@ function ProfilePage() {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="animate-pulse space-y-4">
-          <div className="h-32 bg-gray-200 rounded-lg"></div>
-          <div className="h-20 bg-gray-200 rounded-lg"></div>
+          <div className="h-32 bg-muted/50 rounded-lg"></div>
+          <div className="h-20 bg-muted/50 rounded-lg"></div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="h-64 bg-gray-200 rounded-lg"></div>
-            <div className="h-64 bg-gray-200 rounded-lg"></div>
-            <div className="h-64 bg-gray-200 rounded-lg"></div>
+            <div className="h-64 bg-muted/50 rounded-lg"></div>
+            <div className="h-64 bg-muted/50 rounded-lg"></div>
+            <div className="h-64 bg-muted/50 rounded-lg"></div>
           </div>
         </div>
       </div>
@@ -329,10 +329,10 @@ function ProfilePage() {
                 </div>
               ) : (
                 <div>
-                  <h1 className="text-2xl font-bold text-gray-900">
+                  <h1 className="text-2xl font-bold text-foreground">
                     {profile.displayName}
                   </h1>
-                  <p className="text-gray-600 mt-1">
+                  <p className="text-muted-foreground mt-1">
                     {profile.bio || 'No bio provided'}
                   </p>
                 </div>
@@ -397,31 +397,31 @@ function ProfilePage() {
             {/* Stats Cards */}
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-gray-600">Total Spent</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">Total Spent</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">${(profile.stats.totalSpent / 1000000).toFixed(2)}</div>
-                <p className="text-xs text-gray-500">Across all purchases</p>
+                <p className="text-xs text-muted-foreground">Across all purchases</p>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-gray-600">Purchases</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">Purchases</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">{profile.stats.purchaseCount}</div>
-                <p className="text-xs text-gray-500">Items purchased</p>
+                <p className="text-xs text-muted-foreground">Items purchased</p>
               </CardContent>
             </Card>
 
             <Card>
               <CardHeader className="pb-2">
-                <CardTitle className="text-sm font-medium text-gray-600">Profile Views</CardTitle>
+                <CardTitle className="text-sm font-medium text-muted-foreground">Profile Views</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">{profile.stats.favoritedBy}</div>
-                <p className="text-xs text-gray-500">This month</p>
+                <p className="text-xs text-muted-foreground">This month</p>
               </CardContent>
             </Card>
           </div>
@@ -433,18 +433,18 @@ function ProfilePage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
-                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                  <Trophy className="h-5 w-5 text-yellow-500" />
+                <div className="flex items-center gap-3 p-3 bg-muted/20 rounded-lg">
+                  <Trophy className="h-5 w-5 text-chart-3" />
                   <div className="flex-1">
                     <p className="text-sm font-medium">Earned Silver Badge</p>
-                    <p className="text-xs text-gray-500">2 hours ago</p>
+                    <p className="text-xs text-muted-foreground">2 hours ago</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
-                  <Package className="h-5 w-5 text-blue-500" />
+                <div className="flex items-center gap-3 p-3 bg-muted/20 rounded-lg">
+                  <Package className="h-5 w-5 text-primary" />
                   <div className="flex-1">
                     <p className="text-sm font-medium">Purchased Premium Content Pass</p>
-                    <p className="text-xs text-gray-500">1 day ago</p>
+                    <p className="text-xs text-muted-foreground">1 day ago</p>
                   </div>
                 </div>
               </div>
@@ -475,12 +475,12 @@ function ProfilePage() {
                       </div>
                       <CardContent className="p-4">
                         <h3 className="font-semibold text-sm truncate">{nft.name}</h3>
-                        <p className="text-xs text-gray-500">{nft.collection}</p>
-                        <p className="text-xs text-gray-600 mt-1 line-clamp-2">
+                        <p className="text-xs text-muted-foreground">{nft.collection}</p>
+                        <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
                           {nft.description}
                         </p>
                         <div className="flex items-center justify-between mt-2">
-                          <span className="text-xs text-gray-500">
+                          <span className="text-xs text-muted-foreground">
                             #{nft.tokenId}
                           </span>
                           <Button variant="ghost" size="sm" className="h-6 px-2">
@@ -493,9 +493,9 @@ function ProfilePage() {
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <Package className="h-12 w-12 text-gray-400 mx-auto mb-3" />
-                  <p className="text-gray-500">No NFTs to display</p>
-                  <p className="text-xs text-gray-400">Purchase items from creators to build your collection</p>
+                  <Package className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
+                  <p className="text-muted-foreground">No NFTs to display</p>
+                  <p className="text-xs text-muted-foreground">Purchase items from creators to build your collection</p>
                 </div>
               )}
             </CardContent>
@@ -522,8 +522,8 @@ function ProfilePage() {
                         className="w-16 h-16 mx-auto mb-3"
                       />
                       <h3 className="font-semibold text-sm">{badge.name}</h3>
-                      <p className="text-xs text-gray-600 mt-1">{badge.description}</p>
-                      <div className="flex items-center justify-between mt-3 text-xs text-gray-500">
+                      <p className="text-xs text-muted-foreground mt-1">{badge.description}</p>
+                      <div className="flex items-center justify-between mt-3 text-xs text-muted-foreground">
                         <span>Qty: {badge.count}</span>
                         <span>{new Date(badge.earnedAt).toLocaleDateString()}</span>
                       </div>
@@ -532,9 +532,9 @@ function ProfilePage() {
                 </div>
               ) : (
                 <div className="text-center py-8">
-                  <Trophy className="h-12 w-12 text-gray-400 mx-auto mb-3" />
-                  <p className="text-gray-500">No badges earned yet</p>
-                  <p className="text-xs text-gray-400">Make purchases to start earning loyalty badges</p>
+                  <Trophy className="h-12 w-12 text-muted-foreground mx-auto mb-3" />
+                  <p className="text-muted-foreground">No badges earned yet</p>
+                  <p className="text-xs text-muted-foreground">Make purchases to start earning loyalty badges</p>
                 </div>
               )}
             </CardContent>
@@ -594,21 +594,21 @@ function ProfilePage() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium">Public Profile</p>
-                  <p className="text-xs text-gray-500">Allow others to view your profile</p>
+                  <p className="text-xs text-muted-foreground">Allow others to view your profile</p>
                 </div>
                 <input type="checkbox" defaultChecked />
               </div>
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium">Show Purchase Count</p>
-                  <p className="text-xs text-gray-500">Display total purchases on profile</p>
+                  <p className="text-xs text-muted-foreground">Display total purchases on profile</p>
                 </div>
                 <input type="checkbox" defaultChecked />
               </div>
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium">Show NFT Collection</p>
-                  <p className="text-xs text-gray-500">Display owned NFTs publicly</p>
+                  <p className="text-xs text-muted-foreground">Display owned NFTs publicly</p>
                 </div>
                 <input type="checkbox" defaultChecked />
               </div>

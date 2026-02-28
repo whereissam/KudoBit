@@ -83,7 +83,7 @@ function PurchaseHistory() {
         >
           <div className="flex items-center gap-4 mb-6">
             <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30 rounded-full flex items-center justify-center">
-              <ShoppingBag className="h-6 w-6 text-blue-600" />
+              <ShoppingBag className="h-6 w-6 text-primary" />
             </div>
             <div>
               <h1 className="text-2xl md:text-3xl font-bold">
@@ -139,7 +139,7 @@ function PurchaseHistory() {
               <Download className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-blue-600">
+              <div className="text-2xl font-bold text-primary">
                 {mockPurchases.filter(p => p.downloadable).length}
               </div>
             </CardContent>

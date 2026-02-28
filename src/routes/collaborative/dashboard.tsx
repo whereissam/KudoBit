@@ -1,9 +1,11 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useAccount } from 'wagmi'
-import { Button } from '../components/ui/button'
-import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card'
-import { Badge } from '../components/ui/badge'
+import { useCollaborativeProducts } from '@/hooks/use-collaborative'
+import { formatUnits } from 'viem'
+import { Button } from '@/components/ui/button'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
 import { 
   Users, 
   Plus, 
@@ -51,79 +53,25 @@ export const Route = createFileRoute('/collaborative/dashboard')({
 
 function CollaborativeDashboard() {
   const { address, isConnected } = useAccount()
-  const [products, setProducts] = useState<CollaborativeProduct[]>([])
-  const [summary, setSummary] = useState<DashboardSummary | null>(null)
-  const [recentDistributions, setRecentDistributions] = useState<RoyaltyDistribution[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
+  const {
+    productCount,
+    earnings,
+    isLoading: loading,
+    contractDeployed,
+  } = useCollaborativeProducts()
 
-  useEffect(() => {
-    if (isConnected && address) {
-      fetchDashboardData()
-    }
-  }, [isConnected, address])
+  // Build summary from contract data
+  const summary: DashboardSummary | null = contractDeployed ? {
+    totalProducts: productCount,
+    totalEarnings: earnings ? formatUnits(earnings, 6) : '0',
+    totalPurchases: 0, // needs indexer
+    uniqueCustomers: 0, // needs indexer
+  } : null
 
-  const fetchDashboardData = async () => {
-    try {
-      const token = localStorage.getItem('authToken')
-      if (!token) {
-        throw new Error('Authentication required')
-      }
-
-      // Fetch dashboard summary
-      const dashboardResponse = await fetch(`/api/collaborative/dashboard/${address}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-
-      if (dashboardResponse.ok) {
-        const dashboardData = await dashboardResponse.json()
-        setSummary(dashboardData.dashboard.summary)
-        setProducts(dashboardData.dashboard.products)
-        setRecentDistributions(dashboardData.dashboard.recentDistributions)
-      } else {
-        // Fallback to individual API calls
-        await fetchProductsAndAnalytics()
-      }
-
-    } catch (err) {
-      console.error('Dashboard fetch error:', err)
-      setError(err instanceof Error ? err.message : 'Failed to load dashboard')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const fetchProductsAndAnalytics = async () => {
-    const token = localStorage.getItem('authToken')
-    if (!token) return
-
-    // Fetch products
-    const productsResponse = await fetch(`/api/collaborative/products/collaborator/${address}`, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    })
-
-    if (productsResponse.ok) {
-      const productsData = await productsResponse.json()
-      setProducts(productsData.products)
-    }
-
-    // Fetch analytics
-    const analyticsResponse = await fetch(`/api/collaborative/analytics/collaborator/${address}`, {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    })
-
-    if (analyticsResponse.ok) {
-      const analyticsData = await analyticsResponse.json()
-      setSummary(analyticsData.analytics)
-      setRecentDistributions(analyticsData.analytics.recentDistributions || [])
-    }
-  }
+  // Product list and distributions need indexed data — empty for now
+  const products: CollaborativeProduct[] = []
+  const recentDistributions: RoyaltyDistribution[] = []
+  const error = ''
 
   const formatPrice = (price: string | number) => {
     const priceNum = typeof price === 'string' ? parseFloat(price) : price
@@ -183,7 +131,7 @@ function CollaborativeDashboard() {
 
       {/* Error Display */}
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+        <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4 mb-6">
           <p className="text-destructive">{error}</p>
         </div>
       )}
@@ -337,7 +285,7 @@ function CollaborativeDashboard() {
             ) : (
               <div className="space-y-3">
                 {recentDistributions.map((distribution, index) => (
-                  <div key={index} className="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">
+                  <div key={index} className="flex items-center justify-between py-2 border-b border-border last:border-0">
                     <div>
                       <p className="font-medium text-sm">{distribution.product_name}</p>
                       <div className="flex items-center gap-2 text-xs text-muted-foreground">

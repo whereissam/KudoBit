@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useAccount, useWriteContract, useWaitForTransactionReceipt, useChainId } from 'wagmi'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -144,41 +144,50 @@ function CreatorRegister() {
     }
   }
 
-  // Handle transaction results
-  if (isSuccess) {
-    if (registrationStep === 'register') {
-      // After registration, grant CREATOR_ROLE
-      setRegistrationStep('grant_role')
-      toast.success('Profile registered! Granting creator permissions...')
-      writeContract({
-        address: CONTRACTS.productNFT,
-        abi: PRODUCT_NFT_ABI,
-        functionName: 'grantRole',
-        args: [
-          '0x828634d95e775031b9ff576805c2feea7f67b6d4bb35b8c6ba75a74a5435da50', // CREATOR_ROLE hash
-          address!
-        ],
-        chain: getChainById(chainId),
-        account: address,
-      })
-    } else if (registrationStep === 'grant_role') {
-      toast.success('Creator profile registered successfully!')
-      setIsSubmitting(false)
-      navigate({ to: '/creator' })
-    }
-  }
+  // Handle transaction results in useEffect to prevent infinite re-renders
+  const prevSuccess = useRef(false)
+  const prevError = useRef(false)
 
-  if (isError) {
-    toast.error('Transaction failed')
-    setIsSubmitting(false)
-  }
+  useEffect(() => {
+    if (isSuccess && !prevSuccess.current) {
+      prevSuccess.current = true
+      if (registrationStep === 'register') {
+        setRegistrationStep('grant_role')
+        prevSuccess.current = false // Reset for next tx
+        toast.success('Profile registered! Granting creator permissions...')
+        writeContract({
+          address: CONTRACTS.productNFT,
+          abi: PRODUCT_NFT_ABI,
+          functionName: 'grantRole',
+          args: [
+            '0x828634d95e775031b9ff576805c2feea7f67b6d4bb35b8c6ba75a74a5435da50', // CREATOR_ROLE hash
+            address!
+          ],
+          chain: getChainById(chainId),
+          account: address,
+        })
+      } else if (registrationStep === 'grant_role') {
+        toast.success('Creator profile registered successfully!')
+        setIsSubmitting(false)
+        navigate({ to: '/creator' })
+      }
+    }
+  }, [isSuccess, registrationStep, address, chainId, navigate, writeContract])
+
+  useEffect(() => {
+    if (isError && !prevError.current) {
+      prevError.current = true
+      toast.error('Transaction failed')
+      setIsSubmitting(false)
+    }
+  }, [isError])
 
   if (!isConnected) {
     return (
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-md mx-auto text-center">
           <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full flex items-center justify-center">
-            <User className="h-8 w-8 text-blue-600" />
+            <User className="h-8 w-8 text-primary" />
           </div>
           <h1 className="text-2xl font-bold mb-4">Connect Your Wallet</h1>
           <p className="text-muted-foreground mb-6">
@@ -262,10 +271,10 @@ function CreatorRegister() {
                     <div className="border-2 border-dashed rounded-lg p-4 text-center">
                       {profile.avatar ? (
                         <div className="space-y-2">
-                          <div className="w-16 h-16 mx-auto bg-green-100 rounded-full flex items-center justify-center">
-                            <Camera className="h-8 w-8 text-green-600" />
+                          <div className="w-16 h-16 mx-auto bg-chart-2/10 rounded-full flex items-center justify-center">
+                            <Camera className="h-8 w-8 text-chart-2" />
                           </div>
-                          <p className="text-sm text-green-600">Avatar uploaded</p>
+                          <p className="text-sm text-chart-2">Avatar uploaded</p>
                         </div>
                       ) : (
                         <div className="space-y-2">
@@ -300,10 +309,10 @@ function CreatorRegister() {
                     <div className="border-2 border-dashed rounded-lg p-4 text-center">
                       {profile.banner ? (
                         <div className="space-y-2">
-                          <div className="w-16 h-8 mx-auto bg-green-100 rounded flex items-center justify-center">
-                            <Camera className="h-4 w-4 text-green-600" />
+                          <div className="w-16 h-8 mx-auto bg-chart-2/10 rounded flex items-center justify-center">
+                            <Camera className="h-4 w-4 text-chart-2" />
                           </div>
-                          <p className="text-sm text-green-600">Banner uploaded</p>
+                          <p className="text-sm text-chart-2">Banner uploaded</p>
                         </div>
                       ) : (
                         <div className="space-y-2">

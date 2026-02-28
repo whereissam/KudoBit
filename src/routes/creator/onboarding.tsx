@@ -288,16 +288,16 @@ function CreatorOnboardingPage() {
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       {/* Header */}
       <div className="mb-8 text-center">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        <h1 className="text-3xl font-bold text-foreground mb-2">
           Welcome to KudoBit Creator Program
         </h1>
-        <p className="text-gray-600 mb-4">
+        <p className="text-muted-foreground mb-4">
           Let's set up your creator profile and get you ready to start selling
         </p>
         
         {/* Progress Bar */}
         <div className="max-w-md mx-auto">
-          <div className="flex justify-between text-sm text-gray-600 mb-2">
+          <div className="flex justify-between text-sm text-muted-foreground mb-2">
             <span>Progress</span>
             <span>{Math.round(progressPercentage)}% complete</span>
           </div>
@@ -312,10 +312,10 @@ function CreatorOnboardingPage() {
             <div key={step.id} className="flex items-center min-w-0">
               <div className={`flex items-center justify-center w-10 h-10 rounded-full border-2 ${
                 index === currentStep
-                  ? 'border-blue-500 bg-blue-500 text-white'
+                  ? 'border-blue-500 bg-primary/10 text-white'
                   : step.completed
-                  ? 'border-green-500 bg-green-500 text-white'
-                  : 'border-gray-300 bg-white text-gray-400'
+                  ? 'border-green-500 bg-chart-2/10 text-white'
+                  : 'border-gray-300 bg-white text-muted-foreground'
               }`}>
                 {step.completed ? (
                   <Check className="h-5 w-5" />
@@ -327,7 +327,7 @@ function CreatorOnboardingPage() {
               <div className="ml-3">
                 <p className={`text-sm font-medium ${
                   index === currentStep ? 'text-blue-600' : 
-                  step.completed ? 'text-green-600' : 'text-gray-500'
+                  step.completed ? 'text-green-600' : 'text-muted-foreground'
                 }`}>
                   {step.title}
                   {step.required && (
@@ -337,7 +337,7 @@ function CreatorOnboardingPage() {
               </div>
               
               {index < steps.length - 1 && (
-                <ArrowRight className="h-4 w-4 text-gray-400 mx-4" />
+                <ArrowRight className="h-4 w-4 text-muted-foreground mx-4" />
               )}
             </div>
           ))}
@@ -349,7 +349,7 @@ function CreatorOnboardingPage() {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             {steps[currentStep].completed && (
-              <CheckCircle className="h-5 w-5 text-green-500" />
+              <CheckCircle className="h-5 w-5 text-chart-2" />
             )}
             {steps[currentStep].title}
             {steps[currentStep].required && (
@@ -399,7 +399,7 @@ function CreatorOnboardingPage() {
                   placeholder="Tell your audience about yourself and your work..."
                   className="w-full p-3 border border-gray-300 rounded-md h-32 resize-none"
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-muted-foreground mt-1">
                   {profile.bio.length}/500 characters
                 </p>
               </div>
@@ -412,7 +412,7 @@ function CreatorOnboardingPage() {
                       {tag}
                       <button
                         onClick={() => removeTag(tag)}
-                        className="ml-1 text-red-500"
+                        className="ml-1 text-destructive"
                       >
                         ×
                       </button>
@@ -425,7 +425,7 @@ function CreatorOnboardingPage() {
                       key={tag}
                       onClick={() => addTag(tag)}
                       disabled={profile.tags.includes(tag) || profile.tags.length >= 10}
-                      className="px-2 py-1 text-xs border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50"
+                      className="px-2 py-1 text-xs border border-gray-300 rounded-md hover:bg-muted/20 disabled:opacity-50"
                     >
                       + {tag}
                     </button>
@@ -441,7 +441,7 @@ function CreatorOnboardingPage() {
               <div>
                 <Label>Profile Image</Label>
                 <div className="flex items-center gap-4 mt-2">
-                  <div className="w-20 h-20 bg-gray-200 rounded-full flex items-center justify-center overflow-hidden">
+                  <div className="w-20 h-20 bg-muted/50 rounded-full flex items-center justify-center overflow-hidden">
                     {profile.profileImage ? (
                       <img 
                         src={URL.createObjectURL(profile.profileImage)} 
@@ -449,7 +449,7 @@ function CreatorOnboardingPage() {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <User className="h-8 w-8 text-gray-400" />
+                      <User className="h-8 w-8 text-muted-foreground" />
                     )}
                   </div>
                   <div>
@@ -461,7 +461,7 @@ function CreatorOnboardingPage() {
                       <Camera className="h-4 w-4 mr-2" />
                       Choose Image
                     </Button>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-muted-foreground">
                       Recommended: 400x400px, max 5MB
                     </p>
                   </div>
@@ -481,7 +481,7 @@ function CreatorOnboardingPage() {
               <div>
                 <Label>Cover Image</Label>
                 <div className="mt-2">
-                  <div className="w-full h-32 bg-gray-200 rounded-lg flex items-center justify-center overflow-hidden">
+                  <div className="w-full h-32 bg-muted/50 rounded-lg flex items-center justify-center overflow-hidden">
                     {profile.coverImage ? (
                       <img 
                         src={URL.createObjectURL(profile.coverImage)} 
@@ -489,7 +489,7 @@ function CreatorOnboardingPage() {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <Image className="h-8 w-8 text-gray-400" />
+                      <Image className="h-8 w-8 text-muted-foreground" />
                     )}
                   </div>
                   <Button 
@@ -500,7 +500,7 @@ function CreatorOnboardingPage() {
                     <Upload className="h-4 w-4 mr-2" />
                     Upload Cover Image
                   </Button>
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-xs text-muted-foreground mt-1">
                     Recommended: 1200x300px, max 10MB
                   </p>
                   <input
@@ -583,7 +583,7 @@ function CreatorOnboardingPage() {
             <div className="space-y-6">
               <div>
                 <Label>Portfolio Items *</Label>
-                <p className="text-sm text-gray-600 mb-3">
+                <p className="text-sm text-muted-foreground mb-3">
                   Add links to your best work (up to 5 items)
                 </p>
                 
@@ -630,10 +630,10 @@ function CreatorOnboardingPage() {
             <div className="space-y-6">
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                 <div className="flex items-start gap-3">
-                  <Star className="h-5 w-5 text-blue-500 mt-0.5" />
+                  <Star className="h-5 w-5 text-primary mt-0.5" />
                   <div>
-                    <h3 className="font-semibold text-blue-900">Get Verified</h3>
-                    <p className="text-sm text-blue-700 mt-1">
+                    <h3 className="font-semibold text-primary">Get Verified</h3>
+                    <p className="text-sm text-primary mt-1">
                       Verification increases trust and can boost your sales by up to 40%. 
                       It also unlocks exclusive features like higher commission rates and priority support.
                     </p>
@@ -643,21 +643,21 @@ function CreatorOnboardingPage() {
 
               <div>
                 <Label>Identity Verification</Label>
-                <p className="text-sm text-gray-600 mb-3">
+                <p className="text-sm text-muted-foreground mb-3">
                   Upload a government-issued ID for identity verification
                 </p>
                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
                   {profile.idDocument ? (
                     <div className="flex items-center justify-center gap-2">
-                      <FileText className="h-5 w-5 text-green-500" />
-                      <span className="text-sm text-green-600">
+                      <FileText className="h-5 w-5 text-chart-2" />
+                      <span className="text-sm text-chart-2">
                         {profile.idDocument.name}
                       </span>
                     </div>
                   ) : (
                     <div>
-                      <Upload className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-                      <p className="text-sm text-gray-600">
+                      <Upload className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                      <p className="text-sm text-muted-foreground">
                         Drop your ID document here or click to upload
                       </p>
                     </div>
@@ -676,21 +676,21 @@ function CreatorOnboardingPage() {
 
               <div>
                 <Label>Business Registration (Optional)</Label>
-                <p className="text-sm text-gray-600 mb-3">
+                <p className="text-sm text-muted-foreground mb-3">
                   For business accounts, upload your business registration documents
                 </p>
                 <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
                   {profile.businessRegistration ? (
                     <div className="flex items-center justify-center gap-2">
-                      <FileText className="h-5 w-5 text-green-500" />
-                      <span className="text-sm text-green-600">
+                      <FileText className="h-5 w-5 text-chart-2" />
+                      <span className="text-sm text-chart-2">
                         {profile.businessRegistration.name}
                       </span>
                     </div>
                   ) : (
                     <div>
-                      <Upload className="h-8 w-8 text-gray-400 mx-auto mb-2" />
-                      <p className="text-sm text-gray-600">
+                      <Upload className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                      <p className="text-sm text-muted-foreground">
                         Drop your business documents here or click to upload
                       </p>
                     </div>
@@ -715,7 +715,7 @@ function CreatorOnboardingPage() {
                   onChange={(e) => setProfile(prev => ({ ...prev, portfolioVerification: e.target.value }))}
                   placeholder="Link to verify your portfolio authenticity"
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-muted-foreground mt-1">
                   Optional: Link to your existing portfolio, Behance, Dribbble, etc.
                 </p>
               </div>
@@ -737,7 +737,7 @@ function CreatorOnboardingPage() {
                     <div key={key} className="flex items-center justify-between p-3 border rounded-lg">
                       <div>
                         <p className="font-medium">{label}</p>
-                        <p className="text-sm text-gray-600">{description}</p>
+                        <p className="text-sm text-muted-foreground">{description}</p>
                       </div>
                       <input
                         type="checkbox"
@@ -758,10 +758,10 @@ function CreatorOnboardingPage() {
 
               <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                  <CheckCircle className="h-5 w-5 text-chart-2 mt-0.5" />
                   <div>
-                    <h3 className="font-semibold text-green-900">Ready to Launch!</h3>
-                    <p className="text-sm text-green-700 mt-1">
+                    <h3 className="font-semibold text-chart-2">Ready to Launch!</h3>
+                    <p className="text-sm text-chart-2 mt-1">
                       You're all set to start your creator journey on KudoBit. 
                       Click "Complete Setup" to create your profile and access the creator dashboard.
                     </p>

@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useState, useEffect } from 'react'
-import { useAccount, useReadContract, useWriteContract, useChainId } from 'wagmi'
+import { useAccount, useReadContract, useChainId } from 'wagmi'
+import { usePerks } from '@/hooks/use-perks'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -21,10 +22,9 @@ import {
   Sparkles
 } from 'lucide-react'
 import { CONTRACTS } from '@/lib/contracts'
-import { getChainById } from '@/lib/wagmi'
 import toast from 'react-hot-toast'
 
-export const Route = createFileRoute('/perks/discover')({
+export const Route = createFileRoute('/perks')({
   component: PerksDiscoverPage,
 })
 
@@ -51,46 +51,6 @@ interface UserBadgeBalance {
   tier: string
 }
 
-// Placeholder ABI for PerksRegistry contract
-const PERKS_REGISTRY_ABI = [
-  {
-    "inputs": [],
-    "name": "getAllActivePerks",
-    "outputs": [{"internalType": "Perk[]", "name": "", "type": "tuple[]"}],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [{"internalType": "address", "name": "user", "type": "address"}],
-    "name": "getEligiblePerksForUser",
-    "outputs": [{"internalType": "Perk[]", "name": "", "type": "tuple[]"}],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {"internalType": "address", "name": "user", "type": "address"},
-      {"internalType": "uint256", "name": "perkId", "type": "uint256"}
-    ],
-    "name": "checkPerkEligibility",
-    "outputs": [
-      {"internalType": "bool", "name": "eligible", "type": "bool"},
-      {"internalType": "string", "name": "reason", "type": "string"}
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {"internalType": "uint256", "name": "perkId", "type": "uint256"},
-      {"internalType": "string", "name": "additionalData", "type": "string"}
-    ],
-    "name": "redeemPerk",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  }
-] as const
 
 const BADGE_INFO = {
   1: { name: 'Bronze Badge', icon: <Award className="h-4 w-4 text-chart-4" />, color: 'bg-chart-4/10 border-chart-4/20 text-chart-4' },
@@ -112,7 +72,7 @@ const PERK_TYPE_INFO = {
 function PerksDiscoverPage() {
   const { address, isConnected } = useAccount()
   const navigate = useNavigate()
-  const { writeContract, isPending } = useWriteContract()
+  const { redeemPerk, isWriting: isPending, contractDeployed: perksDeployed } = usePerks()
   const chainId = useChainId()
   
   const [perks, setPerks] = useState<Perk[]>([])
@@ -263,7 +223,7 @@ function PerksDiscoverPage() {
     return requiredBadge ? requiredBadge.balance >= perk.minimumBadgeAmount : false
   }
 
-  const handleRedeemPerk = async (perk: Perk) => {
+  const handleRedeemPerk = (perk: Perk) => {
     if (!isConnected || !address) {
       toast.error('Please connect your wallet')
       return
@@ -274,31 +234,8 @@ function PerksDiscoverPage() {
       return
     }
 
-    try {
-      // Note: This would need the actual deployed PerksRegistry contract address
-      const perksRegistryAddress = '0x0000000000000000000000000000000000000000' // Placeholder
-
-      await writeContract({
-        address: perksRegistryAddress,
-        abi: PERKS_REGISTRY_ABI,
-        functionName: 'redeemPerk',
-        chain: getChainById(chainId),
-        account: address,
-        args: [BigInt(perk.id), '']
-      })
-
-      toast.success(`Perk redeemed! Code: ${perk.redemptionCode}`)
-      
-      // In a real app, you would update the perk's usage count
-      setPerks(prev => prev.map(p => 
-        p.id === perk.id 
-          ? { ...p, timesUsed: p.timesUsed + 1 }
-          : p
-      ))
-    } catch (error) {
-      console.error('Error redeeming perk:', error)
-      toast.error('Failed to redeem perk')
-    }
+    redeemPerk(BigInt(perk.id), '')
+    toast.success(`Perk redeem submitted! Code: ${perk.redemptionCode}`)
   }
 
   const filteredPerks = perks.filter(perk => {
@@ -493,7 +430,7 @@ function PerksDiscoverPage() {
                     <div className="flex-1">
                       <CardTitle className="text-lg leading-tight">{perk.name}</CardTitle>
                       <div className="flex items-center gap-2 mt-2">
-                        <Badge className={`text-xs ${perkTypeInfo?.color || 'bg-gray-50 text-gray-700'}`}>
+                        <Badge className={`text-xs ${perkTypeInfo?.color || 'bg-muted/20 text-foreground'}`}>
                           {perkTypeInfo?.icon} {perkTypeInfo?.label}
                         </Badge>
                         <Badge className={`text-xs ${badgeInfo?.color}`}>
@@ -502,7 +439,7 @@ function PerksDiscoverPage() {
                         </Badge>
                       </div>
                     </div>
-                    {isEligible && <Check className="h-5 w-5 text-green-500 flex-shrink-0" />}
+                    {isEligible && <Check className="h-5 w-5 text-chart-2 flex-shrink-0" />}
                   </div>
                 </CardHeader>
                 

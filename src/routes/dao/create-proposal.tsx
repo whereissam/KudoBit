@@ -1,11 +1,13 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAccount } from 'wagmi'
-import { Button } from '../components/ui/button'
-import { Input } from '../components/ui/input'
-import { Label } from '../components/ui/label'
-import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select'
+import { useDAO } from '@/hooks/use-dao'
+import { formatUnits } from 'viem'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { 
   FileText, 
   DollarSign, 
@@ -55,10 +57,17 @@ function CreateProposal() {
   const [error, setError] = useState('')
   const [showAdvanced, setShowAdvanced] = useState(false)
 
-  // Mock voting power check
-  const mockVotingPower = "125000" // 125K KUDO
-  const proposalThreshold = "100000" // 100K KUDO required
-  const hasEnoughPower = parseFloat(mockVotingPower) >= parseFloat(proposalThreshold)
+  const { votingPower, proposalThreshold, propose, isWriting, isConfirming, isSuccess, txHash } = useDAO()
+
+  const vpNum = votingPower ? Number(formatUnits(votingPower, 18)) : 0
+  const thresholdNum = proposalThreshold ? Number(formatUnits(proposalThreshold, 18)) : 0
+  const hasEnoughPower = vpNum >= thresholdNum || thresholdNum === 0
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate({ to: '/dao/dashboard' })
+    }
+  }, [isSuccess])
 
   if (!isConnected) {
     return (
@@ -80,13 +89,13 @@ function CreateProposal() {
       <div className="container mx-auto px-4 py-8">
         <Card>
           <CardContent className="p-8 text-center">
-            <AlertTriangle className="w-12 h-12 text-orange-500 mx-auto mb-4" />
+            <AlertTriangle className="w-12 h-12 text-chart-5 mx-auto mb-4" />
             <h2 className="text-2xl font-bold mb-4">Insufficient Voting Power</h2>
             <p className="text-muted-foreground mb-4">
-              You need at least {(parseFloat(proposalThreshold) / 1000).toFixed(0)}K KUDO tokens to create proposals.
+              You need at least {(thresholdNum / 1000).toFixed(0)}K KUDO tokens to create proposals.
             </p>
             <p className="text-muted-foreground mb-6">
-              Your current voting power: {(parseFloat(mockVotingPower) / 1000).toFixed(0)}K KUDO
+              Your current voting power: {(vpNum / 1000).toFixed(0)}K KUDO
             </p>
             <div className="flex gap-4 justify-center">
               <Button onClick={() => navigate({ to: '/dao/dashboard' })}>
@@ -229,19 +238,20 @@ function CreateProposal() {
     setIsSubmitting(true)
 
     try {
-      // In production, this would create the actual proposal on-chain
-      console.log('Creating proposal:', {
-        ...proposalData,
-        actions,
-        proposer: address
-      })
+      const categoryMap: Record<string, number> = { Treasury: 0, Protocol: 1, Ecosystem: 2, Community: 3, Technical: 4 }
+      const proposalType = BigInt(categoryMap[proposalData.category] || 0)
+      const target = (actions[0]?.target || '0x0000000000000000000000000000000000000000') as `0x${string}`
+      const value = BigInt(actions[0]?.value || '0')
+      const callData = (actions[0]?.calldata || '0x') as `0x${string}`
 
-      // Mock successful submission
-      await new Promise(resolve => setTimeout(resolve, 2000))
-
-      // Navigate back to DAO dashboard
-      navigate({ to: '/dao/dashboard' })
-
+      propose(
+        proposalData.title,
+        proposalData.description,
+        proposalType,
+        target,
+        value,
+        callData,
+      )
     } catch (err) {
       console.error('Proposal creation error:', err)
       setError(err instanceof Error ? err.message : 'Failed to create proposal')
@@ -340,7 +350,7 @@ function CreateProposal() {
               >
                 Use Template
               </Button>
-              <Info className="w-4 h-4 text-gray-400" />
+              <Info className="w-4 h-4 text-muted-foreground" />
               <span className="text-xs text-muted-foreground">Apply category-specific template</span>
             </div>
 
@@ -506,13 +516,13 @@ function CreateProposal() {
               <div>
                 <p className="text-sm text-muted-foreground">Your Voting Power</p>
                 <p className="text-2xl font-bold text-primary">
-                  {(parseFloat(mockVotingPower) / 1000).toFixed(0)}K
+                  {(vpNum / 1000).toFixed(0)}K
                 </p>
               </div>
               <div>
                 <p className="text-sm text-muted-foreground">Required Threshold</p>
                 <p className="text-2xl font-bold text-muted-foreground">
-                  {(parseFloat(proposalThreshold) / 1000).toFixed(0)}K
+                  {(thresholdNum / 1000).toFixed(0)}K
                 </p>
               </div>
               <div>
@@ -536,11 +546,11 @@ function CreateProposal() {
         <div className="flex items-center gap-4">
           <Button
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || isWriting || isConfirming}
             size="lg"
             className="flex items-center gap-2"
           >
-            {isSubmitting ? (
+            {isSubmitting || isWriting || isConfirming ? (
               <>
                 <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
                 Creating Proposal...
@@ -565,7 +575,7 @@ function CreateProposal() {
         <div className="bg-primary/5 border border-blue-200 rounded-lg p-4">
           <div className="flex items-start gap-3">
             <Info className="w-5 h-5 text-primary mt-0.5" />
-            <div className="text-sm text-blue-800">
+            <div className="text-sm text-primary">
               <p className="font-medium mb-1">Proposal Process</p>
               <ul className="space-y-1 text-xs">
                 <li>• Proposals have a 1-day delay before voting begins</li>

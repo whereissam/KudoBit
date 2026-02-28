@@ -1,9 +1,11 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { useState, useEffect } from 'react'
 import { useAccount } from 'wagmi'
-import { Button } from '../components/ui/button'
-import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/card'
-import { Badge } from '../components/ui/badge'
+import { useDAO } from '@/hooks/use-dao'
+import { formatUnits } from 'viem'
+import { Button } from '@/components/ui/button'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import { Badge } from '@/components/ui/badge'
 import { 
   DollarSign, 
   TrendingUp, 
@@ -51,6 +53,7 @@ export const Route = createFileRoute('/dao/treasury')({
 
 function TreasuryDashboard() {
   const { address, isConnected } = useAccount()
+  const { daoStats, treasuryBalance, fundTreasury } = useDAO()
   const [transactions, setTransactions] = useState<TreasuryTransaction[]>([])
   const [allocations, setAllocations] = useState<TreasuryAllocation[]>([])
   const [stats, setStats] = useState<TreasuryStats | null>(null)
@@ -126,25 +129,25 @@ function TreasuryDashboard() {
       category: 'Community Rewards',
       amount: '1500000',
       percentage: 15,
-      color: 'bg-green-500'
+      color: 'bg-chart-2'
     },
     {
       category: 'Development',
       amount: '1000000',
       percentage: 10,
-      color: 'bg-purple-500'
+      color: 'bg-chart-3'
     },
     {
       category: 'Marketing',
       amount: '500000',
       percentage: 5,
-      color: 'bg-orange-500'
+      color: 'bg-chart-5'
     },
     {
       category: 'Operations',
       amount: '500000',
       percentage: 5,
-      color: 'bg-red-500'
+      color: 'bg-destructive'
     }
   ]
 
@@ -163,10 +166,16 @@ function TreasuryDashboard() {
 
   const loadTreasuryData = async () => {
     try {
-      // In production, fetch from actual contracts and APIs
-      setTransactions(mockTransactions)
+      // Transaction history needs an indexer - use placeholders for now
+      setTransactions([])
       setAllocations(mockAllocations)
-      setStats(mockStats)
+      // Use on-chain treasury balance when available
+      const realBalance = treasuryBalance ? formatUnits(treasuryBalance, 18) : '0'
+      setStats({
+        ...mockStats,
+        totalBalance: realBalance,
+        proposalsExecuted: daoStats?.executedProposals || 0,
+      })
     } catch (err) {
       console.error('Treasury data loading error:', err)
       setError(err instanceof Error ? err.message : 'Failed to load treasury data')
@@ -255,7 +264,7 @@ function TreasuryDashboard() {
 
       {/* Error Display */}
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+        <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4 mb-6">
           <p className="text-destructive">{error}</p>
         </div>
       )}
@@ -294,7 +303,7 @@ function TreasuryDashboard() {
           <Card>
             <CardContent className="p-6">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-red-100 rounded-lg">
+                <div className="p-2 bg-destructive/10 rounded-lg">
                   <TrendingDown className="w-5 h-5 text-destructive" />
                 </div>
                 <div>
@@ -394,7 +403,7 @@ function TreasuryDashboard() {
                           <div className={`p-2 rounded-lg ${
                             tx.type === 'inflow' 
                               ? 'bg-chart-1/10 text-chart-1' 
-                              : 'bg-red-100 text-destructive'
+                              : 'bg-destructive/10 text-destructive'
                           }`}>
                             {tx.type === 'inflow' ? (
                               <ArrowUpRight className="w-4 h-4" />

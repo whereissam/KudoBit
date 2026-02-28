@@ -18,7 +18,7 @@ export const Route = createFileRoute('/about')({
           <div className="bg-card rounded-lg shadow-md p-8">
             <div className="flex items-center mb-4">
               <div className="p-2 bg-primary/10 rounded-lg mr-3">
-                <Target className="h-6 w-6 text-primary dark:text-blue-400" />
+                <Target className="h-6 w-6 text-primary" />
               </div>
               <h2 className="text-2xl font-semibold text-foreground">
                 Our Mission
@@ -33,8 +33,8 @@ export const Route = createFileRoute('/about')({
 
           <div className="bg-card rounded-lg shadow-md p-8">
             <div className="flex items-center mb-4">
-              <div className="p-2 bg-chart-1/10 dark:bg-green-900/30 rounded-lg mr-3">
-                <Lightbulb className="h-6 w-6 text-chart-1 dark:text-green-400" />
+              <div className="p-2 bg-chart-1/10 rounded-lg mr-3">
+                <Lightbulb className="h-6 w-6 text-chart-1" />
               </div>
               <h2 className="text-2xl font-semibold text-foreground">
                 Philosophy
@@ -50,8 +50,8 @@ export const Route = createFileRoute('/about')({
 
         <div className="bg-card rounded-lg shadow-sm p-8 mb-16">
           <div className="flex items-center mb-6">
-            <div className="p-2 bg-chart-3/10 dark:bg-purple-900/30 rounded-lg mr-3">
-              <Users className="h-6 w-6 text-chart-3 dark:text-purple-400" />
+            <div className="p-2 bg-chart-3/10 rounded-lg mr-3">
+              <Users className="h-6 w-6 text-chart-3" />
             </div>
             <h2 className="text-2xl font-semibold text-foreground">
               Perfect For
@@ -60,7 +60,7 @@ export const Route = createFileRoute('/about')({
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-4">
               <div className="flex items-start gap-3">
-                <div className="w-2 h-2 bg-purple-500 rounded-full mt-2"></div>
+                <div className="w-2 h-2 bg-chart-3 rounded-full mt-2"></div>
                 <div>
                   <h3 className="font-medium text-foreground">
                     Startups & MVPs
@@ -71,7 +71,7 @@ export const Route = createFileRoute('/about')({
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <div className="w-2 h-2 bg-purple-500 rounded-full mt-2"></div>
+                <div className="w-2 h-2 bg-chart-3 rounded-full mt-2"></div>
                 <div>
                   <h3 className="font-medium text-foreground">
                     Learning Projects
@@ -84,7 +84,7 @@ export const Route = createFileRoute('/about')({
             </div>
             <div className="space-y-4">
               <div className="flex items-start gap-3">
-                <div className="w-2 h-2 bg-purple-500 rounded-full mt-2"></div>
+                <div className="w-2 h-2 bg-chart-3 rounded-full mt-2"></div>
                 <div>
                   <h3 className="font-medium text-foreground">
                     Production Apps
@@ -95,7 +95,7 @@ export const Route = createFileRoute('/about')({
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <div className="w-2 h-2 bg-purple-500 rounded-full mt-2"></div>
+                <div className="w-2 h-2 bg-chart-3 rounded-full mt-2"></div>
                 <div>
                   <h3 className="font-medium text-foreground">
                     Team Collaboration
@@ -109,10 +109,10 @@ export const Route = createFileRoute('/about')({
           </div>
         </div>
 
-        <div className="text-center bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg p-8">
+        <div className="text-center bg-gradient-to-r from-accent/20 to-chart-3/20 rounded-lg p-8">
           <div className="flex justify-center mb-4">
-            <div className="p-3 bg-red-100 dark:bg-red-900/30 rounded-full">
-              <Heart className="h-8 w-8 text-red-500 dark:text-red-400" />
+            <div className="p-3 bg-destructive/10 rounded-full">
+              <Heart className="h-8 w-8 text-destructive" />
             </div>
           </div>
           <h2 className="text-2xl font-bold text-foreground mb-4">
