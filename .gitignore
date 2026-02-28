@@ -89,3 +89,4 @@ playwright-report/
 scripts/
 tools/
 .claude/settings.local.json
+.claude/plans/
