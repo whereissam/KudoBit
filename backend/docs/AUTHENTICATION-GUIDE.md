@@ -33,12 +33,12 @@ GET /v1/auth/siwe-template
     "statement": "Sign in to KudoBit",
     "uri": "http://localhost:4500",
     "version": "1",
-    "chainId": 2810,
+    "chainId": 10143,
     "nonce": "j0df9fps13ypp6e7acyij",
     "issuedAt": "2025-07-24T12:01:26.316Z",
     "expirationTime": "2025-07-24T12:16:26.316Z"
   },
-  "message_template": "localhost:4500 wants you to sign in with your Ethereum account:\n{{USER_WALLET_ADDRESS}}\n\nSign in to KudoBit\n\nURI: http://localhost:4500\nVersion: 1\nChain ID: 2810\nNonce: j0df9fps13ypp6e7acyij\nIssued At: 2025-07-24T12:01:26.316Z\nExpiration Time: 2025-07-24T12:16:26.316Z",
+  "message_template": "localhost:4500 wants you to sign in with your Ethereum account:\n{{USER_WALLET_ADDRESS}}\n\nSign in to KudoBit\n\nURI: http://localhost:4500\nVersion: 1\nChain ID: 10143\nNonce: j0df9fps13ypp6e7acyij\nIssued At: 2025-07-24T12:01:26.316Z\nExpiration Time: 2025-07-24T12:16:26.316Z",
   "instructions": "Replace {{USER_WALLET_ADDRESS}} with the actual wallet address before signing"
 }
 ```
@@ -54,7 +54,7 @@ Sign in to KudoBit
 
 URI: http://localhost:4500
 Version: 1
-Chain ID: 2810
+Chain ID: 10143
 Nonce: j0df9fps13ypp6e7acyij
 Issued At: 2025-07-24T12:01:26.316Z
 Expiration Time: 2025-07-24T12:16:26.316Z
@@ -69,7 +69,7 @@ POST /v1/auth/login
 Content-Type: application/json
 
 {
-  "message": "localhost:4500 wants you to sign in with your Ethereum account:\n0x742d35Cc6435C426FD4a4b5421e0B65dC55bd0E7\n\nSign in to KudoBit\n\nURI: http://localhost:4500\nVersion: 1\nChain ID: 2810\nNonce: j0df9fps13ypp6e7acyij\nIssued At: 2025-07-24T12:01:26.316Z\nExpiration Time: 2025-07-24T12:16:26.316Z",
+  "message": "localhost:4500 wants you to sign in with your Ethereum account:\n0x742d35Cc6435C426FD4a4b5421e0B65dC55bd0E7\n\nSign in to KudoBit\n\nURI: http://localhost:4500\nVersion: 1\nChain ID: 10143\nNonce: j0df9fps13ypp6e7acyij\nIssued At: 2025-07-24T12:01:26.316Z\nExpiration Time: 2025-07-24T12:16:26.316Z",
   "signature": "0x..."
 }
 ```
@@ -200,7 +200,7 @@ fetch('/v1/creators', {
 2. **Message must be exact** - any formatting changes will cause signature verification to fail
 3. **Nonce is unique** - get a fresh template for each authentication attempt
 4. **Token expires** in 24 hours - handle token refresh in your frontend
-5. **Chain ID is 2810** (Morph Holesky) - ensure your wallet is on the correct network
+5. **Chain ID is 10143** (Monad Testnet) - ensure your wallet is on the correct network
 
 ---
 

@@ -14,7 +14,7 @@
 - [ ] Connect Wallet button appears when not connected
 - [ ] MetaMask prompts to connect when clicked  
 - [ ] Wallet address displays after connection
-- [ ] Network switches to Morph Holesky (Chain ID: 2810)
+- [ ] Network switches to Monad Testnet (Chain ID: 10143)
 - [ ] MockUSDC balance shows (likely 0 initially)
 - [ ] "Get MockUSDC" faucet button appears
 - [ ] Products display in grid layout
@@ -23,7 +23,7 @@
 ### MockUSDC Faucet Testing  
 - [ ] Click "Get MockUSDC" button
 - [ ] MetaMask prompts for transaction
-- [ ] Transaction confirms quickly (Morph speed!)
+- [ ] Transaction confirms quickly (Monad speed!)
 - [ ] Balance updates to show new USDC (1000 USDC)
 - [ ] Success toast notification appears
 
@@ -41,7 +41,7 @@
 - [ ] Stats show (Total Badges, Badge Types Owned)  
 - [ ] Badge cards display (Bronze, Silver, Gold, Diamond)
 - [ ] Initially shows "Not Earned" for all badges
-- [ ] "View on Morphscan" links work (after badges earned)
+- [ ] "View on Monadscan" links work (after badges earned)
 
 ### Admin Panel (/admin) Testing
 - [ ] Access control works (only contract owner can access)
@@ -64,16 +64,16 @@
 
 ### If Wallet Won't Connect:
 1. Make sure MetaMask is installed
-2. Add Morph Holesky network:
-   - Network Name: Morph Holesky
-   - RPC URL: https://rpc-quicknode-holesky.morphl2.io  
-   - Chain ID: 2810
-   - Currency: ETH
-   - Explorer: https://explorer-holesky.morphl2.io
+2. Add Monad Testnet network:
+   - Network Name: Monad Testnet
+   - RPC URL: https://testnet-rpc.monad.xyz  
+   - Chain ID: 10143
+   - Currency: MON
+   - Explorer: https://testnet.monadscan.com
 
 ### If Faucet Fails:
-- Make sure you have some Morph ETH for gas fees
-- Get ETH from: https://faucet.morphl2.io
+- Make sure you have some MON for gas fees
+- Get ETH from: https://faucet.monad.xyz
 
 ### If Admin Panel Shows "Access Denied":
 - Make sure you're connected with the wallet that deployed the contracts

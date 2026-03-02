@@ -1,7 +1,7 @@
-# 🚀 Morph Commerce - 3-Minute Hackathon Pitch
+# 🚀 Monad Commerce - 3-Minute Hackathon Pitch
 
 ## 🎯 Hook (15 seconds)
-> "Imagine buying a $0.50 digital sticker and earning instant, verifiable loyalty points — without worrying about $20 gas fees. This is the future of micro-commerce, and it's only possible on Morph."
+> "Imagine buying a $0.50 digital sticker and earning instant, verifiable loyalty points — without worrying about $20 gas fees. This is the future of micro-commerce, and it's only possible on Monad."
 
 ## 🔥 Problem Statement (30 seconds)
 
@@ -15,7 +15,7 @@
 
 ## ✨ Solution (45 seconds)
 
-**Introducing Morph Commerce** - A Web2-like shopping experience with Web3 benefits:
+**Introducing Monad Commerce** - A Web2-like shopping experience with Web3 benefits:
 
 - **🛍️ Digital Marketplace**: Buy digital goods (wallpapers, content passes, stickers) with one-click
 - **🏆 Instant Loyalty**: Earn verifiable ERC-1155 badges after each purchase  
@@ -24,22 +24,22 @@
 
 *[DEMO: Live transaction showing instant confirmation]*
 
-## 🌟 Why Morph is Essential (60 seconds)
+## 🌟 Why Monad is Essential (60 seconds)
 
-**This dApp showcases Morph's unique technological advantages:**
+**This dApp showcases Monad's unique technological advantages:**
 
-### ⚡ **Hybrid Rollup Architecture**
-- **Optimistic + ZK**: Lightning-fast transactions with instant finality
-- **Responsive Validity Proofs**: Automatic security upgrades when needed
+### ⚡ **Parallel EVM Architecture**
+- **Parallel Execution**: Lightning-fast transactions with 1s block times
+- **Pipelined Execution**: Automatic security upgrades when needed
 - **Result**: Sub-second confirmations vs 2-15 minutes on other chains
 
-### 🏛️ **Decentralized Sequencer Network**  
+### 🏛️ **High-Throughput L1 with 1s Block Times**  
 - **Fair Ordering**: No MEV exploitation or censorship
 - **True Decentralization**: No single point of failure
 - **Result**: Every transaction is processed fairly and transparently
 
 ### 💡 **Economic Viability**
-- **Ultra-Low Fees**: ~$0.01 per transaction vs $10-50 on L1
+- **Ultra-Low Fees**: ~$0.01 per transaction vs $10-50 on other chains
 - **Global Consumer Layer**: Finally makes micro-transactions profitable
 - **Result**: New business models become possible
 
@@ -68,7 +68,7 @@
 - Integration with real digital marketplaces
 - Mobile app for mainstream adoption
 
-**Morph enables a new economy where every digital interaction can be monetized and rewarded transparently.**
+**Monad enables a new economy where every digital interaction can be monetized and rewarded transparently.**
 
 ---
 
@@ -77,7 +77,7 @@
 ### Key Phrases to Emphasize:
 - **"Lightning fast"** - whenever showing transactions
 - **"Ultra-low cost"** - when mentioning fees
-- **"Only possible on Morph"** - when highlighting unique features
+- **"Only possible on Monad"** - when highlighting unique features
 - **"Web2 experience, Web3 benefits"** - for UX emphasis
 
 ### Visual Cues:
@@ -101,7 +101,7 @@ If live demo fails:
 - Show the comprehensive test suite results
 
 ### Closing Statement:
-*"Morph Commerce proves that Morph's hybrid rollup technology and decentralized sequencer can power the next generation of consumer applications. We've built the foundation for a new digital economy where every micro-transaction matters, every loyalty point is verifiable, and every user gets the speed and security they deserve."*
+*"Monad Commerce proves that Monad's parallel execution engine (10,000 TPS) and high-throughput L1 with 1s block times can power the next generation of consumer applications. We've built the foundation for a new digital economy where every micro-transaction matters, every loyalty point is verifiable, and every user gets the speed and security they deserve."*
 
 ## 🏆 Key Success Metrics
 
@@ -112,15 +112,15 @@ If live demo fails:
 - ✅ Seamless Web3 integration with excellent UX
 
 **Innovation:**
-- ✅ Novel use case for hybrid rollup technology
+- ✅ Novel use case for parallel execution engine (10,000 TPS)
 - ✅ Practical demonstration of micro-transaction viability
 - ✅ Bridge between Web2 familiarity and Web3 benefits
 
-**Morph Integration:**
-- ✅ Optimized for Morph's specific advantages
-- ✅ Clear articulation of why Morph is essential
+**Monad Integration:**
+- ✅ Optimized for Monad's specific advantages
+- ✅ Clear articulation of why Monad is essential
 - ✅ Demonstrates real-world consumer application potential
 
 ---
 
-*Remember: You're not just presenting a project, you're showcasing the future of digital commerce enabled by Morph's revolutionary technology.*
+*Remember: You're not just presenting a project, you're showcasing the future of digital commerce enabled by Monad's revolutionary technology.*

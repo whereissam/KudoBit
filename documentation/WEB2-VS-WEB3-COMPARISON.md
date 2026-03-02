@@ -1,11 +1,11 @@
-# 📊 Web2 vs KudoBit/Morph Comparison Chart
+# 📊 Web2 vs KudoBit/Monad Comparison Chart
 
 ## 🥊 **Platform Comparison: Traditional vs KudoBit**
 
-| Feature | 🔴 Traditional Platforms<br/>(Gumroad, Patreon) | 🟢 KudoBit on Morph |
+| Feature | 🔴 Traditional Platforms<br/>(Gumroad, Patreon) | 🟢 KudoBit on Monad |
 |---------|--------------------------------------------------|---------------------|
 | **Platform Fees** | 🔴 10%+ commission + payment fees | 🟢 ~0% protocol fees |
-| **Transaction Cost** | 🔴 $0.30+ (Stripe minimum) | 🟢 <$0.01 (Morph gas) |
+| **Transaction Cost** | 🔴 $0.30+ (Stripe minimum) | 🟢 <$0.01 (Monad gas) |
 | **Minimum Viable Sale** | 🔴 ~$3.00 to be profitable | 🟢 $0.05+ profitable |
 | **Creator Payouts** | 🔴 Weekly/monthly batches | 🟢 Instant, direct to wallet |
 | **Account Control** | 🔴 Platform owns your account | 🟢 You own your wallet |
@@ -15,14 +15,14 @@
 | **Revenue Splits** | 🔴 Complex, manual setup | 🟢 Smart contract automation |
 | **Authentication** | 🔴 Username/password | 🟢 Cryptographic wallet auth |
 
-## 🚀 **Why Morph is Essential**
+## 🚀 **Why Monad is Essential**
 
-| Blockchain Feature | 🔴 Other L2s | 🟢 Morph's Advantage |
+| Blockchain Feature | 🔴 Other L1s | 🟢 Monad's Advantage |
 |-------------------|--------------|---------------------|
 | **Transaction Fees** | 🔴 $0.01-0.10 (still too high) | 🟢 Sub-$0.01 (enables micro-sales) |
 | **Confirmation Speed** | 🔴 5-15 seconds | 🟢 Sub-second optimistic |
-| **Sequencer** | 🔴 Centralized (censorship risk) | 🟢 Decentralized (censorship resistant) |
-| **Finality** | 🔴 7 days (optimistic) | 🟢 Minutes (RVP proofs) |
+| **Throughput** | 🔴 Low TPS (congestion risk) | 🟢 10,000 TPS (parallel execution) |
+| **Finality** | 🔴 Minutes to hours | 🟢 1 second (1s blocks) |
 | **Consumer Focus** | 🔴 DeFi/trading focused | 🟢 Built for consumer apps |
 | **UX** | 🔴 Complex for mainstream | 🟢 Web2-familiar experience |
 
@@ -36,7 +36,7 @@ Traditional Platform:
 ├─ Payment Processing: -$0.30
 └─ Creator Receives: -$0.255 (LOSS!)
 
-KudoBit on Morph:
+KudoBit on Monad:
 ├─ Sale Price: $0.05
 ├─ Platform Fee: $0.00
 ├─ Gas Fee: -$0.005
@@ -51,7 +51,7 @@ Traditional Platform:
 ├─ Payment Processing: -$0.30
 └─ Creator Receives: $4.20 (84% profit)
 
-KudoBit on Morph:
+KudoBit on Monad:
 ├─ Sale Price: $5.00
 ├─ Platform Fee: $0.00
 ├─ Gas Fee: -$0.005
@@ -92,7 +92,7 @@ KudoBit on Morph:
 
 ## 🏆 **Competitive Advantages Summary**
 
-### **What Makes KudoBit + Morph Unique:**
+### **What Makes KudoBit + Monad Unique:**
 
 1. **🎯 Enables New Markets**: Micro-transactions ($0.05-$0.50) profitable for first time
 2. **⚡ Superior UX**: Sub-second confirmations feel like Web2
@@ -101,17 +101,17 @@ KudoBit on Morph:
 5. **🚀 Future-Proof**: Built on unstoppable infrastructure
 
 ### **The Bottom Line:**
-> "KudoBit isn't just better than traditional platforms - it enables entirely new business models that were impossible before Morph's breakthrough technology."
+> "KudoBit isn't just better than traditional platforms - it enables entirely new business models that were impossible before Monad's breakthrough technology."
 
 ---
 
 ## 🎤 **Quick Reference for Demo**
 
 **When judges ask "Why not just use Gumroad?"**
-> "Gumroad takes 10% + fees and makes micro-sales impossible. KudoBit on Morph enables profitable $0.05 sales with true fan ownership."
+> "Gumroad takes 10% + fees and makes micro-sales impossible. KudoBit on Monad enables profitable $0.05 sales with true fan ownership."
 
-**When judges ask "Why Morph specifically?"**  
-> "Only Morph's sub-$0.01 fees make micro-commerce viable. Plus decentralized sequencer prevents censorship - essential for creator sovereignty."
+**When judges ask "Why Monad specifically?"**  
+> "Only Monad's sub-$0.01 fees make micro-commerce viable. Plus high-throughput L1 with 1s block times prevents censorship - essential for creator sovereignty."
 
 **When judges ask "What's the innovation?"**
-> "We're not just moving existing models to blockchain - we're enabling entirely new creator economy possibilities that only work with Morph's unique technology."
+> "We're not just moving existing models to blockchain - we're enabling entirely new creator economy possibilities that only work with Monad's unique technology."

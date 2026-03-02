@@ -1,25 +1,25 @@
-# 🚀 Morph Commerce - Final Deployment Checklist
+# 🚀 Monad Commerce - Final Deployment Checklist
 
 ## ✅ Critical Tasks Remaining
 
-### 1. ☐ Get Morph Holesky ETH from faucet
+### 1. ☐ Get Monad Testnet ETH from faucet
 **Action Required:**
-- Visit: https://faucet.morphl2.io
+- Visit: https://faucet.monad.xyz
 - Connect your MetaMask wallet
-- Add Morph Holesky network (Chain ID: 2810)
+- Add Monad Testnet network (Chain ID: 10143)
 - Claim test ETH (~0.1 ETH should be plenty)
 
 **Verification:**
 ```bash
 # Check your balance after claiming
-npx hardhat run scripts/check-wallet.cjs --network morphHolesky
+npx hardhat run scripts/check-wallet.cjs --network monadTestnet
 ```
 
-### 2. ☐ Deploy MockUSDC.sol contract to Morph Holesky
+### 2. ☐ Deploy MockUSDC.sol contract to Monad Testnet
 **Action Required:**
 ```bash
 # Deploy all contracts at once
-npx hardhat run scripts/deploy.cjs --network morphHolesky
+npx hardhat run scripts/deploy.cjs --network monadTestnet
 ```
 
 **Expected Output:**
@@ -49,15 +49,15 @@ export const CONTRACTS = {
 - Or use the admin panel once frontend is running
 - Fund 2-3 test wallets with ~100 USDC each
 
-### 5. ☐ Verify contracts on Morph Explorer
+### 5. ☐ Verify contracts on Monad Explorer
 **Action Required:**
-- Visit: https://explorer-holesky.morphl2.io
+- Visit: https://testnet.monadscan.com
 - Search for your contract addresses
 - Verify source code (optional but recommended)
 
 ### 6. ☐ Test complete user flow per detailed specifications
 **Test Checklist:**
-- [ ] Connect wallet to Morph Holesky
+- [ ] Connect wallet to Monad Testnet
 - [ ] Check USDC balance display
 - [ ] Use faucet to get USDC
 - [ ] Browse products on homepage
@@ -83,7 +83,7 @@ npx vercel --prod
 ### 8. ☐ Conduct final end-to-end testing before submission
 **Final Test Suite:**
 - [ ] Live frontend works with deployed contracts
-- [ ] All transactions confirm quickly on Morph
+- [ ] All transactions confirm quickly on Monad
 - [ ] Mobile responsiveness verified
 - [ ] Error handling works properly
 - [ ] Demo flow rehearsed successfully
@@ -98,7 +98,7 @@ node scripts/check-wallet.cjs
 ### Deployment with Gas Estimation
 ```bash
 node scripts/prepare-deployment.cjs
-npx hardhat run scripts/deploy.cjs --network morphHolesky
+npx hardhat run scripts/deploy.cjs --network monadTestnet
 ```
 
 ### Quick Test
@@ -128,17 +128,17 @@ Before final submission, verify:
 ## 🎯 Success Metrics
 
 When complete, you'll have:
-- ✅ Fully deployed smart contracts on Morph Holesky
+- ✅ Fully deployed smart contracts on Monad Testnet
 - ✅ Live frontend application with working transactions
 - ✅ Complete user flow from purchase to loyalty rewards
 - ✅ Professional demo ready for hackathon judges
 
 ## 🔗 Important Links
 
-- **Faucet**: https://faucet.morphl2.io
-- **Explorer**: https://explorer-holesky.morphl2.io
-- **RPC**: https://rpc-quicknode-holesky.morphl2.io
-- **Chain ID**: 2810
+- **Faucet**: https://faucet.monad.xyz
+- **Explorer**: https://testnet.monadscan.com
+- **RPC**: https://testnet-rpc.monad.xyz
+- **Chain ID**: 10143
 
 ---
 

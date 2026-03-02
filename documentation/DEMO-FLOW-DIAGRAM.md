@@ -11,10 +11,10 @@
 
 1️⃣ Connect Wallet                 💰 Direct Payouts                  ⚡ Sub-$0.01 Fees
    ├─ MetaMask prompt             ├─ No middleman                    ├─ Makes micro-sales profitable
-   ├─ Morph network               ├─ Instant settlement              ├─ $0.05 digital sticker viable
+   ├─ Monad network               ├─ Instant settlement              ├─ $0.05 digital sticker viable
    └─ ✅ Connected                └─ Keep ~100% revenue              └─ ✅ Ultra-low cost
 
-2️⃣ Browse Products               🏛️ Creator Sovereignty             🔒 Decentralized Sequencer  
+2️⃣ Browse Products               🏛️ Creator Sovereignty             🔒 High-Throughput L1  
    ├─ $0.05 Digital Sticker      ├─ Censorship resistant            ├─ No single point of failure
    ├─ $0.20 Wallpaper NFT        ├─ Own customer data               ├─ Fair transaction processing
    └─ $0.50 Premium Pass         └─ Control pricing/content         └─ ✅ Unstoppable platform
@@ -25,14 +25,14 @@
    ├─ Confirm purchase           └─ Transparent on-chain data       └─ ✅ Built for users
    └─ ⚡ Instant confirmation
 
-4️⃣ Loyalty Reward               🎯 Demo Separation                  🔗 Hybrid Rollup Tech
+4️⃣ Loyalty Reward               🎯 Demo Separation                  🔗 Parallel EVM Tech
    ├─ Creator awards badge       ├─ Show manual minting             ├─ Optimistic + ZK proofs
    ├─ ERC-1155 NFT minted        ├─ Explain auto-minting concept    ├─ Best of both worlds
    └─ ✅ Fan owns forever        └─ Highlight on-chain ownership    └─ ✅ Perfect for commerce
 
 5️⃣ True Ownership              🌟 Future Vision                   📈 Ecosystem Growth
    ├─ Badge in wallet           ├─ Multi-creator platform          ├─ DAO governance ready
-   ├─ Verifiable on Morphscan   ├─ Cross-creator benefits          ├─ Developer ecosystem
+   ├─ Verifiable on Monadscan   ├─ Cross-creator benefits          ├─ Developer ecosystem
    └─ 🏆 Owned, not rented      └─ Creator economy revolution       └─ ✅ Long-term viability
 ```
 
@@ -50,12 +50,12 @@ Beat 1: "No Passwords Needed"
 Beat 2: "Micro-Transactions Work"  
 ├─ $0.05 sticker purchase
 ├─ Sub-$0.01 transaction fee
-└─ 💡 "Only possible on Morph"
+└─ 💡 "Only possible on Monad"
 
 Beat 3: "Instant Everything"
 ├─ Sub-second confirmations
 ├─ Real-time balance updates  
-└─ 💡 "Morph's speed advantage"
+└─ 💡 "Monad's speed advantage"
 
 Beat 4: "True Digital Ownership"
 ├─ NFT badge in wallet
@@ -89,13 +89,13 @@ Tab 3: Loyalty Dashboard
 ├─ Badge gallery
 └─ Ownership verification
 
-Tab 4: Morphscan Explorer
-├─ https://explorer-holesky.morphl2.io
+Tab 4: Monadscan Explorer
+├─ https://testnet.monadscan.com
 ├─ Show live transactions
 └─ Verify contract interactions
 
 Tab 5: MetaMask
-├─ Morph Holesky network
+├─ Monad Testnet network
 ├─ Test ETH for gas
 └─ MockUSDC balance
 ```
@@ -105,7 +105,7 @@ Tab 5: MetaMask
 ```
 OPENING (15s):
 ═════════════
-🎤 "Good morning! We're Team KudoBit, building the Web3 Gumroad on Morph."
+🎤 "Good morning! We're Team KudoBit, building the Web3 Gumroad on Monad."
 📺 [Show slide: KudoBit logo + tagline]
 🎤 "Digital Value, Instantly Rewarded - solving creator platform problems."
 
@@ -117,7 +117,7 @@ PROBLEM (30s):
 
 SOLUTION DEMO (90s):
 ══════════════════
-🎤 "KudoBit fixes this with Morph's unique advantages. Let me show you..."
+🎤 "KudoBit fixes this with Monad's unique advantages. Let me show you..."
 
 📺 [Switch to localhost:5173]
 🎤 "I'll connect my wallet - notice: no passwords, wallet-based identity."
@@ -125,11 +125,11 @@ SOLUTION DEMO (90s):
 
 🎤 "Here's our creator's storefront. Notice these micro-prices - $0.05 sticker!"
 📺 [Show products, emphasize low prices]
-🎤 "Only profitable because Morph has sub-$0.01 transaction costs."
+🎤 "Only profitable because Monad has sub-$0.01 transaction costs."
 
 🎤 "I'll buy this sticker - watch the speed."
 👆 [Click Buy Now, approve, purchase]
-🎤 "Sub-second confirmation! That's Morph's hybrid rollup in action."
+🎤 "Sub-second confirmation! That's Monad's parallel EVM in action."
 
 📺 [Switch to /admin]
 🎤 "Now as the creator, I'll award a loyalty badge - this would be automatic."
@@ -138,26 +138,26 @@ SOLUTION DEMO (90s):
 
 📺 [Switch to /loyalty]  
 🎤 "And here's the fan's loyalty dashboard - they truly own this badge."
-👆 [Show owned badge, click Morphscan link]
+👆 [Show owned badge, click Monadscan link]
 
 MORPH ADVANTAGE (30s):
 ════════════════════
-🎤 "This only works on Morph because..."
-📺 [Show slide: Morph advantages]
+🎤 "This only works on Monad because..."
+📺 [Show slide: Monad advantages]
 🎤 "Decentralized sequencer prevents censorship, ultra-low fees enable micro-commerce, and it's built for consumers like us."
 
 FUTURE (15s):
 ════════════
 🎤 "Phase 1 complete, ready for multi-creator platform with cross-creator benefits and DAO governance."
 📺 [Show slide: Future vision]
-🎤 "KudoBit: The future of creator economy, uniquely enabled by Morph."
+🎤 "KudoBit: The future of creator economy, uniquely enabled by Monad."
 ```
 
 ## 🏆 **Success Metrics to Mention**
 
 - ✅ **Full-Stack Web3**: Smart contracts + IPFS + SIWE auth
 - ✅ **Production Ready**: Backend API + Frontend + Database
-- ✅ **Morph Integration**: Leveraging unique advantages
+- ✅ **Monad Integration**: Leveraging unique advantages
 - ✅ **Real Innovation**: Solving actual creator problems
 - ✅ **Technical Depth**: Beyond simple smart contract demos
 

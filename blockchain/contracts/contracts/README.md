@@ -276,14 +276,14 @@ npm run deploy:local:node
 # - CreatorStore: 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
 ```
 
-### Test Network (Morph Holesky)
+### Test Network (Monad Testnet)
 ```bash
 # Set environment variables
 export PRIVATE_KEY="your-private-key"
-export MORPH_RPC_URL="https://rpc-quicknode-holesky.morphl2.io"
+export MONAD_RPC_URL="https://testnet-rpc.monad.xyz"
 
 # Deploy to testnet
-npx hardhat run scripts/deploy-core.cjs --network morphHolesky
+npx hardhat run scripts/deploy-core.cjs --network monadTestnet
 ```
 
 ### Contract Addresses
@@ -296,12 +296,12 @@ npx hardhat run scripts/deploy-core.cjs --network morphHolesky
 | CreatorStore | `0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9` |
 | SecondaryMarketplace | `0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0` |
 
-#### Morph Holesky Testnet
+#### Monad Testnet
 | Contract | Address |
 |----------|---------|
-| MockUSDC | `0x1dA0552f45cC89be39A2BF53Ef1c75859894D5dd` |
-| LoyaltyToken | `0x89de622217c01f4c97453a35CaFfF1E7b7D6f8FC` |
-| CreatorStore | `0x203B1f821F726d596b57C1399906EF338b98b9FF` |
+| MockUSDC | `0x0000000000000000000000000000000000000000` |
+| LoyaltyToken | `0x0000000000000000000000000000000000000000` |
+| CreatorStore | `0x0000000000000000000000000000000000000000` |
 
 ## 🧪 Testing
 
@@ -375,10 +375,10 @@ npm run test:coverage
 networks: {
   hardhat: { chainId: 1337 },
   localhost: { url: "http://localhost:8545" },
-  morphHolesky: {
-    url: "https://rpc-quicknode-holesky.morphl2.io",
+  monadTestnet: {
+    url: "https://testnet-rpc.monad.xyz",
     accounts: [process.env.PRIVATE_KEY],
-    chainId: 2810
+    chainId: 10143
   }
 }
 ```
@@ -386,7 +386,7 @@ networks: {
 ### Environment Variables
 ```env
 PRIVATE_KEY=your-private-key-here
-MORPH_RPC_URL=https://rpc-quicknode-holesky.morphl2.io
+MONAD_RPC_URL=https://testnet-rpc.monad.xyz
 ETHERSCAN_API_KEY=your-etherscan-key
 ```
 

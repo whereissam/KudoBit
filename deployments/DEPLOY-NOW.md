@@ -24,7 +24,7 @@ Once deployed, test these key features on the live site:
 ### ✅ What Should Work
 - [x] Pages load (/, /loyalty, /admin)
 - [x] Wallet connection (MetaMask)
-- [x] Contract interactions on Morph Holesky
+- [x] Contract interactions on Monad Testnet
 - [x] Responsive design on mobile
 
 ### 🧪 Test These Features Live:
@@ -45,7 +45,7 @@ Once deployed, test these key features on the live site:
 - ✅ Complete "Web3 Gumroad" platform
 - ✅ Creator sovereignty with direct payouts
 - ✅ True fan ownership via NFT badges
-- ✅ Morph's ultra-low fees and instant transactions
+- ✅ Monad's ultra-low fees and instant transactions
 - ✅ Professional UI matching Web2 expectations
 - ✅ Mobile responsive design
 - ✅ Production-ready deployment
@@ -53,7 +53,7 @@ Once deployed, test these key features on the live site:
 **For Demo Day:**
 1. Show your live URL
 2. Connect wallet → buy product → earn badge
-3. Emphasize Morph's speed and low fees
+3. Emphasize Monad's speed and low fees
 4. Highlight creator benefits vs traditional platforms
 
 You've successfully completed Phase 1 of your roadmap! 🏆

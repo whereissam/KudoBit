@@ -1,16 +1,16 @@
-# Project: Micro-Commerce & Loyalty on Morph
+# Project: Micro-Commerce & Loyalty on Monad
 
 ## 1. Product Requirements Document (PRD) - Detailed
 
 ### 1.1. Introduction
-"Micro-Commerce & Loyalty on Morph" is a pioneering decentralized application (dApp) designed to revolutionize digital commerce by enabling seamless, low-cost micro-transactions and transparent loyalty programs. It empowers small businesses, independent creators, and community leaders to monetize digital goods and foster customer loyalty directly on the blockchain. By harnessing Morph's cutting-edge **hybrid rollup technology (Optimistic zkEVM with Responsive Validity Proof)** and its **decentralized sequencer network**, our platform delivers a Web2-like user experience with the inherent benefits of Web3: transparency, security, and true ownership, making micro-transactions economically viable and reliable for the first time.
+"Micro-Commerce & Loyalty on Monad" is a pioneering decentralized application (dApp) designed to revolutionize digital commerce by enabling seamless, low-cost micro-transactions and transparent loyalty programs. It empowers small businesses, independent creators, and community leaders to monetize digital goods and foster customer loyalty directly on the blockchain. By harnessing Monad's cutting-edge **parallel execution engine (10,000 TPS) (parallel EVM with pipelined execution)** and its **high-throughput L1 with 1s block times**, our platform delivers a Web2-like user experience with the inherent benefits of Web3: transparency, security, and true ownership, making micro-transactions economically viable and reliable for the first time.
 
 ### 1.2. Vision & Goals
 * **Vision:** To be the foundational layer for a new wave of consumer-centric, high-volume digital micro-transactions and verifiable loyalty programs, democratizing commerce for creators and small businesses and accelerating mainstream adoption of Web3.
 * **Goals (Hackathon Specific - 12 Days):**
-    1.  **Core Functionality Demo:** Successfully demonstrate the purchase of a digital item using a test stablecoin on Morph Holesky Testnet.
+    1.  **Core Functionality Demo:** Successfully demonstrate the purchase of a digital item using a test stablecoin on Monad Testnet Testnet.
     2.  **Loyalty Program Showcase:** Visually represent the issuance and display of instant, on-chain loyalty points or badges post-purchase.
-    3.  **Highlight Morph's Unique Advantages:** Articulate and visually demonstrate how Morph's hybrid rollup (speed, low cost, responsive security) and decentralized sequencer (fairness, censorship-resistance) are *essential* to the project's feasibility and superior user experience. This is your winning edge.
+    3.  **Highlight Monad's Unique Advantages:** Articulate and visually demonstrate how Monad's parallel EVM (speed, low cost, responsive security) and high-throughput L1 with 1s block times (fairness, censorship-resistance) are *essential* to the project's feasibility and superior user experience. This is your winning edge.
     4.  **Exceptional UX/UI:** Deliver a highly intuitive, clean, and visually appealing user interface that feels familiar to Web2 users, abstracting blockchain complexities.
     5.  **Robust MVP:** Present a stable, bug-free Minimum Viable Product that clearly communicates the full vision.
 
@@ -21,7 +21,7 @@
     * **Community Managers:** Issuing on-chain loyalty or reputation tokens for engagement.
 * **Secondary:**
     * **Everyday Consumers:** Looking for easy, affordable, and transparent ways to acquire digital content and earn verifiable rewards.
-    * **Web3 Developers:** Seeking a practical example of a consumer-focused dApp leveraging Morph's capabilities.
+    * **Web3 Developers:** Seeking a practical example of a consumer-focused dApp leveraging Monad's capabilities.
 
 ### 1.4. Key Features (MVP for Hackathon)
 
@@ -42,7 +42,7 @@
         6.  *Conceptually:* Triggers the loyalty award (demonstrated manually in MVP).
     * **Presentation:**
         * Clear modal/toast messages for "Approving...", "Processing Payment...", "Payment Successful!".
-        * Visually emphasize the *speed* of Morph's transaction confirmation. A quick success toast is key.
+        * Visually emphasize the *speed* of Monad's transaction confirmation. A quick success toast is key.
         * Subtle animations on button clicks or transaction completion.
 * **"My Loyalty" Dashboard:**
     * **Functionality:** Displays the user's current balance of loyalty points (ERC-20) or a gallery of collected loyalty badges (ERC-1155 NFTs, showing their images).
@@ -56,7 +56,7 @@
     * **Functionality:** A simple interface for the demo presenter (acting as the merchant). Input field for `recipientAddress`, input field for `pointsAmount` (or `badgeId`). A button to "Award Loyalty." This calls `LoyaltyToken.awardPoints()` or `LoyaltyToken.mintBadge()`.
     * **Presentation:** A bare-bones, clearly labeled "Admin Panel" page accessible via a direct URL, not linked from the main UI. It's strictly for demonstrating the loyalty issuance part during the pitch.
 
-#### 1.4.3. Smart Contracts (Deployed on Morph Holesky Testnet)
+#### 1.4.3. Smart Contracts (Deployed on Monad Testnet Testnet)
 * **`MockUSDC.sol` (ERC-20 Standard):**
     * Standard `ERC20.sol` (OpenZeppelin).
     * `faucet()` function (optional) or pre-fund test accounts.
@@ -79,21 +79,21 @@
 
 ### 1.5. Technical Requirements
 
-* **Blockchain:** Morph Holesky Testnet.
-    * RPC URL: `https://rpc-holesky.morphl2.io` (or `https://2810.rpc.thirdweb.com`)
-    * Chain ID: `2810`
-    * Explorer: `https://explorer-holesky.morphl2.io`
+* **Blockchain:** Monad Testnet Testnet.
+    * RPC URL: `https://testnet-rpc.monad.xyz` (or `https://10143.rpc.thirdweb.com`)
+    * Chain ID: `10143`
+    * Explorer: `https://testnet.monadscan.com`
 * **Smart Contracts:** Solidity (using `solc` compiler via Hardhat/Foundry).
 * **Development Frameworks:** Hardhat (recommended for easier testing, deployment scripts).
 * **Frontend:** Next.js (React), Wagmi (for React hooks), Viem (underlying low-level client), Tailwind CSS (for rapid styling).
 * **Wallet Integration:** MetaMask (standard choice, widely used).
-* **Test Tokens:** Morph Holesky ETH (for gas on Morph) and your deployed `MockUSDC` on Morph Holesky.
+* **Test Tokens:** Monad Testnet ETH (for gas on Monad) and your deployed `MockUSDC` on Monad Testnet.
 * **Hosting:** Vercel (seamless deployment for Next.js).
 
 ### 1.6. Success Metrics (for Hackathon Judging)
 * **Functional Demo:** The live application demonstrates the entire user flow (connect wallet, view products, buy item, view loyalty) flawlessly.
 * **Problem/Solution Fit:** Clear articulation of the problem (high fees, complexity of micro-transactions) and how the dApp uniquely solves it.
-* **Morph Advantage Articulation:** The presentation explicitly connects the dApp's capabilities directly to Morph's specific technical advantages (Hybrid Rollup for speed/cost/security, Decentralized Sequencer for fairness/reliability).
+* **MonadAdvantage Articulation:** The presentation explicitly connects the dApp's capabilities directly to Monad's specific technical advantages (Parallel EVM for speed/cost/security, High-Throughput L1 with 1s Block Times for fairness/reliability).
 * **User Experience (UX):** The UI is intuitive, clean, and requires minimal blockchain knowledge from the end-user. The transaction process feels fast and efficient.
 * **Code Quality:** Smart contracts are secure, concise, and well-commented. Frontend code is organized and readable.
 * **Innovation & Future Potential:** The project showcases a novel use case for blockchain in everyday consumer interactions and has a clear roadmap for future development.
@@ -106,14 +106,14 @@ This plan is aggressive but achievable if you stay focused and prioritize.
 
 ### **User Flow: Buying a Digital Item & Earning Loyalty**
 
-1.  **Landing Page (`/`):** User arrives at `microcommerce.morph`.
-2.  **Connect Wallet:** User clicks "Connect Wallet" button, connects MetaMask to Morph Holesky.
+1.  **Landing Page (`/`):** User arrives at `microcommerce.monad`.
+2.  **Connect Wallet:** User clicks "Connect Wallet" button, connects MetaMask to Monad Testnet.
 3.  **Browse Products:** User sees a curated list of digital products (e.g., "Exclusive Wallpaper," "Premium Content").
 4.  **Select Product:** User clicks on a product card.
 5.  **Initiate Purchase:** User clicks "Buy Now" on the product detail.
 6.  **Approve USDC (if first time):** MetaMask pops up, user approves `Shopfront` contract to spend MockUSDC. This is a separate transaction.
 7.  **Confirm Purchase:** MetaMask pops up again, user confirms the `buyItem` transaction.
-8.  **Instant Confirmation:** Frontend displays a *very fast* "Payment Successful!" toast/modal, thanks to Morph's optimistic finality.
+8.  **Instant Confirmation:** Frontend displays a *very fast* "Payment Successful!" toast/modal, thanks to Monad's 1s block times.
 9.  **View Loyalty (Manual Demo Step):** Presenter navigates to "My Loyalty" page (`/loyalty`) to show that loyalty points/badges have *conceptually* been awarded.
 10. **Merchant Action (Behind the Scenes/Admin Page Demo):** Presenter briefly navigates to the `/admin` page, inputs the buyer's address, and clicks "Award Loyalty" to manually mint the points/badge to demonstrate the on-chain loyalty issuance.
 
@@ -122,33 +122,33 @@ This plan is aggressive but achievable if you stay focused and prioritize.
 * **Day 1: Project Setup & Research (Today)**
     * **Goal:** Dev environment ready, test tokens acquired, basic project structure.
     * **Checklist:**
-        * [ ] Create GitHub repository: `morph-microcommerce-loyalty`.
-        * [ ] Initialize Next.js/React project: `npx create-next-app@latest morph-microcommerce --ts --tailwind --eslint`.
+        * [ ] Create GitHub repository: `monad-microcommerce-loyalty`.
+        * [ ] Initialize Next.js/React project: `npx create-next-app@latest monad-microcommerce --ts --tailwind --eslint`.
         * [ ] Install Hardhat: `npm install --save-dev hardhat @nomicfoundation/hardhat-toolbox`.
         * [ ] Install Wagmi/Viem: `npm install wagmi viem @tanstack/react-query`.
-        * [ ] Configure Wagmi for Morph Holesky Testnet in `src/wagmi.ts` (create this file):
+        * [ ] Configure Wagmi for Monad Testnet Testnet in `src/wagmi.ts` (create this file):
             ```typescript
             // src/wagmi.ts
             import { http, createConfig } from 'wagmi';
-            import { mainnet } from 'wagmi/chains'; // You'll configure Morph Holesky below
+            import { mainnet } from 'wagmi/chains'; // You'll configure Monad Testnet below
             import { injected, metaMask, walletConnect } from 'wagmi/connectors';
 
-            // Define Morph Holesky chain details
-            const morphHolesky = {
-              id: 2810, // Morph Holesky Chain ID
-              name: 'Morph Holesky',
-              nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+            // Define Monad Testnet chain details
+            const monadTestnet = {
+              id: 10143, // Monad Testnet Chain ID
+              name: 'Monad Testnet',
+              nativeCurrency: { name: 'Monad', symbol: 'MON', decimals: 18 },
               rpcUrls: {
-                default: { http: ['[https://rpc-holesky.morphl2.io](https://rpc-holesky.morphl2.io)'] },
+                default: { http: ['[https://testnet-rpc.monad.xyz](https://testnet-rpc.monad.xyz)'] },
               },
               blockExplorers: {
-                default: { name: 'Morphscan', url: '[https://explorer-holesky.morphl2.io](https://explorer-holesky.morphl2.io)' },
+                default: { name: 'Monadscan', url: '[https://testnet.monadscan.com](https://testnet.monadscan.com)' },
               },
               testnet: true,
             };
 
             export const config = createConfig({
-              chains: [morphHolesky, mainnet], // Add mainnet for connector flexibility if needed, but focus on Morph Holesky
+              chains: [monadTestnet, mainnet], // Add mainnet for connector flexibility if needed, but focus on Monad Testnet
               connectors: [
                 injected(),
                 metaMask(),
@@ -156,7 +156,7 @@ This plan is aggressive but achievable if you stay focused and prioritize.
               ],
               ssr: true,
               transports: {
-                [morphHolesky.id]: http(),
+                [monadTestnet.id]: http(),
                 [mainnet.id]: http(),
               },
             });
@@ -192,7 +192,7 @@ This plan is aggressive but achievable if you stay focused and prioritize.
               );
             }
             ```
-        * [ ] Get Morph Holesky ETH from faucet: `faucet.morphl2.io`.
+        * [ ] Get Monad Testnet ETH from faucet: `faucet.monad.xyz`.
         * [ ] Deploy a simple ERC-20 `MockUSDC.sol` (or use a well-known testnet ERC-20 on Holesky if available). **Crucial for demo:** Fund your merchant wallet and a few test user wallets with MockUSDC.
             * *Example `MockUSDC.sol` (in `contracts/MockUSDC.sol`):*
                 ```solidity
@@ -346,17 +346,17 @@ This plan is aggressive but achievable if you stay focused and prioritize.
             * `Shopfront` deployment, `setProduct`, `buyItem` (including `approve` calls), and ensuring `MockUSDC` is transferred correctly.
         * [ ] Ensure tests cover `require` statements (e.g., buying inactive product).
 
-* **Day 4: Deployment to Morph Holesky**
-    * **Goal:** All smart contracts live and verified on Morph Holesky.
+* **Day 4: Deployment to Monad Testnet**
+    * **Goal:** All smart contracts live and verified on Monad Testnet.
     * **Checklist:**
-        * [ ] Configure `hardhat.config.js` with Morph Holesky network details (RPC, accounts, etherscan API key for verification if needed).
+        * [ ] Configure `hardhat.config.js` with Monad Testnet network details (RPC, accounts, etherscan API key for verification if needed).
         * [ ] Write deployment scripts (e.g., `scripts/deploy.js`) for:
             * `MockUSDC` (if custom)
             * `LoyaltyToken`
             * `Shopfront` (passing deployed `MockUSDC` and `LoyaltyToken` addresses to its constructor).
-        * [ ] Run deployment scripts: `npx hardhat run scripts/deploy.js --network morphHolesky`.
+        * [ ] Run deployment scripts: `npx hardhat run scripts/deploy.js --network monadTestnet`.
         * [ ] **Crucial:** Record all deployed contract addresses (MockUSDC, LoyaltyToken, Shopfront).
-        * [ ] Verify contracts on the Morph Holesky Explorer (`explorer-holesky.morphl2.io`). This makes your code transparent to judges.
+        * [ ] Verify contracts on the Monad Testnet Explorer (`testnet.monadscan.com`). This makes your code transparent to judges.
         * [ ] Update your frontend's `wagmi.ts` or a separate `config.ts` file with these new addresses and ABIs.
 
 ### **Phase 2: Frontend & Core Logic (Days 5-8)**
@@ -366,7 +366,7 @@ This plan is aggressive but achievable if you stay focused and prioritize.
     * **Checklist:**
         * [ ] Create `src/app/page.tsx` for the shop.
         * [ ] Implement a `ConnectButton` component (can be a simple Wagmi `useConnect` button or a `RainbowKit` component if you opted for it).
-        * [ ] Display connected wallet address and Morph ETH balance using `wagmi` hooks.
+        * [ ] Display connected wallet address and MonadETH balance using `wagmi` hooks.
         * [ ] Create a `products.json` or `products.ts` mock data file for product details (ID, name, price, image URL, description).
         * [ ] Fetch actual product details from your `Shopfront` contract using `useContractRead` (e.g., `products` mapping, `getAllProductIds()`).
         * [ ] Map contract data to product cards with Tailwind CSS.
@@ -379,7 +379,7 @@ This plan is aggressive but achievable if you stay focused and prioritize.
         * [ ] Use `wagmi`'s `useWriteContract` hook for `Shopfront.buyItem()`.
         * [ ] Implement sequential transaction flow: first `approve`, then `buyItem`.
         * [ ] Use `react-hot-toast` or similar for clear, quick notifications: "Waiting for approval...", "Approval successful!", "Processing payment...", "Payment successful!", "Error: [message]".
-        * [ ] **Visual Emphasis:** Add a subtle animation (e.g., a checkmark quickly appearing) to the "Payment Successful" toast/modal to convey Morph's speed.
+        * [ ] **Visual Emphasis:** Add a subtle animation (e.g., a checkmark quickly appearing) to the "Payment Successful" toast/modal to convey Monad's speed.
 
 * **Day 7: "My Loyalty" Page & Data Fetching**
     * **Goal:** Loyalty data displays correctly for the connected user.
@@ -407,7 +407,7 @@ This plan is aggressive but achievable if you stay focused and prioritize.
 * **Day 9: UI/UX Refinements**
     * **Goal:** Clean, modern, and user-friendly design.
     * **Checklist:**
-        * [ ] Refine Tailwind CSS classes for consistent theme (e.g., Morph-inspired green/purple accents).
+        * [ ] Refine Tailwind CSS classes for consistent theme (e.g., Monad-inspired green/purple accents).
         * [ ] Improve layout, spacing, and typography.
         * [ ] Add subtle interactive elements (e.g., product card hover effects, button animations).
         * [ ] Ensure excellent mobile responsiveness across all pages.
@@ -421,7 +421,7 @@ This plan is aggressive but achievable if you stay focused and prioritize.
         * [ ] Test edge cases:
             * User rejects MetaMask transaction.
             * User has insufficient MockUSDC.
-            * Network changes (e.g., user switches from Morph Holesky to Sepolia during flow).
+            * Network changes (e.g., user switches from Monad Testnet to Sepolia during flow).
             * Incorrect wallet connected (e.g., trying to use admin features with a regular user wallet).
         * [ ] Verify all loading states provide clear user feedback.
 
@@ -429,13 +429,13 @@ This plan is aggressive but achievable if you stay focused and prioritize.
     * **Goal:** Be fully prepared to deliver a winning pitch.
     * **Checklist:**
         * [ ] **Craft your 3-minute pitch script.** Structure:
-            * **Hook (15s):** "Imagine buying digital content and earning instant, verifiable loyalty points with zero hidden fees. This is Micro-Commerce on Morph."
+            * **Hook (15s):** "Imagine buying digital content and earning instant, verifiable loyalty points with zero hidden fees. This is Micro-Commerce on Monad."
             * **Problem (30s):** "Traditional platforms have high fees, lack transparency. Existing Web3 is too complex/expensive for micro-transactions."
             * **Solution (45s):** "Our dApp enables seamless digital purchases and on-chain loyalty, making micro-transactions viable for the first time."
-            * **✨ Morph Advantage (1 min - THIS IS KEY):**
-                * "We chose Morph because its **Hybrid Rollup (Optimistic zkEVM with RVP)** allows for *lightning-fast, incredibly low-cost, yet securely final* micro-transactions – something impossible on L1 and uniquely balanced among L2s. This is why buying a $0.50 digital sticker makes economic sense here."
-                * "And Morph's **Decentralized Sequencer** ensures every purchase, every loyalty point, is processed *fairly and without censorship*, guaranteeing trust for both buyer and seller."
-                * "This combination truly delivers on Morph's vision of being the **Global Consumer Layer**."
+            * **✨ MonadAdvantage (1 min - THIS IS KEY):**
+                * "We chose Monad because its **Parallel EVM (parallel EVM with pipelined execution)** allows for *lightning-fast, incredibly low-cost, yet securely final* micro-transactions – something uniquely achievable on Monad. This is why buying a $0.50 digital sticker makes economic sense here."
+                * "And Monad's **High-Throughput L1 with 1s Block Times** ensures every purchase, every loyalty point, is processed *fairly and without censorship*, guaranteeing trust for both buyer and seller."
+                * "This combination truly delivers on Monad's vision of being the **Global Consumer Layer**."
             * **Demo Walkthrough (1 min):**
                 * Connect Wallet.
                 * Show products.
@@ -443,8 +443,8 @@ This plan is aggressive but achievable if you stay focused and prioritize.
                 * Navigate to "My Loyalty" (show the conceptual loyalty award).
                 * Briefly show the `/admin` page demonstrating how loyalty can be issued on-chain.
             * **Future Vision (15s):** Brief mention of automated loyalty, fiat on-ramps, creator dashboards.
-        * [ ] **Practice the demo flow repeatedly** to ensure it's seamless and highlights Morph's advantages naturally.
-        * [ ] Prepare concise slides (if applicable) reinforcing key points, especially Morph's benefits.
+        * [ ] **Practice the demo flow repeatedly** to ensure it's seamless and highlights Monad's advantages naturally.
+        * [ ] Prepare concise slides (if applicable) reinforcing key points, especially Monad's benefits.
         * [ ] Finalize your GitHub `README.md` with detailed explanations, setup, screenshots, and live demo link.
 
 * **Day 12: Final Testing & Submission**
@@ -471,4 +471,4 @@ If you find yourself ahead of schedule, these would enhance the project:
 6.  **Subscription Model:** Implement a recurring payment smart contract (e.g., using a modified ERC-20 `permit` or a simple escrow) for digital subscriptions.
 7.  **Gamified Loyalty Tiers:** Based on total loyalty points/badges, display different tiers with unique perks.
 
-This detailed plan should provide a clear roadmap to a winning project. Focus on execution and showcasing Morph's strengths!
+This detailed plan should provide a clear roadmap to a winning project. Focus on execution and showcasing Monad's strengths!

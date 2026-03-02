@@ -20,7 +20,7 @@ Total Duration: 4 minutes
 **[VISUAL: KudoBit logo on screen, clean background]**
 
 **SCRIPT:**
-> "Hi, I'm [Your Name] from Team KudoBit. We're building the **Web3 Gumroad** on Morph - a platform that finally gives creators true sovereignty and fans real ownership.
+> "Hi, I'm [Your Name] from Team KudoBit. We're building the **Web3 Gumroad** on Monad - a platform that finally gives creators true sovereignty and fans real ownership.
 >
 > Today's creator platforms like Gumroad extract **10% fees**, risk **censoring creators**, and give fans worthless loyalty points they don't actually own. 
 >
@@ -35,13 +35,13 @@ Total Duration: 4 minutes
 **[VISUAL: KudoBit solution diagram]**
 
 **SCRIPT:**
-> "KudoBit solves these problems using **Morph's unique blockchain advantages**.
+> "KudoBit solves these problems using **Monad's unique blockchain advantages**.
 >
 > **For Creators:** Direct wallet payouts with **sub-$0.01 transaction costs** - making even **5-cent digital stickers profitable** for the first time.
 >
 > **For Fans:** True digital ownership through **ERC-1155 NFT badges** stored in their wallets, not just database points.
 >
-> **Why Morph?** Only Morph's **decentralized sequencer** and **hybrid rollup** make this economically viable at scale."
+> **Why Monad?** Only Monad's **high-throughput L1 with 1s block times** and **parallel EVM** make this economically viable at scale."
 
 **[VISUAL TRANSITION: Screen recording setup - browser with localhost:5173]**
 
@@ -63,7 +63,7 @@ Total Duration: 4 minutes
 > "You own your identity, not the platform."
 
 **[ACTION: Show products]**
-> "Here are digital products at **micro-prices** - a 5-cent sticker, 20-cent wallpaper. These prices are only profitable because of **Morph's ultra-low fees**."
+> "Here are digital products at **micro-prices** - a 5-cent sticker, 20-cent wallpaper. These prices are only profitable because of **Monad's ultra-low fees**."
 
 **[ACTION: Get MockUSDC from faucet]**
 > "I'll grab some test USDC from our integrated faucet..."
@@ -72,7 +72,7 @@ Total Duration: 4 minutes
 > "Now I'll buy this 5-cent digital sticker. Watch the transaction speed..."
 
 **[VISUAL: MetaMask approve + purchase prompts]**
-> "Two quick MetaMask prompts - approval and purchase. Notice the **instant confirmation** - that's Morph's hybrid rollup technology providing **sub-second finality**."
+> "Two quick MetaMask prompts - approval and purchase. Notice the **instant confirmation** - that's Monad's parallel EVM technology providing **sub-second finality**."
 
 **[VISUAL: Success notification]**
 > "Success! The creator just received **99% of the sale price** directly in their wallet. No middleman, no waiting for payouts."
@@ -96,8 +96,8 @@ Total Duration: 4 minutes
 **[VISUAL: Badge gallery with owned badge]**
 > "This badge is **verifiable on the blockchain**, can't be taken away by any platform, and will enable **cross-creator benefits** in the future."
 
-**[ACTION: Click 'View on Morphscan']**
-> "You can verify ownership on Morphscan - this is **true digital ownership**."
+**[ACTION: Click 'View on Monadscan']**
+> "You can verify ownership on Monadscan - this is **true digital ownership**."
 
 ### **Demo Part 3: Technical Innovation (3:00 - 3:30)**
 
@@ -105,7 +105,7 @@ Total Duration: 4 minutes
 
 **SCRIPT:**
 > "Behind the scenes, KudoBit is a **full-stack Web3 platform**:
-> - **Smart contracts** on Morph for payments and loyalty
+> - **Smart contracts** on Monad for payments and loyalty
 > - **IPFS integration** for decentralized metadata storage  
 > - **Hono.js backend** with **Sign-in with Ethereum** authentication
 > - **React frontend** with modern Web3 tooling
@@ -123,11 +123,11 @@ Total Duration: 4 minutes
 >
 > **Phase 2** brings multi-creator collaboration with automated royalty splits. **Phase 3** enables cross-creator loyalty benefits and DAO governance.
 >
-> KudoBit represents the **future of the creator economy** - where creators have sovereignty, fans have ownership, and both are powered by **Morph's breakthrough technology**.
+> KudoBit represents the **future of the creator economy** - where creators have sovereignty, fans have ownership, and both are powered by **Monad's breakthrough technology**.
 >
 > The Web3 Gumroad is here. Thank you!"
 
-**[VISUAL: End screen with KudoBit logo and "Built on Morph"]**
+**[VISUAL: End screen with KudoBit logo and "Built on Monad"]**
 
 ---
 
@@ -141,8 +141,8 @@ Total Duration: 4 minutes
 
 ### **Pre-Recording Checklist:**
 - [ ] Both frontend (localhost:5173) and backend running
-- [ ] MetaMask connected to Morph Holesky
-- [ ] Test wallet funded with Morph ETH
+- [ ] MetaMask connected to Monad Testnet
+- [ ] Test wallet funded with MON
 - [ ] MockUSDC balance ready for demo
 - [ ] All tabs pre-loaded and tested
 - [ ] Script practiced and timed
@@ -159,12 +159,12 @@ Total Duration: 4 minutes
 - "True digital ownership"
 - "Creator sovereignty"
 - "Sub-$0.01 transaction costs"
-- "Only possible on Morph"
+- "Only possible on Monad"
 - "Production-ready platform"
 
 ### **Common Mistakes to Avoid:**
 - Don't rush through transactions
-- Don't skip explaining WHY Morph is essential
+- Don't skip explaining WHY Monad is essential
 - Don't forget to show the actual NFT badge ownership
 - Don't make it too technical - focus on benefits
 - Don't go over time limit
@@ -191,7 +191,7 @@ Total Duration: 4 minutes
 
 **A successful demo video will:**
 ✅ Show KudoBit working end-to-end
-✅ Clearly explain Morph's unique advantages  
+✅ Clearly explain Monad's unique advantages  
 ✅ Demonstrate both technical depth and user benefits
 ✅ Feel professional and production-ready
 ✅ Make judges excited about the creator economy future

@@ -83,7 +83,7 @@ POLYGON_RPC_URL=https://polygon-mainnet.infura.io/v3/your_key
 OPTIMISM_RPC_URL=https://optimism-mainnet.infura.io/v3/your_key
 ARBITRUM_RPC_URL=https://arbitrum-mainnet.infura.io/v3/your_key
 BASE_RPC_URL=https://base-mainnet.g.alchemy.com/v2/your_key
-MORPH_RPC_URL=https://rpc-quicknode-holesky.morphl2.io
+MONAD_RPC_URL=https://testnet-rpc.monad.xyz
 
 # Verification
 ETHERSCAN_API_KEY=your_etherscan_api_key
@@ -104,7 +104,7 @@ npm run compile
 
 ### **2. Deploy to Testnets First**
 ```bash
-# Deploy to Morph Holesky (recommended for testing)
+# Deploy to Monad Testnet (recommended for testing)
 npm run deploy:testnet
 
 # Deploy to other testnets

@@ -74,7 +74,7 @@ npm run test
 - `npm run build` - Build frontend for production
 - `npm run compile` - Compile smart contracts
 - `npm run test` - Run contract tests
-- `npm run deploy:testnet` - Deploy to Morph Holesky testnet
+- `npm run deploy:testnet` - Deploy to Monad Testnet testnet
 
 ## 🎯 What You Can Test
 
@@ -110,7 +110,7 @@ npm run test
 
 ### Network Support
 - ✅ Hardhat (localhost:8545)
-- ✅ Morph Holesky Testnet
+- ✅ Monad Testnet
 - ✅ Ethereum Mainnet (configured)
 
 ## 🎉 Everything is Ready!
