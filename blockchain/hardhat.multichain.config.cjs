@@ -20,22 +20,20 @@ module.exports = {
     },
   },
   networks: {
-    // Primary Network - Morph
-    morphHolesky: {
-      url: "https://rpc-quicknode-holesky.morphl2.io",
+    // Primary Network - Monad
+    monadTestnet: {
+      url: "https://testnet-rpc.monad.xyz",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY.startsWith('0x') ? process.env.PRIVATE_KEY : `0x${process.env.PRIVATE_KEY}`] : [],
-      chainId: 2810,
-      gasPrice: 20000000000, // 20 gwei
+      chainId: 10143,
       timeout: 60000,
     },
-    morphMainnet: {
-      url: "https://rpc-quicknode.morphl2.io",
+    monadMainnet: {
+      url: "https://rpc.monad.xyz",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY.startsWith('0x') ? process.env.PRIVATE_KEY : `0x${process.env.PRIVATE_KEY}`] : [],
-      chainId: 2818,
-      gasPrice: 20000000000,
+      chainId: 143,
       timeout: 60000,
     },
-    
+
     // Ethereum Networks
     ethereum: {
       url: process.env.ETHEREUM_RPC_URL || "https://eth-mainnet.g.alchemy.com/v2/YOUR-API-KEY",
@@ -115,48 +113,48 @@ module.exports = {
       chainId: 1337
     }
   },
-  
+
   etherscan: {
     apiKey: {
       // Ethereum
       mainnet: process.env.ETHERSCAN_API_KEY,
       sepolia: process.env.ETHERSCAN_API_KEY,
-      
+
       // Polygon
       polygon: process.env.POLYGONSCAN_API_KEY,
       polygonAmoy: process.env.POLYGONSCAN_API_KEY,
-      
+
       // Arbitrum
       arbitrumOne: process.env.ARBISCAN_API_KEY,
       arbitrumSepolia: process.env.ARBISCAN_API_KEY,
-      
+
       // Optimism
       optimisticEthereum: process.env.OPTIMISTIC_ETHERSCAN_API_KEY,
       optimismSepolia: process.env.OPTIMISTIC_ETHERSCAN_API_KEY,
-      
+
       // Base
       base: process.env.BASESCAN_API_KEY,
       baseSepolia: process.env.BASESCAN_API_KEY,
-      
-      // Morph
-      morphHolesky: "morphHolesky",
-      morphMainnet: "morphMainnet"
+
+      // Monad
+      monadTestnet: "monadTestnet",
+      monadMainnet: "monadMainnet"
     },
     customChains: [
       {
-        network: "morphHolesky",
-        chainId: 2810,
+        network: "monadTestnet",
+        chainId: 10143,
         urls: {
-          apiURL: "https://explorer-api-holesky.morphl2.io/api",
-          browserURL: "https://explorer-holesky.morphl2.io"
+          apiURL: "https://testnet.monadscan.com/api",
+          browserURL: "https://testnet.monadscan.com"
         }
       },
       {
-        network: "morphMainnet", 
-        chainId: 2818,
+        network: "monadMainnet",
+        chainId: 143,
         urls: {
-          apiURL: "https://explorer-api.morphl2.io/api",
-          browserURL: "https://explorer.morphl2.io"
+          apiURL: "https://monadscan.com/api",
+          browserURL: "https://monadscan.com"
         }
       },
       {

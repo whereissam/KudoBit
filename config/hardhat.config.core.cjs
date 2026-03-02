@@ -19,11 +19,10 @@ module.exports = {
     artifacts: "./artifacts"
   },
   networks: {
-    morphHolesky: {
-      url: "https://rpc-quicknode-holesky.morphl2.io",
+    monadTestnet: {
+      url: "https://testnet-rpc.monad.xyz",
       accounts: process.env.PRIVATE_KEY ? [`0x${process.env.PRIVATE_KEY.replace('0x', '')}`] : [],
-      chainId: 2810,
-      gasPrice: 20000000000, // 20 gwei
+      chainId: 10143,
     },
     hardhat: {
       chainId: 1337
@@ -31,15 +30,15 @@ module.exports = {
   },
   etherscan: {
     apiKey: {
-      morphHolesky: "morphHolesky" // placeholder
+      monadTestnet: "monadTestnet" // placeholder
     },
     customChains: [
       {
-        network: "morphHolesky",
-        chainId: 2810,
+        network: "monadTestnet",
+        chainId: 10143,
         urls: {
-          apiURL: "https://explorer-api-holesky.morphl2.io/api",
-          browserURL: "https://explorer-holesky.morphl2.io"
+          apiURL: "https://testnet.monadscan.com/api",
+          browserURL: "https://testnet.monadscan.com"
         }
       }
     ]

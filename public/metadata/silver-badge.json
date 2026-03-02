@@ -18,7 +18,7 @@
     },
     {
       "trait_type": "Blockchain",
-      "value": "Morph"
+      "value": "Monad"
     },
     {
       "trait_type": "Standard",
@@ -28,7 +28,7 @@
   "properties": {
     "category": "Loyalty",
     "platform": "KudoBit",
-    "blockchain": "Morph",
+    "blockchain": "Monad",
     "isTransferable": true,
     "utilities": [
       "Creator platform access",

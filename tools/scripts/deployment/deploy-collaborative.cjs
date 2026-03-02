@@ -47,7 +47,7 @@ async function main() {
   
   // Save deployment info
   const deploymentInfo = {
-    network: "morphHolesky",
+    network: "monadTestnet",
     collaborativeProductFactory: {
       address: collaborativeFactoryAddress,
       deployedAt: new Date().toISOString(),
@@ -63,7 +63,7 @@ async function main() {
   
   console.log("\n🔧 Next Steps:");
   console.log("1. Update your frontend contracts configuration with the new address");
-  console.log("2. Verify the contract on Morphscan (optional)");
+  console.log("2. Verify the contract on Monadscan (optional)");
   console.log("3. Test collaborative product creation");
   
   return deploymentInfo;

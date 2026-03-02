@@ -5,7 +5,7 @@ async function main() {
   
   const [deployer] = await ethers.getSigners();
   console.log(`📝 Deploying from: ${deployer.address}`);
-  console.log(`💰 Balance: ${ethers.formatEther(await deployer.provider.getBalance(deployer.address))} ETH`);
+  console.log(`💰 Balance: ${ethers.formatEther(await deployer.provider.getBalance(deployer.address))} MON`);
 
   // Get existing contract addresses
   const BADGE_CHECKER_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
@@ -68,10 +68,10 @@ async function main() {
   console.log("\n💸 Step 4: Funding DAO Treasury...");
   
   try {
-    // Fund the DAO with some ETH for proposals
-    const fundingAmount = ethers.parseEther("1.0"); // 1 ETH
+    // Fund the DAO with some MON for proposals
+    const fundingAmount = ethers.parseEther("1.0"); // 1 MON
     await dao.fundTreasury({ value: fundingAmount });
-    console.log(`✅ DAO treasury funded with ${ethers.formatEther(fundingAmount)} ETH`);
+    console.log(`✅ DAO treasury funded with ${ethers.formatEther(fundingAmount)} MON`);
   } catch (error) {
     console.log("⚠️  Treasury funding failed:", error.message);
   }
@@ -89,7 +89,7 @@ async function main() {
   const daoStats = await dao.getDAOStats();
   
   console.log(`  Total Proposals: ${daoStats[0]}`);
-  console.log(`  Treasury Balance: ${ethers.formatEther(daoStats[3])} ETH`);
+  console.log(`  Treasury Balance: ${ethers.formatEther(daoStats[3])} MON`);
   console.log(`  Quorum Threshold: ${ethers.formatEther(daoStats[5])} votes`);
   
   console.log("\n🗳️ Step 6: Creating Test Proposal...");
@@ -124,7 +124,7 @@ async function main() {
   
   // Save deployment info
   const deploymentInfo = {
-    network: "morphHolesky",
+    network: "monadTestnet",
     timestamp: new Date().toISOString(),
     contracts: {
       simpleGovernanceToken: {

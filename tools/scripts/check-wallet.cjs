@@ -7,12 +7,11 @@ async function main() {
   const balance = await hre.ethers.provider.getBalance(address);
   
   console.log("Wallet Address:", address);
-  console.log("Balance:", hre.ethers.formatEther(balance), "ETH");
-  
+  console.log("Balance:", hre.ethers.formatEther(balance), "MON");
+
   if (balance === 0n) {
-    console.log("\n🚨 You need Morph Holesky ETH for gas fees!");
-    console.log("Get test ETH from: https://faucet.morphl2.io");
-    console.log("Or try: https://faucet.quicknode.com/morph/holesky");
+    console.log("\n🚨 You need Monad Testnet MON for gas fees!");
+    console.log("Get test MON from: https://faucet.monad.xyz");
   }
 }
 

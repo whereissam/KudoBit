@@ -30,7 +30,7 @@ function checkContractAddresses() {
 }
 
 async function main() {
-  console.log('🔍 Morph Commerce - Deployment Verification');
+  console.log('🔍 Monad Commerce - Deployment Verification');
   console.log('===========================================\n');
 
   let allGood = true;
@@ -95,8 +95,8 @@ async function main() {
     
   } else {
     console.log('🔄 DEPLOYMENT NEEDED');
-    console.log('• Get Morph Holesky ETH: https://faucet.morphl2.io');
-    console.log('• Deploy contracts: npx hardhat run scripts/deploy.cjs --network morphHolesky');
+    console.log('• Get Monad Testnet MON: https://faucet.monad.xyz');
+    console.log('• Deploy contracts: npx hardhat run scripts/deploy.cjs --network monadTestnet');
     console.log('• Update frontend: node scripts/post-deploy.cjs');
     console.log('• Build for production: npm run build');
   }
@@ -106,7 +106,7 @@ async function main() {
   console.log('• Have 2-3 funded test wallets ready');
   console.log('• Check mobile responsiveness');
   console.log('• Time your pitch to 3 minutes exactly');
-  console.log('• Emphasize Morph\'s speed during transactions');
+  console.log('• Emphasize Monad\'s speed during transactions');
 }
 
 main().catch(console.error);

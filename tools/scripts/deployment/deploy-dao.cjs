@@ -5,7 +5,7 @@ async function main() {
   
   const [deployer] = await ethers.getSigners();
   console.log(`📝 Deploying from: ${deployer.address}`);
-  console.log(`💰 Balance: ${ethers.formatEther(await deployer.provider.getBalance(deployer.address))} ETH`);
+  console.log(`💰 Balance: ${ethers.formatEther(await deployer.provider.getBalance(deployer.address))} MON`);
 
   // Configuration
   const TIMELOCK_DELAY = 24 * 60 * 60; // 24 hours
@@ -141,7 +141,7 @@ async function main() {
   
   // Save deployment info
   const deploymentInfo = {
-    network: "morphHolesky",
+    network: "monadTestnet",
     timestamp: new Date().toISOString(),
     contracts: {
       governanceToken: {
@@ -178,7 +178,7 @@ async function main() {
   console.log("=".repeat(60));
   
   console.log("\n🔧 Next Steps:");
-  console.log("1. Verify contracts on Morphscan");
+  console.log("1. Verify contracts on Monadscan");
   console.log("2. Update frontend configuration with new addresses");
   console.log("3. Create initial governance proposal");
   console.log("4. Transfer admin roles to DAO (after testing)");

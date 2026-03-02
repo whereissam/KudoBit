@@ -1,7 +1,7 @@
 {
   "timestamp": "2025-07-23T20:48:14.989Z",
-  "network": "morphHolesky",
-  "chainId": 2810,
+  "network": "monadTestnet",
+  "chainId": 10143,
   "loyaltyTokenAddress": "0x89de622217c01f4c97453a35CaFfF1E7b7D6f8FC",
   "badges": [
     {

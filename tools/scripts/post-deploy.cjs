@@ -9,7 +9,7 @@ async function main() {
   const deploymentsPath = path.join(__dirname, '../deployments.json');
   if (!fs.existsSync(deploymentsPath)) {
     console.log("❌ deployments.json not found");
-    console.log("Run deployment first: npx hardhat run scripts/deploy.cjs --network morphHolesky\n");
+    console.log("Run deployment first: npx hardhat run scripts/deploy.cjs --network monadTestnet\n");
     return;
   }
 
@@ -50,7 +50,7 @@ async function main() {
   console.log("2. Open browser to http://localhost:5173");
   console.log("");
   console.log("3. Test complete flow:");
-  console.log("   ✓ Connect wallet to Morph Holesky");
+  console.log("   ✓ Connect wallet to Monad Testnet");
   console.log("   ✓ Go to /admin and claim test USDC");
   console.log("   ✓ Return to shop and buy an item");
   console.log("   ✓ Check /loyalty page for badges");
@@ -67,9 +67,9 @@ async function main() {
   // Generate explorer links
   console.log("🔗 Contract Verification Links:");
   console.log("==============================");
-  console.log(`MockUSDC: https://explorer-holesky.morphl2.io/address/${deployments.mockUSDC}`);
-  console.log(`LoyaltyToken: https://explorer-holesky.morphl2.io/address/${deployments.loyaltyToken}`);
-  console.log(`Shopfront: https://explorer-holesky.morphl2.io/address/${deployments.shopfront}`);
+  console.log(`MockUSDC: https://testnet.monadscan.com/address/${deployments.mockUSDC}`);
+  console.log(`LoyaltyToken: https://testnet.monadscan.com/address/${deployments.loyaltyToken}`);
+  console.log(`Shopfront: https://testnet.monadscan.com/address/${deployments.shopfront}`);
   console.log("");
 
   console.log("🎯 Demo Preparation:");

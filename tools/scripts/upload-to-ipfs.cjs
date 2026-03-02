@@ -66,7 +66,7 @@ async function uploadBadgeAssets() {
             },
             {
               trait_type: "Blockchain",
-              value: "Morph"
+              value: "Monad"
             },
             {
               trait_type: "Standard",
@@ -76,7 +76,7 @@ async function uploadBadgeAssets() {
           properties: {
             category: "Loyalty",
             platform: "KudoBit",
-            blockchain: "Morph",
+            blockchain: "Monad",
             isTransferable: true,
             utilities: [
               "Creator platform access",
@@ -119,11 +119,11 @@ async function uploadBadgeAssets() {
     // Generate deployment info
     const deploymentInfo = {
       timestamp: new Date().toISOString(),
-      network: 'morphHolesky',
-      chainId: 2810,
+      network: 'monadTestnet',
+      chainId: 10143,
       badges: uploadResults,
       baseURI: '', // Will be set after determining URI pattern
-      notes: 'KudoBit loyalty badges uploaded to IPFS via Pinata for Morph Holesky deployment'
+      notes: 'KudoBit loyalty badges uploaded to IPFS via Pinata for Monad Testnet deployment'
     };
 
     // Save results to file

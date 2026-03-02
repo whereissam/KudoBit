@@ -76,7 +76,7 @@ async function setupDemoIPFS() {
           },
           {
             trait_type: "Blockchain",
-            value: "Morph"
+            value: "Monad"
           },
           {
             trait_type: "Standard",
@@ -86,7 +86,7 @@ async function setupDemoIPFS() {
         properties: {
           category: "Loyalty",
           platform: "KudoBit",
-          blockchain: "Morph",
+          blockchain: "Monad",
           isTransferable: true,
           utilities: [
             "Creator platform access",
@@ -115,8 +115,8 @@ async function setupDemoIPFS() {
     // Generate deployment info
     const deploymentInfo = {
       timestamp: new Date().toISOString(),
-      network: 'morphHolesky',
-      chainId: 2810,
+      network: 'monadTestnet',
+      chainId: 10143,
       loyaltyTokenAddress: '0x89de622217c01f4c97453a35CaFfF1E7b7D6f8FC',
       badges: uploadResults,
       baseURI: 'ipfs://QmKudoBitBadgeBaseURI/', // Base URI for the collection

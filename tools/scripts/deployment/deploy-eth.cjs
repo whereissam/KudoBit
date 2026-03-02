@@ -1,7 +1,7 @@
 const hre = require("hardhat");
 
 async function main() {
-  console.log("Deploying ETH-based contracts to Morph Holesky...");
+  console.log("Deploying ETH-based contracts to Monad Testnet...");
 
   // Get signer
   const [deployer] = await hre.ethers.getSigners();

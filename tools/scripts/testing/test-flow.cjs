@@ -2,7 +2,7 @@ const hre = require("hardhat");
 require("dotenv").config();
 
 async function main() {
-  console.log("🧪 Testing Complete User Flow on Morph Holesky");
+  console.log("🧪 Testing Complete User Flow on Monad Testnet");
   console.log("==============================================\n");
 
   // Check if we have deployments
@@ -11,7 +11,7 @@ async function main() {
   
   if (!fs.existsSync(deploymentsPath)) {
     console.log("❌ No deployment found. Run deployment first:");
-    console.log("npx hardhat run scripts/deploy.cjs --network morphHolesky\n");
+    console.log("npx hardhat run scripts/deploy.cjs --network monadTestnet\n");
     return;
   }
 
@@ -107,7 +107,7 @@ async function main() {
     console.log("=============");
     console.log(`• MockUSDC Faucet: Users can claim up to 1000 USDC`);
     console.log(`• Gas costs are minimal (~${receipt.gasUsed.toString()} gas per purchase)`);
-    console.log("• Transactions confirm instantly on Morph");
+    console.log("• Transactions confirm instantly on Monad");
     console.log("• Loyalty badges are ERC-1155 NFTs");
     console.log("• Perfect for micro-transaction use cases");
 
@@ -116,8 +116,8 @@ async function main() {
     console.log("\nDebugging steps:");
     console.log("• Check contract addresses are correct");
     console.log("• Verify deployment succeeded");
-    console.log("• Ensure sufficient ETH for gas");
-    console.log("• Check Morph Holesky network connection");
+    console.log("• Ensure sufficient MON for gas");
+    console.log("• Check Monad Testnet network connection");
   }
 }
 
