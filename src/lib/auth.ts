@@ -318,6 +318,6 @@ export async function signInWithEthereum(
   address: `0x${string}`, 
   signMessageAsync: (message: string) => Promise<string>
 ): Promise<{ success: boolean; token?: string; error?: string }> {
-  const chainId = 2810 // Morph Holesky
+  const chainId = 10143 // Monad Testnet
   return AuthService.login(address, chainId, signMessageAsync)
 }

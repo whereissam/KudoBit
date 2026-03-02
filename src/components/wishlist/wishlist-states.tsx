@@ -14,7 +14,7 @@ export function WishlistLoading({ message = "Loading your wishlist..." }: Wishli
       animate={{ opacity: 1, y: 0 }}
       className="text-center p-12"
     >
-      <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-morph-green-500" />
+      <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-monad-purple-500" />
       <p className="text-muted-foreground">{message}</p>
     </motion.div>
   )
@@ -42,7 +42,7 @@ export function WishlistEmpty() {
 
 export function WalletNotConnected() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-morph-green-50/5 to-morph-purple-50/5">
+    <div className="min-h-screen bg-gradient-to-br from-background via-monad-purple-50/5 to-monad-cyan-50/5">
       <div className="container mx-auto px-3 sm:px-4 py-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}

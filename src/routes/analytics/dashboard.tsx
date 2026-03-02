@@ -38,9 +38,9 @@ function AnalyticsDashboard() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-morph-green-50/5 to-morph-purple-50/5 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-background via-monad-purple-50/5 to-monad-cyan-50/5 flex items-center justify-center">
         <div className="text-center">
-          <LoadingSpinner size="lg" className="mx-auto mb-4 text-morph-green-500" />
+          <LoadingSpinner size="lg" className="mx-auto mb-4 text-monad-purple-500" />
           <p className="text-muted-foreground">Loading analytics dashboard...</p>
         </div>
       </div>
@@ -49,7 +49,7 @@ function AnalyticsDashboard() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-morph-green-50/5 to-morph-purple-50/5 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-background via-monad-purple-50/5 to-monad-cyan-50/5 flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-xl font-semibold mb-2">Analytics Unavailable</h2>
           <p className="text-muted-foreground">Unable to load analytics data. Please try again later.</p>
@@ -61,7 +61,7 @@ function AnalyticsDashboard() {
   const currentChain = getChainMetadata(chainId)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-morph-green-50/5 to-morph-purple-50/5">
+    <div className="min-h-screen bg-gradient-to-br from-background via-monad-purple-50/5 to-monad-cyan-50/5">
       <div className="container mx-auto py-8 px-4">
         {/* Header */}
         <div className="mb-8">
@@ -207,7 +207,7 @@ function AnalyticsDashboard() {
                     {analytics?.topProducts.slice(0, 5).map((product, index) => (
                       <div key={product.id} className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-morph-green-100 rounded-full flex items-center justify-center text-sm font-medium">
+                          <div className="w-8 h-8 bg-monad-purple-100 rounded-full flex items-center justify-center text-sm font-medium">
                             {index + 1}
                           </div>
                           <div>
@@ -238,7 +238,7 @@ function AnalyticsDashboard() {
                     {analytics?.topCreators.slice(0, 5).map((creator, index) => (
                       <div key={creator.address} className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-morph-purple-100 rounded-full flex items-center justify-center text-sm font-medium">
+                          <div className="w-8 h-8 bg-monad-cyan-100 rounded-full flex items-center justify-center text-sm font-medium">
                             {index + 1}
                           </div>
                           <div>
@@ -396,8 +396,8 @@ function MetricCard({ title, value, change, changeType, icon: Icon }: MetricCard
               {change}
             </div>
           </div>
-          <div className="p-3 bg-morph-green-100 rounded-full">
-            <Icon className="h-6 w-6 text-morph-green-600" />
+          <div className="p-3 bg-monad-purple-100 rounded-full">
+            <Icon className="h-6 w-6 text-monad-purple-600" />
           </div>
         </div>
       </CardContent>

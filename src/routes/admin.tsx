@@ -326,9 +326,9 @@ function AdminPanel() {
                 <div className="space-y-2 text-xs sm:text-sm text-muted-foreground">
                   <p>• This admin panel is for hackathon demonstration purposes only</p>
                   <p>• In production, badge awarding would be fully automated upon purchase completion</p>
-                  <p>• The MockUSDC faucet provides test tokens for the Morph Holesky testnet</p>
+                  <p>• The MockUSDC faucet provides test tokens for the Monad testnet</p>
                   <p>• Manual badge minting demonstrates the loyalty system but isn't needed in production</p>
-                  <p>• All transactions leverage Morph's hybrid rollup for ultra-low fees and instant finality</p>
+                  <p>• All transactions leverage Monad's parallel EVM for ultra-low fees and instant finality</p>
                   <p>• This showcases KudoBit's "Web3 Gumroad" vision with true creator sovereignty</p>
                 </div>
               </CardContent>

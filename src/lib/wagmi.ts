@@ -1,12 +1,12 @@
 import { http } from 'wagmi'
 import { hardhat } from 'wagmi/chains'
 import { getDefaultConfig } from '@rainbow-me/rainbowkit'
-import { 
-  ALL_CHAINS, 
-  TESTNET_CHAINS, 
+import {
+  ALL_CHAINS,
+  TESTNET_CHAINS,
   MAINNET_CHAINS,
-  morphHolesky,
-  morphMainnet,
+  monadTestnet,
+  monadMainnet,
   getDefaultChain
 } from './chains'
 
@@ -33,19 +33,19 @@ const activeChains = getActiveChains()
 // Build transports for active chains
 const buildTransports = () => {
   const transports: Record<number, any> = {}
-  
+
   // Add hardhat transport for development
   if (isDevelopment) {
     transports[hardhat.id] = http('http://127.0.0.1:8545')
   }
-  
+
   // Add transports for each active chain
   activeChains.forEach(chain => {
     if (chain.id !== hardhat.id) {
       transports[chain.id] = http(chain.rpcUrls.default.http[0])
     }
   })
-  
+
   return transports
 }
 
@@ -68,13 +68,13 @@ export const config = getDefaultConfig({
 })
 
 // Export chain utilities
-export { 
+export {
   activeChains,
   isDevelopment,
   isTestMode,
   getDefaultChain,
-  morphHolesky,
-  morphMainnet
+  monadTestnet,
+  monadMainnet
 }
 
 declare module 'wagmi' {

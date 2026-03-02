@@ -102,7 +102,7 @@ function LoyaltyDashboard() {
   const ownedBadgeTypes = badges.filter(badge => badge.balance > 0n).length
 
   const getContractUrl = (tokenId: number) => {
-    return `https://explorer-holesky.morphl2.io/token/${currentContracts.loyaltyToken}?tab=token_transfers&token_id=${tokenId}`
+    return `https://testnet.monadscan.com/token/${currentContracts.loyaltyToken}?tab=token_transfers&token_id=${tokenId}`
   }
 
   return (
@@ -263,7 +263,7 @@ function LoyaltyDashboard() {
                             onClick={() => window.open(getContractUrl(badge.id), '_blank')}
                           >
                             <ExternalLink className="h-3 w-3 mr-1" />
-                            View on Morphscan
+                            View on Monadscan
                           </Button>
                         </div>
                       )}
@@ -294,7 +294,7 @@ function LoyaltyDashboard() {
               className="mt-12 p-6 bg-gradient-to-r from-primary/10 to-primary/20 rounded-lg border border-primary/30"
             >
               <h3 className="text-lg font-semibold mb-4 bg-gradient-to-r from-primary to-primary bg-clip-text text-transparent">
-                True Digital Ownership on Morph
+                True Digital Ownership on Monad
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-muted-foreground">
                 <div>
@@ -304,7 +304,7 @@ function LoyaltyDashboard() {
                   </p>
                   <p>
                     <strong className="text-primary">⚡ Instant & Verifiable:</strong> Earned automatically when you make purchases, 
-                    with instant confirmation on Morph's hybrid rollup.
+                    with instant confirmation on Monad's parallel EVM.
                   </p>
                 </div>
                 <div>

@@ -55,7 +55,7 @@ function Discover() {
   const productIds = productCounter ? Array.from({ length: Number(productCounter) }, (_, i) => i + 1) : []
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-morph-green-50/5 to-morph-purple-50/5">
+    <div className="min-h-screen bg-gradient-to-br from-background via-monad-purple-50/5 to-monad-cyan-50/5">
       <div className="container mx-auto px-3 sm:px-4 py-8">
         {/* Header */}
         <motion.div 
@@ -64,7 +64,7 @@ function Discover() {
           className="text-center mb-8"
         >
           <h1 className="text-3xl md:text-4xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-morph-green-600 to-morph-purple-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-monad-purple-600 to-monad-cyan-600 bg-clip-text text-transparent">
               Discover Digital Products
             </span>
           </h1>
@@ -198,7 +198,7 @@ function Discover() {
             animate={{ opacity: 1 }}
             className="text-center p-8"
           >
-            <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-morph-green-500" />
+            <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-monad-purple-500" />
             <p className="text-muted-foreground">Loading products...</p>
           </motion.div>
         ) : productIds.length === 0 ? (
@@ -297,7 +297,7 @@ function ProductCard({
       >
         <Card className="p-4 hover:shadow-lg transition-all duration-300">
           <div className="flex gap-4">
-            <div className="w-20 h-20 bg-gradient-to-br from-morph-green-50 to-morph-purple-50 dark:from-morph-green-900/20 dark:to-morph-purple-900/20 rounded-lg flex items-center justify-center text-3xl">
+            <div className="w-20 h-20 bg-gradient-to-br from-monad-purple-50 to-monad-cyan-50 dark:from-monad-purple-900/20 dark:to-monad-cyan-900/20 rounded-lg flex items-center justify-center text-3xl">
               {getProductEmoji(productId)}
             </div>
             <div className="flex-1">
@@ -305,7 +305,7 @@ function ProductCard({
                 <Link to={`/product/${productId}`}>
                   <h3 className="font-semibold hover:text-primary transition-colors">{name}</h3>
                 </Link>
-                <span className="text-lg font-bold text-morph-green-600">
+                <span className="text-lg font-bold text-monad-purple-600">
                   {formatUnits(price, 6)} USDC
                 </span>
               </div>
@@ -336,11 +336,11 @@ function ProductCard({
     >
       <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-[1.02]">
         <Link to={`/product/${productId}`}>
-          <div className="aspect-video bg-gradient-to-br from-morph-green-50 to-morph-purple-50 dark:from-morph-green-900/20 dark:to-morph-purple-900/20 flex items-center justify-center relative group">
+          <div className="aspect-video bg-gradient-to-br from-monad-purple-50 to-monad-cyan-50 dark:from-monad-purple-900/20 dark:to-monad-cyan-900/20 flex items-center justify-center relative group">
             <div className="text-6xl group-hover:scale-110 transition-transform">
               {getProductEmoji(productId)}
             </div>
-            <div className="absolute inset-0 bg-gradient-to-br from-morph-green-500/10 to-morph-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute inset-0 bg-gradient-to-br from-monad-purple-500/10 to-monad-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
         </Link>
         
@@ -351,11 +351,11 @@ function ProductCard({
         
         <CardContent className="p-4 pt-0">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-lg font-bold text-morph-green-600">
+            <span className="text-lg font-bold text-monad-purple-600">
               {formatUnits(price, 6)} USDC
             </span>
             <div className="flex items-center text-xs text-muted-foreground">
-              <Zap className="h-3 w-3 mr-1 text-morph-green-500" />
+              <Zap className="h-3 w-3 mr-1 text-monad-purple-500" />
               NFT
             </div>
           </div>

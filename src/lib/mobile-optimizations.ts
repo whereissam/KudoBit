@@ -147,7 +147,7 @@ export class MobilePerformance {
   static preloadCritical() {
     const criticalImages = [
       '/logo.svg',
-      '/chains/morph.svg'
+      '/chains/monad.svg'
     ]
 
     criticalImages.forEach(src => {

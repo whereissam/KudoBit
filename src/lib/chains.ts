@@ -1,57 +1,57 @@
 import { Chain } from 'viem'
-import { 
-  mainnet, 
-  sepolia, 
-  polygon, 
-  polygonAmoy, 
-  arbitrum, 
-  arbitrumSepolia, 
-  optimism, 
-  optimismSepolia, 
-  base, 
-  baseSepolia 
+import {
+  mainnet,
+  sepolia,
+  polygon,
+  polygonAmoy,
+  arbitrum,
+  arbitrumSepolia,
+  optimism,
+  optimismSepolia,
+  base,
+  baseSepolia
 } from 'viem/chains'
 
-// Morph chain definitions
-export const morphHolesky: Chain = {
-  id: 2810,
-  name: 'Morph Holesky',
+// Monad chain definitions
+export const monadTestnet: Chain = {
+  id: 10143,
+  name: 'Monad Testnet',
   nativeCurrency: {
     decimals: 18,
-    name: 'Ethereum',
-    symbol: 'ETH',
+    name: 'Monad',
+    symbol: 'MON',
   },
   rpcUrls: {
     default: {
-      http: ['https://rpc-quicknode-holesky.morphl2.io'],
+      http: ['https://testnet-rpc.monad.xyz'],
     },
   },
   blockExplorers: {
     default: {
-      name: 'Morph Explorer',
-      url: 'https://explorer-holesky.morphl2.io',
+      name: 'Monad Explorer',
+      url: 'https://testnet.monadscan.com',
     },
   },
   testnet: true,
 }
 
-export const morphMainnet: Chain = {
-  id: 2818,
-  name: 'Morph',
+export const monadMainnet: Chain = {
+  id: 143,
+  name: 'Monad',
   nativeCurrency: {
     decimals: 18,
-    name: 'Ethereum',
-    symbol: 'ETH',
+    name: 'Monad',
+    symbol: 'MON',
   },
   rpcUrls: {
     default: {
-      http: ['https://rpc-quicknode.morphl2.io'],
+      http: ['https://rpc.monad.xyz'],
     },
   },
   blockExplorers: {
     default: {
-      name: 'Morph Explorer',
-      url: 'https://explorer.morphl2.io',
+      name: 'Monad Explorer',
+      url: 'https://monadscan.com',
     },
   },
   testnet: false,
@@ -59,7 +59,7 @@ export const morphMainnet: Chain = {
 
 // Chain categories
 export const TESTNET_CHAINS = [
-  morphHolesky,
+  monadTestnet,
   sepolia,
   polygonAmoy,
   arbitrumSepolia,
@@ -68,7 +68,7 @@ export const TESTNET_CHAINS = [
 ] as const
 
 export const MAINNET_CHAINS = [
-  morphMainnet,
+  monadMainnet,
   mainnet,
   polygon,
   arbitrum,
@@ -97,20 +97,19 @@ export interface ChainMetadata {
 
 export const CHAIN_METADATA: Record<number, ChainMetadata> = {
   // Testnets
-  [morphHolesky.id]: {
-    id: morphHolesky.id,
-    name: 'Morph Holesky',
-    shortName: 'Morph',
-    icon: '/chains/morph.svg',
-    color: '#8B5CF6',
-    category: 'L2',
+  [monadTestnet.id]: {
+    id: monadTestnet.id,
+    name: 'Monad Testnet',
+    shortName: 'Monad',
+    icon: '/chains/monad.svg',
+    color: '#836EF9',
+    category: 'L1',
     fees: 'Low',
     speed: 'Fast',
     testnet: true,
-    explorerUrl: 'https://explorer-holesky.morphl2.io',
-    faucetUrl: 'https://bridge-holesky.morphl2.io',
-    bridgeUrl: 'https://bridge-holesky.morphl2.io',
-    docs: 'https://docs.morphl2.io'
+    explorerUrl: 'https://testnet.monadscan.com',
+    faucetUrl: 'https://faucet.monad.xyz',
+    docs: 'https://docs.monad.xyz'
   },
   [sepolia.id]: {
     id: sepolia.id,
@@ -188,19 +187,18 @@ export const CHAIN_METADATA: Record<number, ChainMetadata> = {
   },
 
   // Mainnets
-  [morphMainnet.id]: {
-    id: morphMainnet.id,
-    name: 'Morph',
-    shortName: 'Morph',
-    icon: '/chains/morph.svg',
-    color: '#8B5CF6',
-    category: 'L2',
+  [monadMainnet.id]: {
+    id: monadMainnet.id,
+    name: 'Monad',
+    shortName: 'Monad',
+    icon: '/chains/monad.svg',
+    color: '#836EF9',
+    category: 'L1',
     fees: 'Low',
     speed: 'Fast',
     testnet: false,
-    explorerUrl: 'https://explorer.morphl2.io',
-    bridgeUrl: 'https://bridge.morphl2.io',
-    docs: 'https://docs.morphl2.io'
+    explorerUrl: 'https://monadscan.com',
+    docs: 'https://docs.monad.xyz'
   },
   [mainnet.id]: {
     id: mainnet.id,
@@ -297,13 +295,13 @@ export function getMainnetChains() {
 // Default chain selection based on environment
 export function getDefaultChain(): Chain {
   const isProduction = process.env.NODE_ENV === 'production'
-  return isProduction ? morphMainnet : morphHolesky
+  return isProduction ? monadMainnet : monadTestnet
 }
 
 // Chain icons mapping for components
 export const CHAIN_ICONS = {
-  [morphHolesky.id]: '/chains/morph.svg',
-  [morphMainnet.id]: '/chains/morph.svg',
+  [monadTestnet.id]: '/chains/monad.svg',
+  [monadMainnet.id]: '/chains/monad.svg',
   [mainnet.id]: '/chains/ethereum.svg',
   [sepolia.id]: '/chains/ethereum.svg',
   [polygon.id]: '/chains/polygon.svg',

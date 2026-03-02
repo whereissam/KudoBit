@@ -2,12 +2,12 @@ import { useChainId } from 'wagmi'
 import { mainnet, hardhat } from 'wagmi/chains'
 
 // Simple chain mapping
-const morphHolesky = {
-  id: 2810,
-  name: 'Morph Holesky',
-  nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
-  rpcUrls: { default: { http: ['https://rpc-quicknode-holesky.morphl2.io'] } },
-  blockExplorers: { default: { name: 'Morphscan', url: 'https://explorer-holesky.morphl2.io' } },
+const monadTestnet = {
+  id: 10143,
+  name: 'Monad Testnet',
+  nativeCurrency: { name: 'Monad', symbol: 'MON', decimals: 18 },
+  rpcUrls: { default: { http: ['https://testnet-rpc.monad.xyz'] } },
+  blockExplorers: { default: { name: 'Monadscan', url: 'https://testnet.monadscan.com' } },
   testnet: true,
 } as const
 
@@ -15,7 +15,7 @@ export const getChain = (chainId: number) => {
   switch (chainId) {
     case 1: return mainnet
     case 31337: return hardhat
-    case 2810: return morphHolesky
+    case 10143: return monadTestnet
     default: return mainnet
   }
 }
@@ -26,7 +26,7 @@ export const useWagmiConfig = () => {
   return {
     // For useReadContract
     readConfig: { chainId },
-    // For writeContract  
+    // For writeContract
     writeConfig: { chain: getChain(chainId) }
   }
 }

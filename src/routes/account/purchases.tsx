@@ -50,7 +50,7 @@ function PurchaseHistory() {
 
   if (!isConnected) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-morph-green-50/5 to-morph-purple-50/5">
+      <div className="min-h-screen bg-gradient-to-br from-background via-monad-purple-50/5 to-monad-cyan-50/5">
         <div className="container mx-auto px-3 sm:px-4 py-8">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -58,8 +58,8 @@ function PurchaseHistory() {
             className="text-center p-12"
           >
             <div className="max-w-md mx-auto">
-              <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-morph-green-100 to-morph-purple-100 dark:from-morph-green-900/30 dark:to-morph-purple-900/30 rounded-full flex items-center justify-center">
-                <ShoppingBag className="h-8 w-8 text-morph-green-600" />
+              <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-monad-purple-100 to-monad-cyan-100 dark:from-monad-purple-900/30 dark:to-monad-cyan-900/30 rounded-full flex items-center justify-center">
+                <ShoppingBag className="h-8 w-8 text-monad-purple-600" />
               </div>
               <h3 className="text-xl font-semibold mb-4">Connect Your Wallet</h3>
               <p className="text-muted-foreground">
@@ -73,7 +73,7 @@ function PurchaseHistory() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-morph-green-50/5 to-morph-purple-50/5">
+    <div className="min-h-screen bg-gradient-to-br from-background via-monad-purple-50/5 to-monad-cyan-50/5">
       <div className="container mx-auto px-3 sm:px-4 py-8">
         {/* Header */}
         <motion.div 
@@ -87,7 +87,7 @@ function PurchaseHistory() {
             </div>
             <div>
               <h1 className="text-2xl md:text-3xl font-bold">
-                <span className="bg-gradient-to-r from-morph-green-600 to-morph-purple-600 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-monad-purple-600 to-monad-cyan-600 bg-clip-text text-transparent">
                   My Purchases
                 </span>
               </h1>
@@ -115,7 +115,7 @@ function PurchaseHistory() {
               <ShoppingBag className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-morph-green-600">
+              <div className="text-2xl font-bold text-monad-purple-600">
                 {mockPurchases.length}
               </div>
             </CardContent>
@@ -127,7 +127,7 @@ function PurchaseHistory() {
               <Package className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-morph-purple-600">
+              <div className="text-2xl font-bold text-monad-cyan-600">
                 {mockPurchases.reduce((sum, p) => sum + parseFloat(p.price), 0).toFixed(2)} USDC
               </div>
             </CardContent>
@@ -182,7 +182,7 @@ function PurchaseHistory() {
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
                       {/* Product Image/Emoji */}
-                      <div className="w-16 h-16 bg-gradient-to-br from-morph-green-50 to-morph-purple-50 dark:from-morph-green-900/20 dark:to-morph-purple-900/20 rounded-lg flex items-center justify-center text-2xl">
+                      <div className="w-16 h-16 bg-gradient-to-br from-monad-purple-50 to-monad-cyan-50 dark:from-monad-purple-900/20 dark:to-monad-cyan-900/20 rounded-lg flex items-center justify-center text-2xl">
                         {purchase.emoji}
                       </div>
 
@@ -197,7 +197,7 @@ function PurchaseHistory() {
                             </div>
                           </div>
                           <div className="text-right">
-                            <div className="text-lg font-bold text-morph-green-600">
+                            <div className="text-lg font-bold text-monad-purple-600">
                               {purchase.price} USDC
                             </div>
                             <Badge 
@@ -254,9 +254,9 @@ function PurchaseHistory() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="text-center mt-12 p-6 bg-gradient-to-r from-morph-green-50/50 to-morph-purple-50/50 dark:from-morph-green-900/10 dark:to-morph-purple-900/10 rounded-lg border border-morph-green-200/30"
+          className="text-center mt-12 p-6 bg-gradient-to-r from-monad-purple-50/50 to-monad-cyan-50/50 dark:from-monad-purple-900/10 dark:to-monad-cyan-900/10 rounded-lg border border-monad-purple-200/30"
         >
-          <h3 className="text-lg font-semibold mb-2 bg-gradient-to-r from-morph-green-600 to-morph-purple-600 bg-clip-text text-transparent">
+          <h3 className="text-lg font-semibold mb-2 bg-gradient-to-r from-monad-purple-600 to-monad-cyan-600 bg-clip-text text-transparent">
             Discover More Amazing Products
           </h3>
           <p className="text-sm text-muted-foreground mb-4">

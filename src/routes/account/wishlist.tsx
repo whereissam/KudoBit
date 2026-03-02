@@ -56,7 +56,7 @@ function ProductFromWishlist({ productId }: { productId: number }) {
       <Card className="hover:shadow-lg transition-all duration-300 group">
         <CardContent className="p-6">
           <div className="flex items-start gap-4">
-            <div className="w-16 h-16 bg-gradient-to-br from-morph-green-50 to-morph-purple-50 dark:from-morph-green-900/20 dark:to-morph-purple-900/20 rounded-lg flex items-center justify-center text-2xl group-hover:scale-105 transition-transform">
+            <div className="w-16 h-16 bg-gradient-to-br from-monad-purple-50 to-monad-cyan-50 dark:from-monad-purple-900/20 dark:to-monad-cyan-900/20 rounded-lg flex items-center justify-center text-2xl group-hover:scale-105 transition-transform">
               {getProductEmoji(productId)}
             </div>
 
@@ -90,7 +90,7 @@ function ProductFromWishlist({ productId }: { productId: number }) {
 
               <div className="flex items-center justify-between">
                 <div>
-                  <div className="text-lg font-bold text-morph-green-600 mb-1">
+                  <div className="text-lg font-bold text-monad-purple-600 mb-1">
                     {formatUnits(price, 6)} USDC
                   </div>
                 </div>
@@ -146,7 +146,7 @@ function WishlistPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-morph-green-50/5 to-morph-purple-50/5">
+    <div className="min-h-screen bg-gradient-to-br from-background via-monad-purple-50/5 to-monad-cyan-50/5">
       <div className="container mx-auto px-3 sm:px-4 py-8">
         {/* Header */}
         <motion.div 
@@ -160,7 +160,7 @@ function WishlistPage() {
             </div>
             <div>
               <h1 className="text-2xl md:text-3xl font-bold">
-                <span className="bg-gradient-to-r from-morph-green-600 to-morph-purple-600 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-monad-purple-600 to-monad-cyan-600 bg-clip-text text-transparent">
                   My Wishlist
                 </span>
               </h1>
@@ -202,10 +202,10 @@ function WishlistPage() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
               <CardTitle className="text-sm font-medium">Unique Products</CardTitle>
-              <ShoppingCart className="h-4 w-4 text-morph-green-500" />
+              <ShoppingCart className="h-4 w-4 text-monad-purple-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-morph-green-600">
+              <div className="text-2xl font-bold text-monad-purple-600">
                 {wishlistProductIds.length}
               </div>
             </CardContent>
@@ -214,10 +214,10 @@ function WishlistPage() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
               <CardTitle className="text-sm font-medium">Ready to Buy</CardTitle>
-              <Package className="h-4 w-4 text-morph-purple-500" />
+              <Package className="h-4 w-4 text-monad-cyan-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-morph-purple-600">
+              <div className="text-2xl font-bold text-monad-cyan-600">
                 {wishlistCount > 0 ? 'Yes' : 'No'}
               </div>
             </CardContent>

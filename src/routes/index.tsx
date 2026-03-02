@@ -45,7 +45,7 @@ function Shop() {
   // }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-morph-green-50/5 to-morph-purple-50/5">
+    <div className="min-h-screen bg-gradient-to-br from-background via-monad-purple-50/5 to-monad-cyan-50/5">
       <div className="container mx-auto px-3 sm:px-4 py-8 sm:py-16">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -56,9 +56,9 @@ function Shop() {
           <div className="flex justify-center mb-4 sm:mb-6">
             <motion.div 
               whileHover={{ scale: 1.05 }}
-              className="p-3 sm:p-4 bg-gradient-to-br from-morph-green-100 to-morph-purple-100 dark:from-morph-green-900/30 dark:to-morph-purple-900/30 rounded-full shadow-lg"
+              className="p-3 sm:p-4 bg-gradient-to-br from-monad-purple-100 to-monad-cyan-100 dark:from-monad-purple-900/30 dark:to-monad-cyan-900/30 rounded-full shadow-lg"
             >
-              <ShoppingCart className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 text-morph-green-600 dark:text-morph-green-400" />
+              <ShoppingCart className="h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 text-monad-purple-600 dark:text-monad-purple-400" />
             </motion.div>
           </div>
           
@@ -68,7 +68,7 @@ function Shop() {
             transition={{ delay: 0.1, duration: 0.6 }}
             className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3 sm:mb-4 px-2"
           >
-            <span className="bg-gradient-to-r from-morph-green-600 to-morph-purple-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-monad-purple-600 to-monad-cyan-600 bg-clip-text text-transparent">
               KudoBit
             </span>
           </motion.h1>
@@ -79,9 +79,9 @@ function Shop() {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto px-2"
           >
-            Experience <span className="text-morph-green-600 font-semibold">lightning-fast</span>, 
-            <span className="text-morph-purple-600 font-semibold"> low-cost</span> digital commerce on Morph's hybrid rollup. 
-            Buy digital items and earn loyalty badges <span className="text-morph-green-600 font-semibold">instantly</span>.
+            Experience <span className="text-monad-purple-600 font-semibold">lightning-fast</span>,
+            <span className="text-monad-cyan-600 font-semibold"> low-cost</span> digital commerce on Monad's parallel execution engine.
+            Buy digital items and earn loyalty badges <span className="text-monad-purple-600 font-semibold">instantly</span>.
           </motion.p>
           
           <AnimatePresence>
@@ -92,12 +92,12 @@ function Shop() {
                 exit={{ opacity: 0, scale: 0.9 }}
                 className="flex justify-center mb-6 sm:mb-8"
               >
-                <div className="bg-gradient-to-r from-card to-morph-green-50/50 dark:to-morph-green-900/10 rounded-lg px-4 sm:px-6 py-3 shadow-sm border border-morph-green-200/50">
+                <div className="bg-gradient-to-r from-card to-monad-purple-50/50 dark:to-monad-purple-900/10 rounded-lg px-4 sm:px-6 py-3 shadow-sm border border-monad-purple-200/50">
                   <div className="flex items-center gap-2 sm:gap-4">
-                    <Zap className="h-4 w-4 text-morph-green-500" />
+                    <Zap className="h-4 w-4 text-monad-purple-500" />
                     <span className="text-xs sm:text-sm text-muted-foreground">Balances:</span>
                     {ethBalance && (
-                      <span className="text-sm sm:text-base font-semibold bg-gradient-to-r from-morph-green-600 to-morph-purple-600 bg-clip-text text-transparent">
+                      <span className="text-sm sm:text-base font-semibold bg-gradient-to-r from-monad-purple-600 to-monad-cyan-600 bg-clip-text text-transparent">
                         {parseFloat(formatUnits(ethBalance.value, ethBalance.decimals)).toFixed(4)} {ethBalance.symbol}
                       </span>
                     )}
@@ -105,7 +105,7 @@ function Shop() {
                       <span className="text-xs text-muted-foreground">•</span>
                     )}
                     {usdcBalance && (
-                      <span className="text-sm sm:text-base font-semibold bg-gradient-to-r from-morph-green-600 to-morph-purple-600 bg-clip-text text-transparent">
+                      <span className="text-sm sm:text-base font-semibold bg-gradient-to-r from-monad-purple-600 to-monad-cyan-600 bg-clip-text text-transparent">
                         {formatUnits(usdcBalance, 6)} USDC
                       </span>
                     )}
@@ -115,7 +115,7 @@ function Shop() {
             )}
           </AnimatePresence>
           
-          {/* Morph Advantage Highlight */}
+          {/* Monad Advantage Highlight */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -123,18 +123,18 @@ function Shop() {
             className="flex justify-center items-center gap-6 text-xs sm:text-sm text-muted-foreground mb-8"
           >
             <div className="flex items-center gap-1">
-              <Zap className="h-3 w-3 text-morph-green-500" />
-              <span>Hybrid Rollup</span>
+              <Zap className="h-3 w-3 text-monad-purple-500" />
+              <span>Parallel EVM</span>
             </div>
             <div className="w-1 h-1 bg-muted-foreground rounded-full" />
             <div className="flex items-center gap-1">
-              <Award className="h-3 w-3 text-morph-purple-500" />
-              <span>Decentralized Sequencer</span>
+              <Award className="h-3 w-3 text-monad-cyan-500" />
+              <span>10,000 TPS</span>
             </div>
             <div className="w-1 h-1 bg-muted-foreground rounded-full" />
             <div className="flex items-center gap-1">
-              <CheckCircle className="h-3 w-3 text-morph-green-500" />
-              <span>Instant Finality</span>
+              <CheckCircle className="h-3 w-3 text-monad-purple-500" />
+              <span>1s Blocks</span>
             </div>
           </motion.div>
         </motion.div>
@@ -145,7 +145,7 @@ function Shop() {
             animate={{ opacity: 1 }}
             className="text-center p-8"
           >
-            <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-morph-green-500" />
+            <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-monad-purple-500" />
             <p className="text-sm sm:text-base text-muted-foreground">Loading products...</p>
           </motion.div>
         ) : productIds.length === 0 ? (
@@ -183,13 +183,13 @@ function Shop() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="text-center mt-12 p-6 bg-gradient-to-r from-morph-green-50/50 to-morph-purple-50/50 dark:from-morph-green-900/10 dark:to-morph-purple-900/10 rounded-lg border border-morph-green-200/30"
+            className="text-center mt-12 p-6 bg-gradient-to-r from-monad-purple-50/50 to-monad-cyan-50/50 dark:from-monad-purple-900/10 dark:to-monad-cyan-900/10 rounded-lg border border-monad-purple-200/30"
           >
-            <h3 className="text-lg font-semibold mb-2 bg-gradient-to-r from-morph-green-600 to-morph-purple-600 bg-clip-text text-transparent">
+            <h3 className="text-lg font-semibold mb-2 bg-gradient-to-r from-monad-purple-600 to-monad-cyan-600 bg-clip-text text-transparent">
               Ready to experience the future of digital commerce?
             </h3>
             <p className="text-sm text-muted-foreground mb-4">
-              Connect your wallet to start buying digital items with <strong>instant finality</strong> and <strong>ultra-low fees</strong> on Morph
+              Connect your wallet to start buying digital items with <strong>instant finality</strong> and <strong>ultra-low fees</strong> on Monad
             </p>
             <div className="flex justify-center items-center gap-4 text-xs text-muted-foreground">
               <span>⚡ Lightning Fast</span>
@@ -235,13 +235,13 @@ function ProductCard({ productId, index }: { productId: number; index: number })
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1 }}
     >
-      <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 border-morph-green-200/20 hover:border-morph-green-300/40 hover:scale-[1.02]">
+      <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 border-monad-purple-200/20 hover:border-monad-purple-300/40 hover:scale-[1.02]">
         <Link to={`/product/${productId}`}>
-          <div className="aspect-video bg-gradient-to-br from-morph-green-50 to-morph-purple-50 dark:from-morph-green-900/20 dark:to-morph-purple-900/20 flex items-center justify-center relative group overflow-hidden">
+          <div className="aspect-video bg-gradient-to-br from-monad-purple-50 to-monad-cyan-50 dark:from-monad-purple-900/20 dark:to-monad-cyan-900/20 flex items-center justify-center relative group overflow-hidden">
             <div className="text-6xl group-hover:scale-110 transition-transform">
               {getProductEmoji(productId)}
             </div>
-            <div className="absolute inset-0 bg-gradient-to-br from-morph-green-500/10 to-morph-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute inset-0 bg-gradient-to-br from-monad-purple-500/10 to-monad-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
           
           <CardHeader className="p-3 sm:p-6">
@@ -257,11 +257,11 @@ function ProductCard({ productId, index }: { productId: number; index: number })
           
           <CardContent className="p-3 sm:p-6 pt-0">
             <div className="flex items-center justify-between">
-              <span className="text-lg sm:text-xl lg:text-2xl font-bold bg-gradient-to-r from-morph-green-600 to-morph-purple-600 bg-clip-text text-transparent">
+              <span className="text-lg sm:text-xl lg:text-2xl font-bold bg-gradient-to-r from-monad-purple-600 to-monad-cyan-600 bg-clip-text text-transparent">
                 {formatUnits(price, 6)} USDC
               </span>
               <div className="flex items-center text-xs sm:text-sm text-muted-foreground">
-                <Zap className="h-3 w-3 sm:h-4 sm:w-4 mr-1 text-morph-green-500" />
+                <Zap className="h-3 w-3 sm:h-4 sm:w-4 mr-1 text-monad-purple-500" />
                 NFT
               </div>
             </div>

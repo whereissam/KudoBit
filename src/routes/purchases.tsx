@@ -172,8 +172,8 @@ function PurchasesPage() {
   };
 
   const handleViewTransaction = (txHash: string) => {
-    const morphExplorerUrl = `https://explorer-holesky.morphl2.io/tx/${txHash}`;
-    window.open(morphExplorerUrl, '_blank');
+    const explorerUrl = `https://testnet.monadscan.com/tx/${txHash}`;
+    window.open(explorerUrl, '_blank');
   };
 
   const filteredLibrary = library.filter(item => {

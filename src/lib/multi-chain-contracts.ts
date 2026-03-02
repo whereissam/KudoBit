@@ -1,5 +1,5 @@
 import { Chain } from 'viem'
-import { morphHolesky, morphMainnet } from './chains'
+import { monadTestnet, monadMainnet } from './chains'
 
 // Contract deployment addresses per chain
 export interface ChainDeployment {
@@ -28,21 +28,21 @@ export const CHAIN_DEPLOYMENTS: Record<number, ChainDeployment> = {
     verified: true
   },
 
-  // Morph Holesky Testnet
-  [morphHolesky.id]: {
-    chainId: morphHolesky.id,
+  // Monad Testnet
+  [monadTestnet.id]: {
+    chainId: monadTestnet.id,
     contracts: {
-      MockUSDC: '0x0000000000000000000000000000000000000000', // To be updated after deployment
+      MockUSDC: '0x0000000000000000000000000000000000000000',
       LoyaltyToken: '0x0000000000000000000000000000000000000000',
       Shopfront: '0x0000000000000000000000000000000000000000'
     }
   },
 
-  // Morph Mainnet
-  [morphMainnet.id]: {
-    chainId: morphMainnet.id,
+  // Monad Mainnet
+  [monadMainnet.id]: {
+    chainId: monadMainnet.id,
     contracts: {
-      MockUSDC: '0x0000000000000000000000000000000000000000', // To be updated after deployment
+      MockUSDC: '0x0000000000000000000000000000000000000000',
       LoyaltyToken: '0x0000000000000000000000000000000000000000',
       Shopfront: '0x0000000000000000000000000000000000000000'
     }
@@ -114,7 +114,7 @@ export function getDeployment(chainId: number): ChainDeployment | undefined {
 }
 
 export function getContractAddress(
-  chainId: number, 
+  chainId: number,
   contractName: keyof ChainDeployment['contracts']
 ): `0x${string}` | undefined {
   const deployment = getDeployment(chainId)
@@ -124,7 +124,7 @@ export function getContractAddress(
 export function isDeployed(chainId: number): boolean {
   const deployment = getDeployment(chainId)
   if (!deployment) return false
-  
+
   return Object.values(deployment.contracts).every(
     address => address !== '0x0000000000000000000000000000000000000000'
   )
@@ -137,11 +137,11 @@ export function getSupportedChains(): number[] {
 }
 
 export function getTestnetChains(): number[] {
-  return [31337, morphHolesky.id, 11155111, 80002, 421614, 11155420, 84532]
+  return [31337, monadTestnet.id, 11155111, 80002, 421614, 11155420, 84532]
 }
 
 export function getMainnetChains(): number[] {
-  return [morphMainnet.id, 1, 137, 42161, 10, 8453]
+  return [monadMainnet.id, 1, 137, 42161, 10, 8453]
 }
 
 // Contract configuration with multi-chain support
@@ -175,9 +175,9 @@ export function updateDeployment(chainId: number, contracts: Partial<ChainDeploy
     ...CHAIN_DEPLOYMENTS[chainId].contracts,
     ...contracts
   }
-  
+
   CHAIN_DEPLOYMENTS[chainId].deployedAt = new Date().toISOString()
-  
+
   console.log(`Updated deployment for chain ${chainId}:`, contracts)
 }
 
@@ -220,7 +220,7 @@ export const CHAIN_CONFIG_OVERRIDES: Record<number, {
     maxRetries: 5,
     retryDelay: 30000
   },
-  
+
   // Polygon - faster, cheaper
   137: {
     gasMultiplier: 1.1,
@@ -228,7 +228,7 @@ export const CHAIN_CONFIG_OVERRIDES: Record<number, {
     maxRetries: 3,
     retryDelay: 5000
   },
-  
+
   // Arbitrum - very fast
   42161: {
     gasMultiplier: 1.0,
@@ -236,7 +236,7 @@ export const CHAIN_CONFIG_OVERRIDES: Record<number, {
     maxRetries: 2,
     retryDelay: 2000
   },
-  
+
   // Optimism - fast L2
   10: {
     gasMultiplier: 1.0,
@@ -244,7 +244,7 @@ export const CHAIN_CONFIG_OVERRIDES: Record<number, {
     maxRetries: 2,
     retryDelay: 2000
   },
-  
+
   // Base - Coinbase L2
   8453: {
     gasMultiplier: 1.0,
@@ -252,9 +252,9 @@ export const CHAIN_CONFIG_OVERRIDES: Record<number, {
     maxRetries: 2,
     retryDelay: 2000
   },
-  
-  // Morph - optimized hybrid
-  [morphMainnet.id]: {
+
+  // Monad - high-throughput L1
+  [monadMainnet.id]: {
     gasMultiplier: 1.0,
     blockConfirmations: 1,
     maxRetries: 2,

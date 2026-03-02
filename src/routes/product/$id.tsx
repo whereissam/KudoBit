@@ -92,7 +92,7 @@ function ProductDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-morph-green-50/5 to-morph-purple-50/5">
+    <div className="min-h-screen bg-gradient-to-br from-background via-monad-purple-50/5 to-monad-cyan-50/5">
       <div className="container mx-auto px-4 py-8">
         {/* Back button */}
         <Link to="/">
@@ -112,13 +112,13 @@ function ProductDetail() {
             animate={{ opacity: 1, x: 0 }}
             className="relative"
           >
-            <div className="aspect-square bg-gradient-to-br from-morph-green-50 to-morph-purple-50 dark:from-morph-green-900/20 dark:to-morph-purple-900/20 rounded-lg flex items-center justify-center text-9xl border-2 border-morph-green-200/30">
+            <div className="aspect-square bg-gradient-to-br from-monad-purple-50 to-monad-cyan-50 dark:from-monad-purple-900/20 dark:to-monad-cyan-900/20 rounded-lg flex items-center justify-center text-9xl border-2 border-monad-purple-200/30">
               {getProductImage(Number(id))}
             </div>
             
-            {/* Morph branding */}
+            {/* Monad branding */}
             <div className="absolute bottom-4 right-4 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-full px-3 py-1 text-xs text-muted-foreground">
-              ⚡ Powered by Morph
+              ⚡ Powered by Monad
             </div>
           </motion.div>
 
@@ -144,18 +144,18 @@ function ProductDetail() {
             </div>
 
             {/* Price & Status */}
-            <div className="bg-gradient-to-r from-card to-morph-green-50/50 dark:to-morph-green-900/10 rounded-lg p-6 border border-morph-green-200/30">
+            <div className="bg-gradient-to-r from-card to-monad-purple-50/50 dark:to-monad-purple-900/10 rounded-lg p-6 border border-monad-purple-200/30">
               <div className="flex items-center justify-between">
                 <div>
                   <div className="text-sm text-muted-foreground mb-1">Price</div>
-                  <div className="text-3xl font-bold bg-gradient-to-r from-morph-green-600 to-morph-purple-600 bg-clip-text text-transparent">
+                  <div className="text-3xl font-bold bg-gradient-to-r from-monad-purple-600 to-monad-cyan-600 bg-clip-text text-transparent">
                     {formatUnits(price, 6)} USDC
                   </div>
                 </div>
                 <div className="text-right space-y-2">
                   <div className="flex items-center text-sm font-medium">
-                    <Zap className="h-4 w-4 mr-1 text-morph-green-500" />
-                    Morph Testnet
+                    <Zap className="h-4 w-4 mr-1 text-monad-purple-500" />
+                    Monad Testnet
                   </div>
                   {hasPurchased && (
                     <Badge className="bg-green-100 text-chart-2">
@@ -172,26 +172,26 @@ function ProductDetail() {
               <h3 className="text-lg font-semibold">What you get:</h3>
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-morph-green-500" />
+                  <CheckCircle className="h-4 w-4 text-monad-purple-500" />
                   <span className="text-sm">Instant digital delivery</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-morph-green-500" />
+                  <CheckCircle className="h-4 w-4 text-monad-purple-500" />
                   <span className="text-sm">NFT ownership certificate</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-morph-green-500" />
+                  <CheckCircle className="h-4 w-4 text-monad-purple-500" />
                   <span className="text-sm">Lifetime access to content</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-morph-green-500" />
+                  <CheckCircle className="h-4 w-4 text-monad-purple-500" />
                   <span className="text-sm">Resellable on secondary markets</span>
                 </div>
               </div>
             </div>
 
             {/* Purchase Section */}
-            <Card className="border-morph-green-200/30">
+            <Card className="border-monad-purple-200/30">
               <CardContent className="p-6">
                 {hasPurchased ? (
                   <div className="text-center space-y-4">
@@ -225,7 +225,7 @@ function ProductDetail() {
                     
                     <div className="mt-4 text-xs text-muted-foreground text-center">
                       <div className="flex items-center justify-center gap-2">
-                        <Zap className="h-3 w-3 text-morph-green-500" />
+                        <Zap className="h-3 w-3 text-monad-purple-500" />
                         Secured by blockchain • Instant ownership transfer
                       </div>
                     </div>
@@ -235,11 +235,11 @@ function ProductDetail() {
             </Card>
 
             {/* Creator Profile Section */}
-            <Card className="border-morph-purple-200/30">
+            <Card className="border-monad-cyan-200/30">
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-gradient-to-br from-morph-purple-100 to-morph-green-100 dark:from-morph-purple-900/30 dark:to-morph-green-900/30 rounded-full flex items-center justify-center">
-                    <User className="h-6 w-6 text-morph-purple-600" />
+                  <div className="w-12 h-12 bg-gradient-to-br from-monad-cyan-100 to-monad-purple-100 dark:from-monad-cyan-900/30 dark:to-monad-purple-900/30 rounded-full flex items-center justify-center">
+                    <User className="h-6 w-6 text-monad-cyan-600" />
                   </div>
                   <div className="flex-1">
                     <h4 className="font-semibold mb-1">Creator</h4>
@@ -320,42 +320,42 @@ function ProductDetail() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Mock related products */}
               <Card className="hover:shadow-lg transition-all duration-300">
-                <div className="aspect-video bg-gradient-to-br from-morph-green-50 to-morph-purple-50 dark:from-morph-green-900/20 dark:to-morph-purple-900/20 flex items-center justify-center text-4xl">
+                <div className="aspect-video bg-gradient-to-br from-monad-purple-50 to-monad-cyan-50 dark:from-monad-purple-900/20 dark:to-monad-cyan-900/20 flex items-center justify-center text-4xl">
                   🎨
                 </div>
                 <CardContent className="p-4">
                   <h3 className="font-semibold mb-2">Digital Art Pack</h3>
                   <p className="text-sm text-muted-foreground mb-3">High-quality digital art collection</p>
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-morph-green-600">12.50 USDC</span>
+                    <span className="font-bold text-monad-purple-600">12.50 USDC</span>
                     <Button size="sm" variant="outline">View</Button>
                   </div>
                 </CardContent>
               </Card>
 
               <Card className="hover:shadow-lg transition-all duration-300">
-                <div className="aspect-video bg-gradient-to-br from-morph-green-50 to-morph-purple-50 dark:from-morph-green-900/20 dark:to-morph-purple-900/20 flex items-center justify-center text-4xl">
+                <div className="aspect-video bg-gradient-to-br from-monad-purple-50 to-monad-cyan-50 dark:from-monad-purple-900/20 dark:to-monad-cyan-900/20 flex items-center justify-center text-4xl">
                   🖼️
                 </div>
                 <CardContent className="p-4">
                   <h3 className="font-semibold mb-2">NFT Collection</h3>
                   <p className="text-sm text-muted-foreground mb-3">Exclusive NFT artwork series</p>
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-morph-green-600">25.00 USDC</span>
+                    <span className="font-bold text-monad-purple-600">25.00 USDC</span>
                     <Button size="sm" variant="outline">View</Button>
                   </div>
                 </CardContent>
               </Card>
 
               <Card className="hover:shadow-lg transition-all duration-300">
-                <div className="aspect-video bg-gradient-to-br from-morph-green-50 to-morph-purple-50 dark:from-morph-green-900/20 dark:to-morph-purple-900/20 flex items-center justify-center text-4xl">
+                <div className="aspect-video bg-gradient-to-br from-monad-purple-50 to-monad-cyan-50 dark:from-monad-purple-900/20 dark:to-monad-cyan-900/20 flex items-center justify-center text-4xl">
                   📚
                 </div>
                 <CardContent className="p-4">
                   <h3 className="font-semibold mb-2">Design Guide</h3>
                   <p className="text-sm text-muted-foreground mb-3">Complete guide to digital design</p>
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-morph-green-600">18.75 USDC</span>
+                    <span className="font-bold text-monad-purple-600">18.75 USDC</span>
                     <Button size="sm" variant="outline">View</Button>
                   </div>
                 </CardContent>

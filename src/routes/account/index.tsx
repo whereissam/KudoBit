@@ -32,7 +32,7 @@ function AccountOverview() {
 
   if (!isConnected) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-morph-green-50/5 to-morph-purple-50/5">
+      <div className="min-h-screen bg-gradient-to-br from-background via-monad-purple-50/5 to-monad-cyan-50/5">
         <div className="container mx-auto px-3 sm:px-4 py-8">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -40,8 +40,8 @@ function AccountOverview() {
             className="text-center p-12"
           >
             <div className="max-w-md mx-auto">
-              <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-morph-green-100 to-morph-purple-100 dark:from-morph-green-900/30 dark:to-morph-purple-900/30 rounded-full flex items-center justify-center">
-                <User className="h-8 w-8 text-morph-green-600" />
+              <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-monad-purple-100 to-monad-cyan-100 dark:from-monad-purple-900/30 dark:to-monad-cyan-900/30 rounded-full flex items-center justify-center">
+                <User className="h-8 w-8 text-monad-purple-600" />
               </div>
               <h3 className="text-xl font-semibold mb-4">Connect Your Wallet</h3>
               <p className="text-muted-foreground">
@@ -55,7 +55,7 @@ function AccountOverview() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-morph-green-50/5 to-morph-purple-50/5">
+    <div className="min-h-screen bg-gradient-to-br from-background via-monad-purple-50/5 to-monad-cyan-50/5">
       <div className="container mx-auto px-3 sm:px-4 py-8">
         {/* Header */}
         <motion.div 
@@ -64,12 +64,12 @@ function AccountOverview() {
           className="mb-8"
         >
           <div className="flex items-center gap-4 mb-6">
-            <div className="w-12 h-12 bg-gradient-to-br from-morph-green-100 to-morph-purple-100 dark:from-morph-green-900/30 dark:to-morph-purple-900/30 rounded-full flex items-center justify-center">
-              <User className="h-6 w-6 text-morph-green-600" />
+            <div className="w-12 h-12 bg-gradient-to-br from-monad-purple-100 to-monad-cyan-100 dark:from-monad-purple-900/30 dark:to-monad-cyan-900/30 rounded-full flex items-center justify-center">
+              <User className="h-6 w-6 text-monad-purple-600" />
             </div>
             <div>
               <h1 className="text-2xl md:text-3xl font-bold">
-                <span className="bg-gradient-to-r from-morph-green-600 to-morph-purple-600 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-monad-purple-600 to-monad-cyan-600 bg-clip-text text-transparent">
                   My Account
                 </span>
               </h1>
@@ -86,13 +86,13 @@ function AccountOverview() {
           className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8"
         >
           {ethBalance && (
-            <Card className="bg-gradient-to-br from-morph-green-50/50 to-transparent dark:from-morph-green-900/10">
+            <Card className="bg-gradient-to-br from-monad-purple-50/50 to-transparent dark:from-monad-purple-900/10">
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle className="text-sm font-medium">ETH Balance</CardTitle>
-                <Wallet className="h-4 w-4 text-morph-green-500" />
+                <Wallet className="h-4 w-4 text-monad-purple-500" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-morph-green-600">
+                <div className="text-2xl font-bold text-monad-purple-600">
                   {parseFloat(formatUnits(ethBalance.value, ethBalance.decimals)).toFixed(4)} {ethBalance.symbol}
                 </div>
               </CardContent>
@@ -100,13 +100,13 @@ function AccountOverview() {
           )}
           
           {usdcBalance && (
-            <Card className="bg-gradient-to-br from-morph-purple-50/50 to-transparent dark:from-morph-purple-900/10">
+            <Card className="bg-gradient-to-br from-monad-cyan-50/50 to-transparent dark:from-monad-cyan-900/10">
               <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle className="text-sm font-medium">USDC Balance</CardTitle>
-                <Award className="h-4 w-4 text-morph-purple-500" />
+                <Award className="h-4 w-4 text-monad-cyan-500" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold text-morph-purple-600">
+                <div className="text-2xl font-bold text-monad-cyan-600">
                   {formatUnits(usdcBalance, 6)} USDC
                 </div>
               </CardContent>
@@ -181,7 +181,7 @@ function AccountOverview() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <TrendingUp className="h-5 w-5 text-morph-green-500" />
+                <TrendingUp className="h-5 w-5 text-monad-purple-500" />
                 Recent Activity
               </CardTitle>
             </CardHeader>
@@ -200,7 +200,7 @@ function AccountOverview() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Award className="h-5 w-5 text-morph-purple-500" />
+                <Award className="h-5 w-5 text-monad-cyan-500" />
                 Account Summary
               </CardTitle>
             </CardHeader>

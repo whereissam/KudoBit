@@ -439,7 +439,7 @@ function TreasuryDashboard() {
                       <div className="flex items-center justify-between text-xs text-muted-foreground">
                         <span>Transaction: {tx.txHash}</span>
                         <a 
-                          href={`https://explorer-holesky.morphl2.io/tx/${tx.txHash}`}
+                          href={`https://testnet.monadscan.com/tx/${tx.txHash}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="text-primary hover:underline"

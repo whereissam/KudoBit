@@ -110,7 +110,7 @@ function CheckoutPage() {
 
   if (!isConnected) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-morph-green-50/5 to-morph-purple-50/5">
+      <div className="min-h-screen bg-gradient-to-br from-background via-monad-purple-50/5 to-monad-cyan-50/5">
         <div className="container mx-auto px-4 py-16 text-center">
           <div className="max-w-md mx-auto">
             <Wallet className="h-16 w-16 mx-auto mb-6 text-muted-foreground" />
@@ -138,7 +138,7 @@ function CheckoutPage() {
 
   if (hasPurchased) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-morph-green-50/5 to-morph-purple-50/5">
+      <div className="min-h-screen bg-gradient-to-br from-background via-monad-purple-50/5 to-monad-cyan-50/5">
         <div className="container mx-auto px-4 py-16 text-center">
           <div className="max-w-md mx-auto">
             <CheckCircle className="h-16 w-16 mx-auto mb-6 text-chart-2" />
@@ -163,7 +163,7 @@ function CheckoutPage() {
 
   if (isSuccess && purchaseStep === 'buying') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-background via-morph-green-50/5 to-morph-purple-50/5">
+      <div className="min-h-screen bg-gradient-to-br from-background via-monad-purple-50/5 to-monad-cyan-50/5">
         <div className="container mx-auto px-4 py-16">
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
@@ -183,7 +183,7 @@ function CheckoutPage() {
             <Card className="mb-8">
               <CardContent className="p-6">
                 <div className="flex items-center gap-4 mb-4">
-                  <div className="w-16 h-16 bg-gradient-to-br from-morph-green-50 to-morph-purple-50 dark:from-morph-green-900/20 dark:to-morph-purple-900/20 rounded-lg flex items-center justify-center text-2xl">
+                  <div className="w-16 h-16 bg-gradient-to-br from-monad-purple-50 to-monad-cyan-50 dark:from-monad-purple-900/20 dark:to-monad-cyan-900/20 rounded-lg flex items-center justify-center text-2xl">
                     {getProductEmoji(productId)}
                   </div>
                   <div className="text-left flex-1">
@@ -191,7 +191,7 @@ function CheckoutPage() {
                     <p className="text-sm text-muted-foreground">by {formatAddress(creator)}</p>
                   </div>
                   <div className="text-right">
-                    <div className="text-lg font-bold text-morph-green-600">{priceInUSDC} USDC</div>
+                    <div className="text-lg font-bold text-monad-purple-600">{priceInUSDC} USDC</div>
                   </div>
                 </div>
                 
@@ -270,7 +270,7 @@ function CheckoutPage() {
   const hasEnoughBalance = usdcBalance ? parseFloat(formatUnits(usdcBalance, 6)) >= parseFloat(priceInUSDC) : false
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-morph-green-50/5 to-morph-purple-50/5">
+    <div className="min-h-screen bg-gradient-to-br from-background via-monad-purple-50/5 to-monad-cyan-50/5">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
@@ -286,11 +286,11 @@ function CheckoutPage() {
           
           <div className="text-center">
             <h1 className="text-3xl font-bold mb-2">
-              <span className="bg-gradient-to-r from-morph-green-600 to-morph-purple-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-monad-purple-600 to-monad-cyan-600 bg-clip-text text-transparent">
                 Secure Checkout
               </span>
             </h1>
-            <p className="text-muted-foreground">Complete your purchase on Morph's lightning-fast network</p>
+            <p className="text-muted-foreground">Complete your purchase on Monad's lightning-fast network</p>
           </div>
         </div>
 
@@ -311,7 +311,7 @@ function CheckoutPage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 bg-gradient-to-br from-morph-green-50 to-morph-purple-50 dark:from-morph-green-900/20 dark:to-morph-purple-900/20 rounded-lg flex items-center justify-center text-2xl">
+                    <div className="w-16 h-16 bg-gradient-to-br from-monad-purple-50 to-monad-cyan-50 dark:from-monad-purple-900/20 dark:to-monad-cyan-900/20 rounded-lg flex items-center justify-center text-2xl">
                       {getProductEmoji(productId)}
                     </div>
                     <div className="flex-1">
@@ -344,7 +344,7 @@ function CheckoutPage() {
                     <Separator />
                     <div className="flex justify-between text-lg font-bold">
                       <span>Total:</span>
-                      <span className="text-morph-green-600">{priceInUSDC} USDC</span>
+                      <span className="text-monad-purple-600">{priceInUSDC} USDC</span>
                     </div>
                   </div>
                 </CardContent>
@@ -387,18 +387,18 @@ function CheckoutPage() {
               {step === 'processing' || isPending || isConfirming ? (
                 <Card>
                   <CardContent className="p-8 text-center">
-                    <Loader2 className="h-12 w-12 animate-spin mx-auto mb-4 text-morph-green-500" />
+                    <Loader2 className="h-12 w-12 animate-spin mx-auto mb-4 text-monad-purple-500" />
                     <h3 className="text-lg font-semibold mb-2">
                       {purchaseStep === 'approving' ? 'Approving USDC...' : 'Processing Purchase...'}
                     </h3>
                     <p className="text-sm text-muted-foreground mb-4">
                       {purchaseStep === 'approving'
                         ? 'Please approve USDC spending in your wallet...'
-                        : 'Please wait while your purchase is being confirmed on Morph...'}
+                        : 'Please wait while your purchase is being confirmed on Monad...'}
                     </p>
                     <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
-                      <Zap className="h-3 w-3 text-morph-green-500" />
-                      Lightning-fast confirmation times on Morph
+                      <Zap className="h-3 w-3 text-monad-purple-500" />
+                      Lightning-fast confirmation times on Monad
                     </div>
                     {error && (
                       <div className="mt-4 p-3 bg-destructive/10 rounded-lg text-sm text-destructive">
@@ -421,7 +421,7 @@ function CheckoutPage() {
                       <div className="space-y-3">
                         <div 
                           className={`border rounded-lg p-4 cursor-pointer transition-colors ${
-                            paymentMethod === 'usdc' ? 'border-morph-green-500 bg-morph-green-50/50 dark:bg-morph-green-900/10' : 'border-border'
+                            paymentMethod === 'usdc' ? 'border-monad-purple-500 bg-monad-purple-50/50 dark:bg-monad-purple-900/10' : 'border-border'
                           }`}
                           onClick={() => setPaymentMethod('usdc')}
                         >
@@ -436,7 +436,7 @@ function CheckoutPage() {
                               </div>
                             </div>
                             {paymentMethod === 'usdc' && (
-                              <CheckCircle className="h-5 w-5 text-morph-green-500" />
+                              <CheckCircle className="h-5 w-5 text-monad-purple-500" />
                             )}
                           </div>
                         </div>
@@ -480,7 +480,7 @@ function CheckoutPage() {
                               Secured by blockchain technology
                             </div>
                             <div className="flex items-center justify-center gap-1">
-                              <Zap className="h-3 w-3 text-morph-green-500" />
+                              <Zap className="h-3 w-3 text-monad-purple-500" />
                               Instant ownership transfer
                             </div>
                           </div>
