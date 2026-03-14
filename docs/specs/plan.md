@@ -122,11 +122,11 @@ This plan is aggressive but achievable if you stay focused and prioritize.
 * **Day 1: Project Setup & Research (Today)**
     * **Goal:** Dev environment ready, test tokens acquired, basic project structure.
     * **Checklist:**
-        * [ ] Create GitHub repository: `monad-microcommerce-loyalty`.
-        * [ ] Initialize Next.js/React project: `npx create-next-app@latest monad-microcommerce --ts --tailwind --eslint`.
-        * [ ] Install Hardhat: `npm install --save-dev hardhat @nomicfoundation/hardhat-toolbox`.
-        * [ ] Install Wagmi/Viem: `npm install wagmi viem @tanstack/react-query`.
-        * [ ] Configure Wagmi for Monad Testnet Testnet in `src/wagmi.ts` (create this file):
+        * [x] Create GitHub repository: `monad-microcommerce-loyalty`.
+        * [x] Initialize Next.js/React project: `npx create-next-app@latest monad-microcommerce --ts --tailwind --eslint`.
+        * [x] Install Hardhat: `npm install --save-dev hardhat @nomicfoundation/hardhat-toolbox`.
+        * [x] Install Wagmi/Viem: `npm install wagmi viem @tanstack/react-query`.
+        * [x] Configure Wagmi for Monad Testnet Testnet in `src/wagmi.ts` (create this file):
             ```typescript
             // src/wagmi.ts
             import { http, createConfig } from 'wagmi';
@@ -161,7 +161,7 @@ This plan is aggressive but achievable if you stay focused and prioritize.
               },
             });
             ```
-        * [ ] Wrap your `App` in `src/app/layout.tsx` with `WagmiProvider` and `QueryClientProvider`:
+        * [x] Wrap your `App` in `src/app/layout.tsx` with `WagmiProvider` and `QueryClientProvider`:
             ```typescript jsx
             // src/app/layout.tsx
             'use client';
@@ -193,7 +193,7 @@ This plan is aggressive but achievable if you stay focused and prioritize.
             }
             ```
         * [ ] Get Monad Testnet ETH from faucet: `faucet.monad.xyz`.
-        * [ ] Deploy a simple ERC-20 `MockUSDC.sol` (or use a well-known testnet ERC-20 on Holesky if available). **Crucial for demo:** Fund your merchant wallet and a few test user wallets with MockUSDC.
+        * [x] Deploy a simple ERC-20 `MockUSDC.sol` (or use a well-known testnet ERC-20 on Holesky if available). **Crucial for demo:** Fund your merchant wallet and a few test user wallets with MockUSDC.
             * *Example `MockUSDC.sol` (in `contracts/MockUSDC.sol`):*
                 ```solidity
                 // SPDX-License-Identifier: MIT
@@ -212,12 +212,12 @@ This plan is aggressive but achievable if you stay focused and prioritize.
                     }
                 }
                 ```
-        * [ ] Basic `README.md` file initialized with project name and quick setup steps.
+        * [x] Basic `README.md` file initialized with project name and quick setup steps.
 
 * **Day 2: Smart Contract Drafting - `Shopfront.sol` & `LoyaltyToken.sol`**
     * **Goal:** Initial contract structures outlined and basic functions drafted.
     * **Checklist:**
-        * [ ] Create `contracts/Shopfront.sol` and `contracts/LoyaltyToken.sol`.
+        * [x] Create `contracts/Shopfront.sol` and `contracts/LoyaltyToken.sol`.
         * [ ] `Shopfront.sol` structure:
             ```solidity
             // SPDX-License-Identifier: MIT
@@ -337,9 +337,9 @@ This plan is aggressive but achievable if you stay focused and prioritize.
 * **Day 3: Contract Implementation & Local Testing**
     * **Goal:** Core contract logic implemented and unit-tested locally.
     * **Checklist:**
-        * [ ] Implement all logic within `Shopfront.sol` (product setting, buying).
-        * [ ] Implement all logic within `LoyaltyToken.sol` (minting badges/points).
-        * [ ] Create Hardhat/Foundry test files (`test/Shopfront.js`, `test/LoyaltyToken.js`).
+        * [x] Implement all logic within `Shopfront.sol` (product setting, buying).
+        * [x] Implement all logic within `LoyaltyToken.sol` (minting badges/points).
+        * [ ] Create Hardhat/Foundry test files (`test/Shopfront.js`, `test/LoyaltyToken.js`). <!-- Tests exist for other contracts but NOT specifically for Shopfront, LoyaltyToken, MockUSDC -->
         * [ ] Write and run tests for:
             * `MockUSDC` deployment and basic transfer/faucet (if custom).
             * `LoyaltyToken` deployment, `mintBadge` (or `awardPoints`), `balanceOf` tests.
@@ -349,86 +349,86 @@ This plan is aggressive but achievable if you stay focused and prioritize.
 * **Day 4: Deployment to Monad Testnet**
     * **Goal:** All smart contracts live and verified on Monad Testnet.
     * **Checklist:**
-        * [ ] Configure `hardhat.config.js` with Monad Testnet network details (RPC, accounts, etherscan API key for verification if needed).
-        * [ ] Write deployment scripts (e.g., `scripts/deploy.js`) for:
+        * [x] Configure `hardhat.config.js` with Monad Testnet network details (RPC, accounts, etherscan API key for verification if needed).
+        * [x] Write deployment scripts (e.g., `scripts/deploy.js`) for:
             * `MockUSDC` (if custom)
             * `LoyaltyToken`
             * `Shopfront` (passing deployed `MockUSDC` and `LoyaltyToken` addresses to its constructor).
-        * [ ] Run deployment scripts: `npx hardhat run scripts/deploy.js --network monadTestnet`.
-        * [ ] **Crucial:** Record all deployed contract addresses (MockUSDC, LoyaltyToken, Shopfront).
-        * [ ] Verify contracts on the Monad Testnet Explorer (`testnet.monadscan.com`). This makes your code transparent to judges.
-        * [ ] Update your frontend's `wagmi.ts` or a separate `config.ts` file with these new addresses and ABIs.
+        * [ ] Run deployment scripts: `npx hardhat run scripts/deploy.js --network monadTestnet`. <!-- Deployed to localhost only, NOT yet to Monad Testnet -->
+        * [x] **Crucial:** Record all deployed contract addresses (MockUSDC, LoyaltyToken, Shopfront).
+        * [ ] Verify contracts on the Monad Testnet Explorer (`testnet.monadscan.com`). This makes your code transparent to judges. <!-- Not deployed to Monad Testnet yet -->
+        * [x] Update your frontend's `wagmi.ts` or a separate `config.ts` file with these new addresses and ABIs.
 
 ### **Phase 2: Frontend & Core Logic (Days 5-8)**
 
 * **Day 5: Wallet Integration & Basic Shop UI**
     * **Goal:** Wallet connects, basic shop page renders, displays hardcoded product data (from contract).
     * **Checklist:**
-        * [ ] Create `src/app/page.tsx` for the shop.
-        * [ ] Implement a `ConnectButton` component (can be a simple Wagmi `useConnect` button or a `RainbowKit` component if you opted for it).
-        * [ ] Display connected wallet address and MonadETH balance using `wagmi` hooks.
-        * [ ] Create a `products.json` or `products.ts` mock data file for product details (ID, name, price, image URL, description).
-        * [ ] Fetch actual product details from your `Shopfront` contract using `useContractRead` (e.g., `products` mapping, `getAllProductIds()`).
-        * [ ] Map contract data to product cards with Tailwind CSS.
+        * [x] Create `src/app/page.tsx` for the shop.
+        * [x] Implement a `ConnectButton` component (can be a simple Wagmi `useConnect` button or a `RainbowKit` component if you opted for it).
+        * [x] Display connected wallet address and MonadETH balance using `wagmi` hooks.
+        * [x] Create a `products.json` or `products.ts` mock data file for product details (ID, name, price, image URL, description).
+        * [x] Fetch actual product details from your `Shopfront` contract using `useContractRead` (e.g., `products` mapping, `getAllProductIds()`).
+        * [x] Map contract data to product cards with Tailwind CSS.
 
 * **Day 6: "Buy Now" Integration**
     * **Goal:** Users can initiate and see feedback for purchases.
     * **Checklist:**
-        * [ ] For each product card, add a "Buy Now" button.
-        * [ ] Use `wagmi`'s `useApprove` hook for `MockUSDC` to handle token approval for the `Shopfront` contract.
-        * [ ] Use `wagmi`'s `useWriteContract` hook for `Shopfront.buyItem()`.
-        * [ ] Implement sequential transaction flow: first `approve`, then `buyItem`.
-        * [ ] Use `react-hot-toast` or similar for clear, quick notifications: "Waiting for approval...", "Approval successful!", "Processing payment...", "Payment successful!", "Error: [message]".
-        * [ ] **Visual Emphasis:** Add a subtle animation (e.g., a checkmark quickly appearing) to the "Payment Successful" toast/modal to convey Monad's speed.
+        * [x] For each product card, add a "Buy Now" button.
+        * [x] Use `wagmi`'s `useApprove` hook for `MockUSDC` to handle token approval for the `Shopfront` contract.
+        * [x] Use `wagmi`'s `useWriteContract` hook for `Shopfront.buyItem()`.
+        * [x] Implement sequential transaction flow: first `approve`, then `buyItem`.
+        * [x] Use `react-hot-toast` or similar for clear, quick notifications: "Waiting for approval...", "Approval successful!", "Processing payment...", "Payment successful!", "Error: [message]".
+        * [x] **Visual Emphasis:** Add a subtle animation (e.g., a checkmark quickly appearing) to the "Payment Successful" toast/modal to convey Monad's speed.
 
 * **Day 7: "My Loyalty" Page & Data Fetching**
     * **Goal:** Loyalty data displays correctly for the connected user.
     * **Checklist:**
-        * [ ] Create `src/app/loyalty/page.tsx`.
-        * [ ] Add a navigation link to this page (e.g., in the header).
-        * [ ] Use `wagmi`'s `useContractRead` to fetch the user's loyalty balance (`LoyaltyToken.balanceOf(address)`) if using ERC-20 points.
-        * [ ] If using ERC-1155 badges:
+        * [x] Create `src/app/loyalty/page.tsx`.
+        * [x] Add a navigation link to this page (e.g., in the header). <!-- Present in mobile nav; missing in desktop nav -->
+        * [x] Use `wagmi`'s `useContractRead` to fetch the user's loyalty balance (`LoyaltyToken.balanceOf(address)`) if using ERC-20 points.
+        * [x] If using ERC-1155 badges:
             * Fetch all possible badge IDs (can be hardcoded or read from contract).
             * For each badge ID, check if the user `balanceOf(userAddress, badgeId)` is `> 0`.
             * Display owned badges as a gallery of images (e.g., from IPFS or a simple CDN for hackathon).
-        * [ ] Present loyalty data cleanly with appropriate labels (e.g., "Your Points:", "Your Badges:").
+        * [x] Present loyalty data cleanly with appropriate labels (e.g., "Your Points:", "Your Badges:").
 
 * **Day 8: Simplified Merchant Admin (for Demo)**
     * **Goal:** Ability to demonstrate loyalty award from a "merchant" perspective.
     * **Checklist:**
-        * [ ] Create a simple `src/app/admin/page.tsx`. Ensure this route is *not* easily discoverable/linked in the main UI.
-        * [ ] Add input fields for `recipientAddress` and `pointsAmount`/`badgeId`.
-        * [ ] Add a button "Award Loyalty".
-        * [ ] Use `wagmi`'s `useWriteContract` to call `LoyaltyToken.mintBadge()` (or `awardPoints()`) from the merchant wallet (ensure the merchant wallet is connected to this admin page).
-        * [ ] Add success/error toasts for the admin actions.
+        * [x] Create a simple `src/app/admin/page.tsx`. Ensure this route is *not* easily discoverable/linked in the main UI.
+        * [x] Add input fields for `recipientAddress` and `pointsAmount`/`badgeId`.
+        * [x] Add a button "Award Loyalty".
+        * [x] Use `wagmi`'s `useWriteContract` to call `LoyaltyToken.mintBadge()` (or `awardPoints()`) from the merchant wallet (ensure the merchant wallet is connected to this admin page).
+        * [x] Add success/error toasts for the admin actions.
 
 ### **Phase 3: Polish, Pitch & Deployment (Days 9-12)**
 
 * **Day 9: UI/UX Refinements**
     * **Goal:** Clean, modern, and user-friendly design.
     * **Checklist:**
-        * [ ] Refine Tailwind CSS classes for consistent theme (e.g., Monad-inspired green/purple accents).
-        * [ ] Improve layout, spacing, and typography.
-        * [ ] Add subtle interactive elements (e.g., product card hover effects, button animations).
-        * [ ] Ensure excellent mobile responsiveness across all pages.
-        * [ ] Use clear, concise copy that avoids jargon where possible.
+        * [x] Refine Tailwind CSS classes for consistent theme (e.g., Monad-inspired green/purple accents).
+        * [x] Improve layout, spacing, and typography.
+        * [x] Add subtle interactive elements (e.g., product card hover effects, button animations).
+        * [x] Ensure excellent mobile responsiveness across all pages.
+        * [x] Use clear, concise copy that avoids jargon where possible.
 
 * **Day 10: Performance & Error Handling**
     * **Goal:** Robust and performant application ready for demo.
     * **Checklist:**
-        * [ ] Review all `wagmi` hooks to ensure data is fetched efficiently and updates reactively.
-        * [ ] Implement a global error boundary (e.g., a simple `try-catch` around transaction calls or using React error boundaries).
-        * [ ] Test edge cases:
+        * [x] Review all `wagmi` hooks to ensure data is fetched efficiently and updates reactively.
+        * [x] Implement a global error boundary (e.g., a simple `try-catch` around transaction calls or using React error boundaries).
+        * [ ] Test edge cases: <!-- Manual testing not yet confirmed -->
             * User rejects MetaMask transaction.
             * User has insufficient MockUSDC.
             * Network changes (e.g., user switches from Monad Testnet to Sepolia during flow).
             * Incorrect wallet connected (e.g., trying to use admin features with a regular user wallet).
-        * [ ] Verify all loading states provide clear user feedback.
+        * [x] Verify all loading states provide clear user feedback.
 
 * **Day 11: Demo Script & Presentation Prep**
     * **Goal:** Be fully prepared to deliver a winning pitch.
     * **Checklist:**
-        * [ ] **Craft your 3-minute pitch script.** Structure:
+        * [x] **Craft your 3-minute pitch script.** Structure:
             * **Hook (15s):** "Imagine buying digital content and earning instant, verifiable loyalty points with zero hidden fees. This is Micro-Commerce on Monad."
             * **Problem (30s):** "Traditional platforms have high fees, lack transparency. Existing Web3 is too complex/expensive for micro-transactions."
             * **Solution (45s):** "Our dApp enables seamless digital purchases and on-chain loyalty, making micro-transactions viable for the first time."
@@ -443,19 +443,19 @@ This plan is aggressive but achievable if you stay focused and prioritize.
                 * Navigate to "My Loyalty" (show the conceptual loyalty award).
                 * Briefly show the `/admin` page demonstrating how loyalty can be issued on-chain.
             * **Future Vision (15s):** Brief mention of automated loyalty, fiat on-ramps, creator dashboards.
-        * [ ] **Practice the demo flow repeatedly** to ensure it's seamless and highlights Monad's advantages naturally.
-        * [ ] Prepare concise slides (if applicable) reinforcing key points, especially Monad's benefits.
-        * [ ] Finalize your GitHub `README.md` with detailed explanations, setup, screenshots, and live demo link.
+        * [ ] **Practice the demo flow repeatedly** to ensure it's seamless and highlights Monad's advantages naturally. <!-- Manual task -->
+        * [ ] Prepare concise slides (if applicable) reinforcing key points, especially Monad's benefits. <!-- Manual task -->
+        * [x] Finalize your GitHub `README.md` with detailed explanations, setup, screenshots, and live demo link.
 
 * **Day 12: Final Testing & Submission**
     * **Goal:** Project deployed and submitted on time.
     * **Checklist:**
         * [ ] Conduct final end-to-end tests on a fresh browser/incognito window to ensure no caching issues.
-        * [ ] Deploy your Next.js/React frontend to Vercel: `npm run build && npx vercel --prod`.
+        * [ ] Deploy your Next.js/React frontend to Vercel: `npm run build && npx vercel --prod`. <!-- Not yet deployed to production -->
         * [ ] Update `README.md` and any submission forms with the live demo URL.
         * [ ] Create a clear, concise demo video (if required by the hackathon).
         * [ ] **Submit your project!**
-        * [ ] Celebrate your hard work!
+        * [ ] Celebrate your hard work! <!-- Soon! -->
 
 ---
 
