@@ -33,7 +33,11 @@ contract GumroadCore is AccessControl, ReentrancyGuard {
         
         if (paymentToken == address(0)) {
             require(msg.value >= price, "Insufficient payment");
-            // ETH payments - just keep the ETH in this contract for now
+            // Refund excess ETH
+            if (msg.value > price) {
+                (bool refundSuccess, ) = payable(msg.sender).call{value: msg.value - price}("");
+                require(refundSuccess, "ETH refund failed");
+            }
         } else {
             IERC20(paymentToken).transferFrom(msg.sender, address(this), price);
         }
@@ -47,7 +51,16 @@ contract GumroadCore is AccessControl, ReentrancyGuard {
         }
         
         hasPurchased[productId][msg.sender] = true;
-        
+
         emit ProductPurchased(productId, msg.sender, price);
     }
+
+    function withdrawETH() external onlyRole(DEFAULT_ADMIN_ROLE) {
+        uint256 balance = address(this).balance;
+        require(balance > 0, "No ETH to withdraw");
+        (bool success, ) = payable(msg.sender).call{value: balance}("");
+        require(success, "ETH withdrawal failed");
+    }
+
+    receive() external payable {}
 }

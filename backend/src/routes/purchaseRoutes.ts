@@ -10,6 +10,6 @@ const purchaseRoutes = new Hono<AppEnv>()
 purchaseRoutes.post('/', requireAuth, validatePurchaseCreate, asyncHandler(purchaseController.createPurchase))
 purchaseRoutes.get('/buyer/:address', requireAuth, asyncHandler(purchaseController.getUserPurchases))
 purchaseRoutes.get('/content/:product_id', requireAuth, asyncHandler(purchaseController.getContentAccess))
-purchaseRoutes.get('/verify/:address/:product_id', asyncHandler(purchaseController.verifyPurchase))
+purchaseRoutes.get('/verify/:address/:product_id', requireAuth, asyncHandler(purchaseController.verifyPurchase))
 
 export { purchaseRoutes }

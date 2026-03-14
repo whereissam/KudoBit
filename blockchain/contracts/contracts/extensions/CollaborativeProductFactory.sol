@@ -36,7 +36,8 @@ contract CollaborativeProductFactory is Ownable, ReentrancyGuard {
     mapping(uint256 => mapping(address => bool)) public collaboratorExists;
     mapping(address => uint256[]) public creatorProducts;
     mapping(address => uint256) public collaboratorEarnings;
-    
+    mapping(uint256 => mapping(address => bool)) public hasPurchased;
+
     uint256 public productCount;
     
     event CollaborativeProductCreated(
@@ -197,7 +198,8 @@ contract CollaborativeProductFactory is Ownable, ReentrancyGuard {
     function buyCollaborativeProduct(uint256 productId) public nonReentrant {
         require(productId <= productCount && productId > 0, "Product does not exist");
         require(collaborativeProducts[productId].isActive, "Product is not active");
-        
+        require(!hasPurchased[productId][msg.sender], "Already purchased");
+
         CollaborativeProduct storage product = collaborativeProducts[productId];
         
         // Transfer USDC from buyer to contract for distribution
@@ -237,13 +239,16 @@ contract CollaborativeProductFactory is Ownable, ReentrancyGuard {
             );
         }
         
+        // Mark as purchased
+        hasPurchased[productId][msg.sender] = true;
+
         // Update product stats
         product.totalSales += 1;
         product.totalRevenue += product.priceInUSDC;
-        
+
         // Award loyalty badge
         loyaltyToken.mintBadge(msg.sender, product.loyaltyBadgeId, 1);
-        
+
         emit CollaborativeProductPurchased(msg.sender, productId, product.priceInUSDC, product.loyaltyBadgeId);
     }
     

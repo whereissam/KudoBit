@@ -76,6 +76,7 @@ contract TippingAndCrowdfunding is Ownable, ReentrancyGuard {
     uint256 public totalTipsAmount;
     uint256 public totalCrowdfundingAmount;
     uint256 public platformFeePercentage = 250; // 2.5% in basis points
+    uint256 public accumulatedPlatformFees; // Track platform fees separately
     
     // Tip thresholds for loyalty badges (in USDC with 6 decimals)
     uint256 public constant TIP_BRONZE_THRESHOLD = 1000000; // $1.00
@@ -168,13 +169,16 @@ contract TippingAndCrowdfunding is Ownable, ReentrancyGuard {
         // Calculate platform fee and creator amount
         uint256 platformFee = (amount * platformFeePercentage) / 10000;
         uint256 creatorAmount = amount - platformFee;
-        
+
         // Transfer payment
         require(
             paymentToken.transferFrom(msg.sender, address(this), amount),
             "Payment transfer failed"
         );
-        
+
+        // Track platform fees separately from contributor funds
+        accumulatedPlatformFees += platformFee;
+
         // Transfer to creator
         require(
             paymentToken.transfer(creator, creatorAmount),
@@ -281,12 +285,15 @@ contract TippingAndCrowdfunding is Ownable, ReentrancyGuard {
         // Calculate platform fee and campaign amount
         uint256 platformFee = (amount * platformFeePercentage) / 10000;
         uint256 campaignAmount = amount - platformFee;
-        
+
         // Transfer payment to contract (funds held until campaign completion/cancellation)
         require(
             paymentToken.transferFrom(msg.sender, address(this), amount),
             "Payment transfer failed"
         );
+
+        // Track platform fees separately from contributor funds
+        accumulatedPlatformFees += platformFee;
         
         // Record contribution
         Contribution memory contribution = Contribution({
@@ -524,10 +531,10 @@ contract TippingAndCrowdfunding is Ownable, ReentrancyGuard {
     }
     
     function withdrawPlatformFees() external onlyOwner {
-        uint256 balance = paymentToken.balanceOf(address(this));
-        require(balance > 0, "No fees to withdraw");
-        
-        // Calculate platform fees held (this is simplified - ideally track separately)
-        require(paymentToken.transfer(owner(), balance), "Withdrawal failed");
+        uint256 fees = accumulatedPlatformFees;
+        require(fees > 0, "No fees to withdraw");
+
+        accumulatedPlatformFees = 0;
+        require(paymentToken.transfer(owner(), fees), "Withdrawal failed");
     }
 }

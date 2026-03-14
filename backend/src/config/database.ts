@@ -25,7 +25,7 @@ class Database {
       connectionTimeoutMillis: 2000,
     }
 
-    if (process.env.DB_PASSWORD) {
+    if (process.env.DB_PASSWORD !== undefined) {
       poolConfig.password = process.env.DB_PASSWORD
     }
 

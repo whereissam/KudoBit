@@ -3,6 +3,38 @@ import { productModel } from '../models/productModel.js'
 import { config } from '../config/env.js'
 import { AppError } from '../middleware/errorHandler.js'
 import type { AppContext } from '../types/index.js'
+import { createPublicClient, http } from 'viem'
+
+const rpcUrl = process.env.RPC_URL || 'https://rpc-quicknode-holesky.morphl2.io'
+
+const publicClient = createPublicClient({
+  transport: http(rpcUrl),
+})
+
+async function verifyTransactionOnChain(txHash: string, expectedBuyer: string, expectedAmount: number): Promise<boolean> {
+  try {
+    const receipt = await publicClient.getTransactionReceipt({
+      hash: txHash as `0x${string}`,
+    })
+
+    if (!receipt || receipt.status !== 'success') {
+      return false
+    }
+
+    // Verify the sender matches the authenticated user
+    const tx = await publicClient.getTransaction({
+      hash: txHash as `0x${string}`,
+    })
+
+    if (tx.from.toLowerCase() !== expectedBuyer.toLowerCase()) {
+      return false
+    }
+
+    return true
+  } catch {
+    return false
+  }
+}
 
 export const purchaseController = {
   async createPurchase(c: AppContext) {
@@ -18,6 +50,12 @@ export const purchaseController = {
     const existing = await purchaseModel.findByTxHash(tx_hash)
     if (existing) {
       throw new AppError('Purchase already recorded', 409)
+    }
+
+    // Verify transaction on-chain
+    const isValid = await verifyTransactionOnChain(tx_hash, user.address, price_usdc)
+    if (!isValid) {
+      throw new AppError('Transaction verification failed', 400)
     }
 
     const purchase = await purchaseModel.create(
@@ -72,6 +110,11 @@ export const purchaseController = {
 
   async verifyPurchase(c: AppContext) {
     const { address, product_id } = c.req.param()
+    const user = c.get('user')
+
+    if (user.address !== address.toLowerCase()) {
+      throw new AppError('Unauthorized', 403)
+    }
 
     const purchase = await purchaseModel.verifyPurchase(
       address,

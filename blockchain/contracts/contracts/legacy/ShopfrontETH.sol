@@ -135,9 +135,10 @@ contract ShopfrontETH is Ownable, ReentrancyGuard {
         Item memory item = items[itemId];
         require(msg.value >= item.priceInETH, "Insufficient ETH sent");
         
-        // Refund excess ETH
+        // Refund excess ETH using call instead of transfer (2300 gas limit)
         if (msg.value > item.priceInETH) {
-            payable(msg.sender).transfer(msg.value - item.priceInETH);
+            (bool success, ) = payable(msg.sender).call{value: msg.value - item.priceInETH}("");
+            require(success, "ETH refund failed");
         }
         
         userPurchases[msg.sender].push(itemId);

@@ -207,8 +207,8 @@ contract AffiliateProgram is Ownable, ReentrancyGuard {
         return keccak256(abi.encodePacked(
             user,
             displayName,
-            block.timestamp,
-            block.difficulty
+            totalAffiliates,
+            block.chainid
         ));
     }
     

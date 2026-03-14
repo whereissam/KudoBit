@@ -457,7 +457,9 @@ export function createAuthMiddleware(authManager: ApiAuthManager) {
 
 // Export singleton
 export const apiAuthManager = new ApiAuthManager(
-  process.env.JWT_SECRET || 'default-secret-change-in-production'
+  process.env.JWT_SECRET || (process.env.NODE_ENV === 'production'
+    ? (() => { throw new Error('JWT_SECRET must be set in production') })()
+    : 'dev-secret-DO-NOT-USE-IN-PROD')
 )
 
 // Predefined Permissions

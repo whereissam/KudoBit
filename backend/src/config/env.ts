@@ -2,12 +2,21 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
+function requireEnvInProduction(name: string, fallback: string): string {
+  const value = process.env[name]
+  if (value) return value
+  if (process.env.NODE_ENV === 'production') {
+    throw new Error(`${name} must be set in production`)
+  }
+  return fallback
+}
+
 export const config = {
   port: parseInt(process.env.PORT || '5000'),
   nodeEnv: process.env.NODE_ENV || 'development',
 
   jwt: {
-    secret: process.env.JWT_SECRET || 'dev-secret-change-in-production',
+    secret: requireEnvInProduction('JWT_SECRET', 'dev-secret-DO-NOT-USE-IN-PROD'),
     expiresIn: '24h' as const
   },
 

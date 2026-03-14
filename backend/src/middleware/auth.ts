@@ -3,16 +3,6 @@ import { config } from '../config/env.js'
 import type { AppContext, AppNext } from '../types/index.js'
 
 export async function requireAuth(c: AppContext, next: AppNext): Promise<Response | void> {
-  // Development bypass for testing
-  if (config.nodeEnv === 'development') {
-    const testAddress = c.req.header('X-Test-Address')
-    if (testAddress) {
-      c.set('user', { address: testAddress.toLowerCase() })
-      await next()
-      return
-    }
-  }
-
   const authHeader = c.req.header('Authorization')
   const token = authHeader?.split(' ')[1]
 

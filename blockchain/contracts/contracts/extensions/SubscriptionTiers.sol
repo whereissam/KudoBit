@@ -168,19 +168,25 @@ contract SubscriptionTiers is Ownable, ReentrancyGuard {
     function subscribeToTier(uint256 tierId, bool isAnnual) external nonReentrant {
         require(tierId <= tierCount && tierId > 0, "Invalid tier ID");
         require(subscriptionTiers[tierId].isActive, "Tier is not active");
-        
+
         SubscriptionTier memory tier = subscriptionTiers[tierId];
         uint256 price = isAnnual ? tier.annualPrice : tier.monthlyPrice;
         uint256 duration = isAnnual ? SECONDS_IN_YEAR : SECONDS_IN_MONTH;
-        
+
+        // Transfer payment FIRST (checks-effects-interactions pattern)
+        require(
+            paymentToken.transferFrom(msg.sender, owner(), price),
+            "Payment failed"
+        );
+
         // Check if user already has an active subscription to this tier
         Subscription storage existingSub = userSubscriptions[msg.sender][tierId];
-        
+
         if (existingSub.isActive && existingSub.endTime > block.timestamp) {
             // Extend existing subscription
             existingSub.endTime += duration;
             existingSub.amountPaid += price;
-            
+
             emit SubscriptionRenewed(msg.sender, tierId, existingSub.endTime, price);
         } else {
             // Create new subscription
@@ -192,7 +198,7 @@ contract SubscriptionTiers is Ownable, ReentrancyGuard {
                 isAnnual: isAnnual,
                 amountPaid: price
             });
-            
+
             // Add to user's active tiers if not already present
             bool tierExists = false;
             for (uint256 i = 0; i < userActiveTiers[msg.sender].length; i++) {
@@ -204,19 +210,13 @@ contract SubscriptionTiers is Ownable, ReentrancyGuard {
             if (!tierExists) {
                 userActiveTiers[msg.sender].push(tierId);
             }
-            
+
             // Award loyalty badge
             loyaltyToken.mintBadge(msg.sender, tier.loyaltyBadgeId, 1);
-            
+
             emit SubscriptionPurchased(msg.sender, tierId, duration, price, isAnnual);
         }
-        
-        // Transfer payment
-        require(
-            paymentToken.transferFrom(msg.sender, owner(), price),
-            "Payment failed"
-        );
-        
+
         // Update user's total subscription spending
         userTotalSubscriptionSpent[msg.sender] += price;
     }

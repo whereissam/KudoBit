@@ -11,9 +11,31 @@ function generateNonce(): string {
   return crypto.randomBytes(16).toString('hex')
 }
 
+// In-memory nonce store with TTL (5 minutes)
+const nonceStore = new Map<string, number>()
+const NONCE_TTL_MS = 5 * 60 * 1000
+
+function storeNonce(nonce: string): void {
+  // Clean expired nonces
+  const now = Date.now()
+  for (const [key, expiry] of nonceStore.entries()) {
+    if (expiry < now) nonceStore.delete(key)
+  }
+  nonceStore.set(nonce, now + NONCE_TTL_MS)
+}
+
+function consumeNonce(nonce: string): boolean {
+  const expiry = nonceStore.get(nonce)
+  if (!expiry || expiry < Date.now()) return false
+  nonceStore.delete(nonce)
+  return true
+}
+
 export const authController = {
   async getNonce(c: AppContext) {
-    return c.json({ nonce: generateNonce() })
+    const nonce = generateNonce()
+    storeNonce(nonce)
+    return c.json({ nonce })
   },
 
   async verify(c: AppContext) {
@@ -25,10 +47,21 @@ export const authController = {
 
     try {
       const siweMessage = new SiweMessage(message)
-      const verification = await siweMessage.verify({ signature })
+
+      // Verify signature, domain, and nonce
+      const verification = await siweMessage.verify({
+        signature,
+        domain: config.siwe.domain,
+        nonce: siweMessage.nonce,
+      })
 
       if (!verification.success) {
         throw new AppError('Invalid signature', 401)
+      }
+
+      // Validate nonce was issued by us and consume it (single-use)
+      if (!consumeNonce(siweMessage.nonce)) {
+        throw new AppError('Invalid or expired nonce', 401)
       }
 
       const address = siweMessage.address.toLowerCase()
@@ -47,7 +80,7 @@ export const authController = {
       })
     } catch (error) {
       if (error instanceof AppError) throw error
-      console.error('Auth error:', error)
+      console.error('Auth verification failed')
       throw new AppError('Authentication failed', 500)
     }
   },

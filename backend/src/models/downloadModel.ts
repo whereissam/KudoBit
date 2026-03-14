@@ -2,8 +2,19 @@ import { db } from '../config/database.js'
 import crypto from 'crypto'
 import type { Download } from '../types/index.js'
 
+const MAX_DOWNLOAD_LINKS_PER_PURCHASE = 5
+
 export const DownloadModel = {
   async createDownloadLink(purchaseId: number, buyerAddress: string, productId: number): Promise<Download> {
+    // Limit download link generation per purchase
+    const countResult = await db.query(
+      'SELECT COUNT(*) as count FROM downloads WHERE purchase_id = $1',
+      [purchaseId]
+    )
+    if (parseInt(countResult.rows[0].count) >= MAX_DOWNLOAD_LINKS_PER_PURCHASE) {
+      throw new Error('Download link limit reached for this purchase')
+    }
+
     const downloadUrl = crypto.randomBytes(32).toString('hex')
     const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000)
 

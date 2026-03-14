@@ -1,13 +1,18 @@
 import { Hono } from 'hono'
 import { serve } from '@hono/node-server'
 import { cors } from 'hono/cors'
+import { secureHeaders } from 'hono/secure-headers'
 import { swaggerUI } from '@hono/swagger-ui'
 import { db } from './config/database.js'
 import { config } from './config/env.js'
 import { apiRoutes } from './routes/index.js'
+import { rateLimiter } from './middleware/rateLimiter.js'
 import type { AppEnv } from './types/index.js'
 
 const app = new Hono<AppEnv>()
+
+// Security headers
+app.use('/*', secureHeaders())
 
 // CORS middleware
 app.use('/*', cors({
@@ -17,12 +22,16 @@ app.use('/*', cors({
   allowHeaders: ['Content-Type', 'Authorization'],
 }))
 
+// Rate limiting
+app.use('/api/*', rateLimiter({ requests: 100, windowMs: 60_000 }))
+app.use('/api/auth/*', rateLimiter({ requests: 20, windowMs: 60_000 }))
+app.use('/api/purchases', rateLimiter({ requests: 10, windowMs: 60_000 }))
+
 // Health check
 app.get('/', (c) => c.json({
   name: 'KudoBit API',
   version: '2.0.0',
-  status: 'healthy',
-  env: config.nodeEnv
+  status: 'healthy'
 }))
 
 app.get('/health', (c) => c.json({ status: 'ok', timestamp: new Date().toISOString() }))
@@ -79,11 +88,11 @@ app.notFound((c) => c.json({ error: 'Not found' }, 404))
 
 // Error handler
 app.onError((err, c) => {
+  const statusCode = (err as Error & { statusCode?: number }).statusCode || 500
   console.error('Global error:', err)
   return c.json({
-    error: err.message || 'Internal server error',
-    ...(config.nodeEnv === 'development' && { stack: err.stack })
-  }, ((err as Error & { statusCode?: number }).statusCode || 500) as 500)
+    error: statusCode < 500 ? err.message : 'An error occurred. Please try again.'
+  }, statusCode as 500)
 })
 
 async function start() {

@@ -34,7 +34,7 @@ export const productController = {
   async updateProduct(c: AppContext) {
     const user = c.get('user')
     const { id } = c.req.param()
-    const body = await c.req.json()
+    const body = c.get('validatedBody') as Record<string, unknown>
 
     const product = await productModel.findById(parseInt(id))
     if (!product) {
