@@ -9,17 +9,17 @@ describe("KudoBit Core Contracts Testing", function () {
     [owner, creator, buyer1, buyer2, royaltyRecipient] = await ethers.getSigners();
 
     // Deploy MockUSDC
-    const MockUSDC = await ethers.getContractFactory("MockUSDC");
+    const MockUSDC = await ethers.getContractFactory("blockchain/contracts/contracts/MockUSDC.sol:MockUSDC");
     mockUSDC = await MockUSDC.deploy();
     await mockUSDC.waitForDeployment();
 
     // Deploy LoyaltyToken
-    const LoyaltyToken = await ethers.getContractFactory("LoyaltyToken");
+    const LoyaltyToken = await ethers.getContractFactory("blockchain/contracts/contracts/LoyaltyToken.sol:LoyaltyToken");
     loyaltyToken = await LoyaltyToken.deploy();
     await loyaltyToken.waitForDeployment();
 
     // Deploy Shopfront
-    const Shopfront = await ethers.getContractFactory("Shopfront");
+    const Shopfront = await ethers.getContractFactory("blockchain/contracts/contracts/Shopfront.sol:Shopfront");
     shopfront = await Shopfront.deploy(
       await mockUSDC.getAddress(),
       await loyaltyToken.getAddress()

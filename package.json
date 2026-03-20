@@ -9,9 +9,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint . --config ./config/eslint.config.js",
     "preview": "vite preview",
-    "compile": "hardhat compile --config ./config/hardhat.config.cjs",
-    "deploy:testnet": "hardhat run scripts/deploy.cjs --network monadTestnet --config ./config/hardhat.config.cjs",
-    "test": "hardhat test --config ./config/hardhat.config.cjs",
+    "compile": "hardhat compile --config ./hardhat.config.cjs",
+    "deploy:testnet": "hardhat run scripts/deploy-monad-testnet.cjs --network monadTestnet --config ./hardhat.config.cjs",
+    "test": "hardhat test test/core-contracts-test.cjs --config ./hardhat.config.cjs",
     "test:e2e": "playwright test"
   },
   "dependencies": {
