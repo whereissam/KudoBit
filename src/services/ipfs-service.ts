@@ -1,59 +1,50 @@
-// IPFS Service - Simple file upload/download
+// IPFS Service - Simple file upload/download via backend proxy
+// Pinata API keys are stored server-side only.
+
+const IPFS_GATEWAY = 'https://gateway.pinata.cloud/ipfs'
+
 export class IPFSService {
-  private pinataApiKey = process.env.VITE_PINATA_API_KEY;
-  private pinataSecretKey = process.env.VITE_PINATA_SECRET_KEY;
-  
+  private backendUrl: string
+
+  constructor() {
+    this.backendUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000'
+  }
+
   async uploadFile(file: File): Promise<string> {
-    if (!this.pinataApiKey || !this.pinataSecretKey) {
-      throw new Error('IPFS credentials not configured');
-    }
-    
-    const formData = new FormData();
-    formData.append('file', file);
-    
-    const response = await fetch('https://api.pinata.cloud/pinning/pinFileToIPFS', {
+    const formData = new FormData()
+    formData.append('file', file)
+
+    const response = await fetch(`${this.backendUrl}/api/v1/ipfs/upload`, {
       method: 'POST',
-      headers: {
-        'pinata_api_key': this.pinataApiKey,
-        'pinata_secret_api_key': this.pinataSecretKey,
-      },
       body: formData,
-    });
-    
+    })
+
     if (!response.ok) {
-      throw new Error('Failed to upload to IPFS');
+      throw new Error('Failed to upload to IPFS')
     }
-    
-    const result = await response.json();
-    return result.IpfsHash;
+
+    const result = await response.json()
+    return result.hash
   }
-  
+
   async uploadJSON(data: object): Promise<string> {
-    if (!this.pinataApiKey || !this.pinataSecretKey) {
-      throw new Error('IPFS credentials not configured');
-    }
-    
-    const response = await fetch('https://api.pinata.cloud/pinning/pinJSONToIPFS', {
+    const response = await fetch(`${this.backendUrl}/api/v1/ipfs/metadata`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'pinata_api_key': this.pinataApiKey,
-        'pinata_secret_api_key': this.pinataSecretKey,
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
-    });
-    
+    })
+
     if (!response.ok) {
-      throw new Error('Failed to upload JSON to IPFS');
+      throw new Error('Failed to upload JSON to IPFS')
     }
-    
-    const result = await response.json();
-    return result.IpfsHash;
+
+    const result = await response.json()
+    return result.hash
   }
-  
+
   getFileURL(hash: string): string {
-    return `https://ipfs.io/ipfs/${hash}`;
+    return `${IPFS_GATEWAY}/${hash}`
   }
 }
 
-export const ipfsService = new IPFSService();
+export const ipfsService = new IPFSService()

@@ -1,7 +1,8 @@
-import { 
-  CONTRACTS, 
-  PRODUCT_NFT_ABI, 
-  CREATOR_REGISTRY_ABI
+import {
+  CONTRACTS,
+  PRODUCT_NFT_ABI,
+  CREATOR_REGISTRY_ABI,
+  ROYALTY_MANAGER_ABI,
 } from '../lib/contracts';
 
 export interface ProductMetadata {
@@ -13,7 +14,6 @@ export interface ProductMetadata {
 }
 
 export class ContractService {
-  // Contract interaction data structures for use with wagmi hooks
   getCreateProductConfig(metadata: ProductMetadata, contentHash: string) {
     return {
       address: CONTRACTS.productNFT,
@@ -22,7 +22,7 @@ export class ContractService {
       args: [metadata.name, metadata.description, metadata.image, BigInt(metadata.price), contentHash],
     } as const;
   }
-  
+
   getRegisterCreatorConfig(name: string, bio: string, avatar: string) {
     return {
       address: CONTRACTS.creatorRegistry,
@@ -31,7 +31,7 @@ export class ContractService {
       args: [name, bio, avatar],
     } as const;
   }
-  
+
   getCreatorProductsConfig(creatorAddress: string) {
     return {
       address: CONTRACTS.productNFT,
@@ -40,17 +40,23 @@ export class ContractService {
       args: [creatorAddress as `0x${string}`],
     } as const;
   }
-  
-  async getCreatorEarnings() {
-    // Note: RoyaltyManager ABI not defined in contracts.ts yet
-    // Return mock data for now
-    return BigInt(0);
+
+  getCreatorEarningsConfig(creatorAddress: `0x${string}`, tokenAddress: `0x${string}`) {
+    return {
+      address: CONTRACTS.royaltyManager,
+      abi: ROYALTY_MANAGER_ABI,
+      functionName: 'earnings',
+      args: [creatorAddress, tokenAddress],
+    } as const;
   }
-  
-  async claimEarnings() {
-    // Note: RoyaltyManager ABI not defined in contracts.ts yet
-    // Return mock transaction for now
-    return '0x0000000000000000000000000000000000000000000000000000000000000000';
+
+  getClaimEarningsConfig(tokenAddress: `0x${string}`) {
+    return {
+      address: CONTRACTS.royaltyManager,
+      abi: ROYALTY_MANAGER_ABI,
+      functionName: 'claimEarnings',
+      args: [tokenAddress],
+    } as const;
   }
 }
 

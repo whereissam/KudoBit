@@ -39,7 +39,7 @@ export class KudoBitApiClient {
 
   constructor(config: Partial<ApiConfig> = {}) {
     this.config = {
-      baseUrl: config.baseUrl || 'https://api.kudobit.com/v1',
+      baseUrl: config.baseUrl || import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1',
       apiKey: config.apiKey || '',
       version: config.version || 'v1',
       timeout: config.timeout || 30000,

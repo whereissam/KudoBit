@@ -440,8 +440,52 @@ export {
   CATEGORIES_ABI,
 } from './extension-contracts'
 
-// Chain-specific contract addresses (for the remote files that import getContracts)
-export const getContracts = (_chainId: number) => {
-  // Default to current CONTRACTS for all chains
+// RoyaltyManager ABI - for creator earnings and claims
+export const ROYALTY_MANAGER_ABI = [
+  {
+    "inputs": [
+      {"internalType": "address", "name": "creator", "type": "address"},
+      {"internalType": "address", "name": "token", "type": "address"}
+    ],
+    "name": "earnings",
+    "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{"internalType": "address", "name": "token", "type": "address"}],
+    "name": "claimEarnings",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {"internalType": "address", "name": "creator", "type": "address"},
+      {"internalType": "address", "name": "token", "type": "address"},
+      {"internalType": "uint256", "name": "amount", "type": "uint256"}
+    ],
+    "name": "distributeRevenue",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "PLATFORM_FEE",
+    "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
+    "stateMutability": "view",
+    "type": "function"
+  }
+] as const
+
+// Chain-specific contract addresses
+// Currently all contracts are deployed to Monad Testnet (10143) and local Hardhat (1337).
+const SUPPORTED_CHAIN_IDS = new Set([10143, 1337])
+
+export const getContracts = (chainId: number) => {
+  if (!SUPPORTED_CHAIN_IDS.has(chainId)) {
+    console.warn(`[contracts] Chain ${chainId} has no deployed contracts — using Monad Testnet addresses as fallback`)
+  }
   return CONTRACTS_EXTENDED
 }

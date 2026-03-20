@@ -11,6 +11,7 @@ import { wishlistRoutes } from './wishlistRoutes.js'
 import { followRoutes } from './followRoutes.js'
 import { analyticsRoutes } from './analyticsRoutes.js'
 import { downloadRoutes } from './downloadRoutes.js'
+import { ipfsRoutes } from './ipfsRoutes.js'
 import type { AppEnv } from '../types/index.js'
 
 const apiRoutes = new Hono<AppEnv>()
@@ -29,6 +30,9 @@ apiRoutes.route('/search', searchRoutes)
 // Phase 1: Analytics & Downloads
 apiRoutes.route('/', analyticsRoutes)
 apiRoutes.route('/', downloadRoutes)
+
+// IPFS proxy (Pinata keys stay server-side)
+apiRoutes.route('/ipfs', ipfsRoutes)
 
 // Phase 2: Social Features
 apiRoutes.route('/', reviewRoutes)

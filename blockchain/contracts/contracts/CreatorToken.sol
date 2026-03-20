@@ -36,6 +36,9 @@ contract CreatorToken is ERC20, AccessControl {
     }
     
     function withdraw() external onlyRole(CREATOR_ROLE) {
-        payable(creator).transfer(address(this).balance);
+        uint256 balance = address(this).balance;
+        require(balance > 0, "No balance");
+        (bool success, ) = payable(creator).call{value: balance}("");
+        require(success, "Transfer failed");
     }
 }

@@ -1,7 +1,15 @@
 import '@/index.css'
 import { createRootRoute, Link, Outlet } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/router-devtools'
+import { lazy } from 'react'
 import { ThemeToggle } from '@/components/theme-toggle'
+
+const TanStackRouterDevtools = import.meta.env.DEV
+  ? lazy(() =>
+      import('@tanstack/router-devtools').then((mod) => ({
+        default: mod.TanStackRouterDevtools,
+      }))
+    )
+  : () => null
 import { MobileNav } from '@/components/mobile-nav'
 import { WalletConnect } from '@/components/wallet-connect'
 
